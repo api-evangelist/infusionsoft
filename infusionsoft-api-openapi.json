@@ -1,0 +1,42 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Infusionsoft API",
+        "description": "Test our API services using I\/O Docs. You can also view our written documentation, helper libraries and code samples. The Infusionsoft API enables third-party applications to communicate with Infusionsoft and process, update, and destroy data for a wide variety of uses. You can do things like manage contacts, place orders, send messages, and most other things available for use in the Infusionsoft software. The Infusionsoft API uses XML implemented as either encoded XML-RPC or plain XML over HTTP as its communication method for both sending and receiving requests.",
+        "termsOfService": "http:\/\/exmple.com\/license\/"
+    },
+    "servers": [
+        "http:\/\/keys.api.infusionsoft.com\/"
+    ],
+    "paths": {
+        "\/": {
+            "post": {
+                "summary": "This retrieves the HTML for the given web form",
+                "description": "",
+                "operationId": "GetHTMLWebFormService",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "apiKey",
+                        "in": "query",
+                        "description": "Your Infusionsoft API key"
+                    },
+                    {
+                        "name": "webFormId",
+                        "in": "query",
+                        "description": "The Id to your web form"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": []
+    }
+}
