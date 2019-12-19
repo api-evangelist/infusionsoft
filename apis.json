@@ -1,0 +1,80 @@
+{
+    "name": "Infusionsoft",
+    "description": "<p>Infusionsoft is a private company that offers an e-mail marketing and sales platform for small businesses, including products to streamline the customer lifecycle, customer relationship management, marketing automation, lead capture, and e-commerce.<\/p>",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/infusionsoft-logo.jpg",
+    "tags": [
+        "api provider",
+        "have api",
+        "have swagger",
+        "new"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/infusionsoft\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Infusionsoft API",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/infusionsoft-logo.jpg",
+            "humanURL": "http:\/\/www.infusionsoft.com\/",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/infusionsoft-api-openapi.json"
+                },
+                {
+                    "type": "x-openapi",
+                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/infusionsoft-api.json"
+                }
+            ]
+        },
+        {
+            "name": "Infusionsoft",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/infusionsoft-logo.jpg",
+            "humanURL": "http:\/\/www.infusionsoft.com\/",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/infusionsoft-openapi.json"
+                },
+                {
+                    "type": "x-openapi",
+                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/infusionsoft.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Developers",
+            "url": "https:\/\/developer.infusionsoft.com\/"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/infusionsoft"
+        },
+        {
+            "type": "Swagger",
+            "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-definitions\/swagger\/18953-2019-09-02-22-55-54.json"
+        },
+        {
+            "type": "Partners",
+            "url": "http:\/\/partners.infusionsoft.com\/developer-partners"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/infusionsoft"
+        },
+        {
+            "type": "Website",
+            "url": "http:\/\/www.infusionsoft.com\/"
+        }
+    ]
+}
