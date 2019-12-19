@@ -1,0 +1,51 @@
+{
+    "id": "dd9916f151225a6ecaf1489ec1059df0",
+    "name": "Infusionsoft API",
+    "description": null,
+    "auth": null,
+    "events": null,
+    "variables": [],
+    "order": [],
+    "folders_order": [],
+    "folders": [],
+    "requests": [
+        {
+            "id": "a39a56a569a3c7a2198a707daa9328f4",
+            "name": "This retrieves the HTML for the given web form",
+            "url": "http:\/\/keys.api.infusionsoft.com\/\/",
+            "description": "",
+            "data": [],
+            "dataMode": "raw",
+            "headerData": null,
+            "method": "post",
+            "pathVariableData": [],
+            "queryParams": [
+                {
+                    "key": "apiKey",
+                    "description": "Your Infusionsoft API key",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                },
+                {
+                    "key": "webFormId",
+                    "description": "The Id to your web form",
+                    "value": "",
+                    "equals": true,
+                    "enabled": true
+                }
+            ],
+            "auth": null,
+            "events": null,
+            "folder": null,
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "responses": [],
+            "currentHelper": null,
+            "helperAttributes": null,
+            "collectionId": "dd9916f151225a6ecaf1489ec1059df0",
+            "rawModeData": ""
+        }
+    ]
+}
