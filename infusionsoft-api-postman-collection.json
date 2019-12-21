@@ -1,5 +1,5 @@
 {
-    "id": "dd9916f151225a6ecaf1489ec1059df0",
+    "id": "9102ec1cef7e0c20b7f20497670e0af7",
     "name": "Infusionsoft API",
     "description": null,
     "auth": null,
@@ -10,7 +10,7 @@
     "folders": [],
     "requests": [
         {
-            "id": "a39a56a569a3c7a2198a707daa9328f4",
+            "id": "7fffb137b7242b65b052762c087582d9",
             "name": "This retrieves the HTML for the given web form",
             "url": "http:\/\/keys.api.infusionsoft.com\/\/",
             "description": "",
@@ -44,7 +44,7 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "dd9916f151225a6ecaf1489ec1059df0",
+            "collectionId": "9102ec1cef7e0c20b7f20497670e0af7",
             "rawModeData": ""
         }
     ]
