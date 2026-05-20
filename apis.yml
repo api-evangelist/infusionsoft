@@ -68,6 +68,10 @@ apis:
         url: https://developer.infusionsoft.com/getting-started-oauth-keys/
 
 common:
+  - type: GitHubOrganization
+    url: https://github.com/infusionsoft
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/keap-growing
   - type: Website
     url: https://keap.com
   - type: Documentation
