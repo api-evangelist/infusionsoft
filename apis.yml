@@ -78,7 +78,7 @@ common:
     url: https://developer.infusionsoft.com
   - type: Pricing
     url: https://keap.com/pricing
-  - type: SignUp
+  - type: Signup
     url: https://keap.com/signup
   - type: Developer Community
     url: https://integration.keap.com
