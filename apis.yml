@@ -68,6 +68,8 @@ apis:
         url: https://developer.infusionsoft.com/getting-started-oauth-keys/
 
 common:
+  - type: DomainSecurity
+    url: security/infusionsoft-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/infusionsoft
   - type: LinkedIn

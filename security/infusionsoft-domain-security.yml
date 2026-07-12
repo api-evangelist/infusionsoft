@@ -1,0 +1,33 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: keap.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 15 13:11:32 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: developer.infusionsoft.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep  7 13:21:01 2026 GMT
+  hsts: false
+- host: api.infusionsoft.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  5 22:11:50 2026 GMT
+  hsts: null
+domains:
+- domain: keap.com
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: infusionsoft.com
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
