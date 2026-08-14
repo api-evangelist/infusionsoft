@@ -1,26 +1,33 @@
 aid: infusionsoft
 name: Infusionsoft (Keap)
 description: >-
-  Infusionsoft, now branded as Keap, is a sales and marketing automation
-  CRM built for small businesses that combines contact management,
-  email marketing, e-commerce, pipeline automation, appointments, and
-  invoicing in a single platform. Keap exposes REST APIs (v1 and v2)
-  and a legacy XML-RPC API for managing contacts, companies,
-  opportunities, orders, products, tags, emails, and campaigns, all
-  authenticated via OAuth 2.0 authorization code and refresh token
-  grants.
+  Infusionsoft, now branded as Keap and owned by Thryv Holdings, is a sales and
+  marketing automation CRM built for small businesses that combines contact
+  management, tagging, email marketing, campaign and automation sequences,
+  e-commerce orders and subscriptions, sales pipelines, appointments and
+  invoicing in a single platform. Keap publishes three machine-readable REST
+  contracts: a 399-operation OpenAPI 3.1 for REST v2, a 141-operation OpenAPI
+  3.1 for REST v1, and a separate 45-operation Pipelines (deals) API, alongside
+  a deprecated XML-RPC surface. Everything authenticates as a bearer token,
+  either an OAuth 2.0 authorization-code token or a Personal Access Token or
+  Service Account Key. Keap's event surface is REST Hooks and lives only on v1.
+  There are no granular OAuth scopes and no idempotency keys anywhere in the
+  API.
 type: Index
 accessModel:
-  pricing: unknown
-  onboarding: unknown
-  trial: false
-  try_now: false
-  public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  pricing: paid
+  onboarding: self-service
+  trial: true
+  try_now: true
+  public: true
+  label: Free developer sandbox with a paid production platform plan
+  confidence: high
+  source:
+    - https://keap.com/pricing
+    - https://developer.keap.com/resources/sandbox-application/
+    - https://developer.keap.com/faqs/cost-become-developer-partner/
+  generated: '2026-08-13'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/infusionsoft.png
 tags:
   - CRM
@@ -29,72 +36,214 @@ tags:
   - Email Marketing
   - E-Commerce
   - Small Business
+  - Contacts
+  - Subscriptions
+  - Webhooks
+  - OAuth 2.0
 url: >-
   https://raw.githubusercontent.com/api-evangelist/infusionsoft/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-11'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
   - aid: infusionsoft:rest-v2
     name: Keap REST API v2
     description: >-
-      Modern REST API for managing contacts, companies, opportunities,
-      tags, emails, appointments, notes, and tasks in Keap CRM.
-      Authentication uses OAuth 2.0 with the authorization code and
-      refresh token grants, with access tokens passed as Bearer tokens.
-    humanURL: https://developer.infusionsoft.com/docs/restv2/
+      The default Keap REST API: 237 paths and 399 operations covering contacts,
+      companies, tags, opportunities and stages, orders and order items,
+      products, subscriptions and plans, notes, tasks, emails, automations,
+      affiliates, lead sources, users and settings. Pages with opaque
+      page_token cursors, filters with a filter expression parameter, and uses
+      colon-suffixed custom verbs such as :merge, :applyTags and :achieve.
+      Every major entity carries a per-tenant custom-field model. Authentication
+      is a bearer token - OAuth 2.0 authorization code, a Personal Access Token,
+      or a Service Account Key.
+    humanURL: https://developer.keap.com/docs/restv2/
     baseURL: https://api.infusionsoft.com/crm/rest/v2
     tags:
       - CRM
       - Contacts
       - Opportunities
+      - Orders
+      - Subscriptions
       - Tags
       - OAuth 2.0
     properties:
+      - type: OpenAPI
+        url: openapi/infusionsoft-rest-v2-openapi.json
+      - type: Overlay
+        url: overlays/infusionsoft-rest-v2-overlay.yaml
       - type: Documentation
-        url: https://developer.infusionsoft.com/docs/restv2/
+        url: https://developer.keap.com/docs/restv2/
+      - type: APIReference
+        url: https://developer.keap.com/docs/restv2/
       - type: OAuth Guide
-        url: https://developer.infusionsoft.com/getting-started-oauth-keys/
+        url: https://developer.keap.com/getting-started-oauth-keys/
       - type: Authentication
-        url: https://developer.infusionsoft.com/authentication/
+        url: https://developer.keap.com/authentication/
   - aid: infusionsoft:rest-v1
     name: Keap REST API v1
     description: >-
-      Original REST API for Keap (formerly Infusionsoft) covering
-      contacts, orders, products, subscriptions, campaigns, files,
-      tags, and merchants. Authentication uses OAuth 2.0 with Bearer
-      access tokens.
-    humanURL: https://developer.infusionsoft.com/docs/rest/
+      The original Keap REST API, still labelled Current: 92 paths and 141
+      operations covering contacts, companies, orders, products,
+      subscriptions, campaigns, appointments, files, tags, notes, tasks,
+      affiliates, merchants and account info - plus the REST Hooks
+      subscription surface, which exists nowhere else in the Keap platform.
+      Pages with offset and limit. A v2 integration still has to call v1 to
+      manage its event subscriptions.
+    humanURL: https://developer.keap.com/docs/rest/
     baseURL: https://api.infusionsoft.com/crm/rest/v1
     tags:
       - CRM
       - Orders
       - Products
       - Campaigns
+      - REST Hooks
+      - Webhooks
       - OAuth 2.0
     properties:
+      - type: OpenAPI
+        url: openapi/infusionsoft-rest-v1-openapi.json
+      - type: Overlay
+        url: overlays/infusionsoft-rest-v1-overlay.yaml
+      - type: Webhooks
+        url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
       - type: Documentation
-        url: https://developer.infusionsoft.com/docs/rest/
+        url: https://developer.keap.com/docs/rest/
+      - type: APIReference
+        url: https://developer.keap.com/docs/rest/
       - type: OAuth Guide
-        url: https://developer.infusionsoft.com/getting-started-oauth-keys/
+        url: https://developer.keap.com/getting-started-oauth-keys/
+  - aid: infusionsoft:pipelines
+    name: Keap Pipelines API
+    description: >-
+      The Keap Pipelines (deals) API - 28 paths and 45 operations for deals,
+      deal notes, deal custom fields, date expressions and bulk deal
+      operations. Keap's own developer portal loads this as the Pipelines
+      reference, and its servers block names api.infusionsoft.com, but the
+      document is served from Thryv's API host because Thryv Holdings owns
+      Keap. Its info.title is the internal service name SLAAPI (Service Level
+      Aggregation API) and its contact address is gryffindor@keap.com. It
+      declares no error responses at all - only 200, 201 and 204.
+    humanURL: https://developer.keap.com/docs/restv2Pipelines/
+    baseURL: https://api.infusionsoft.com
+    tags:
+      - CRM
+      - Deals
+      - Pipelines
+      - Sales Automation
+    properties:
+      - type: OpenAPI
+        url: openapi/infusionsoft-pipelines-openapi.yml
+      - type: Overlay
+        url: overlays/infusionsoft-pipelines-overlay.yaml
+      - type: Documentation
+        url: https://developer.keap.com/docs/restv2Pipelines/
+      - type: APIReference
+        url: https://developer.keap.com/docs/restv2Pipelines/
+  - aid: infusionsoft:xml-rpc
+    name: Infusionsoft XML-RPC API
+    description: >-
+      The legacy Infusionsoft XML-RPC API, explicitly labelled Deprecated in
+      the Keap developer guide. It remains documented, with a published table
+      schema reference, but Keap publishes no sunset date for it and no
+      machine-readable contract exists for the surface.
+    humanURL: https://developer.keap.com/docs/xml-rpc/
+    baseURL: https://api.infusionsoft.com/crm/xmlrpc/v1
+    tags:
+      - CRM
+      - XML-RPC
+      - Deprecated
+    properties:
+      - type: Documentation
+        url: https://developer.keap.com/docs/xml-rpc/
+      - type: TableSchema
+        url: https://developer.keap.com/docs/table-schema/
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/infusionsoft-agentic-access.yml
+  - type: OAuthScopes
+    url: scopes/infusionsoft-scopes.yml
+  - type: Authentication
+    url: authentication/infusionsoft-authentication.yml
   - type: DomainSecurity
     url: security/infusionsoft-domain-security.yml
+  - type: Packages
+    url: packages/infusionsoft-packages.yml
+  - type: SDKs
+    url: packages/infusionsoft-packages.yml
+  - type: LLMsTxt
+    url: llms/infusionsoft-llms.txt
+  - type: Conformance
+    url: conformance/infusionsoft-conformance.yml
+  - type: Compliance
+    url: conformance/infusionsoft-conformance.yml
+  - type: ErrorCatalog
+    url: errors/infusionsoft-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/infusionsoft-lifecycle.yml
+  - type: StatusPage
+    url: https://status.keap.com/
+  - type: Deprecation
+    url: lifecycle/infusionsoft-lifecycle.yml
+  - type: Conventions
+    url: conventions/infusionsoft-conventions.yml
+  - type: DataModel
+    url: data-model/infusionsoft-data-model.yml
+  - type: Sandbox
+    url: sandbox/infusionsoft-sandbox.yml
+  - type: RateLimits
+    url: rate-limits/infusionsoft-rate-limits.yml
+  - type: Plans
+    url: plans/infusionsoft-plans-pricing.yml
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Postman
+    url: https://documenter.getpostman.com/view/2915979/UVByKWEZ
+  - type: DeveloperPortal
+    url: https://developer.keap.com/
+  - type: Documentation
+    url: https://developer.keap.com/docs/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: GettingStarted
+    url: https://developer.keap.com/developer-guide/
+  - type: Tutorials
+    url: https://developer.keap.com/tutorials/
+  - type: FAQ
+    url: https://developer.keap.com/faqs/
+  - type: Support
+    url: https://developer.keap.com/get-support/
+  - type: HelpCenter
+    url: https://community.keap.com/c/api/5
+  - type: Developer Community
+    url: https://integration.keap.com
   - type: GitHubOrganization
     url: https://github.com/infusionsoft
   - type: LinkedIn
     url: https://www.linkedin.com/company/keap-growing
   - type: Website
     url: https://keap.com
-  - type: Documentation
-    url: https://developer.infusionsoft.com
+  - type: Blog
+    url: https://keap.com/small-business-automation-blog
   - type: Pricing
     url: https://keap.com/pricing
-  - type: Signup
-    url: https://keap.com/signup
-  - type: Developer Community
-    url: https://integration.keap.com
+  - type: SignUp
+    url: https://keap.com/free-trial
+  - type: Login
+    url: https://keys.developer.keap.com/
+  - type: TermsOfService
+    url: https://www.thryv.com/terms-of-use/
+  - type: PrivacyPolicy
+    url: https://www.thryv.com/privacy/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 22
+  pass: local-v1
