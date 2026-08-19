@@ -44,7 +44,7 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/infusionsoft/refs/heads/main/apis.yml
 created: '2026-05-11'
 modified: '2026-08-13'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - aid: infusionsoft:rest-v2
     name: Keap REST API v2
