@@ -1,0 +1,77 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.keap.com/api-token-quota-and-usage-measurements/
+docs: https://developer.keap.com/api-token-quota-and-usage-measurements/
+note: 'Keap publishes one of the more complete rate-limit disclosures in the CRM category: three independent
+  limit layers (per key/secret pair, per key for PAT/SAK, per application instance) plus an unmetered
+  per-second spike policy, and it returns runtime headers for each metered layer. Effective 2026-06-08
+  the gateway added the per-application-instance tier on top of the token limits.'
+limit_count: 8
+status_on_exhaustion: 429
+retry_guidance: Keap recommends exponential backoff with jitter on 429 responses (developer.keap.com/developer-guide/).
+limits:
+- name: OAuth2 bearer token - per minute
+  scope: per key/secret pair, aggregated across all Keap applications
+  window: 1 minute
+  limit: 1500
+- name: OAuth2 bearer token - per day
+  scope: per key/secret pair, aggregated across all Keap applications
+  window: 1 day (resets 12:00 AM UTC)
+  limit: 150000
+- name: PAT / Service Account Key - per second
+  scope: per key, single application only
+  window: 1 second
+  limit: 10
+- name: PAT / Service Account Key - per minute
+  scope: per key, single application only
+  window: 1 minute
+  limit: 240
+- name: PAT / Service Account Key - per day
+  scope: per key, single application only
+  window: 1 day (resets 12:00 AM UTC)
+  limit: 30000
+- name: Application instance - per minute
+  scope: per application instance (tenant), regardless of token type
+  window: 1 minute
+  limit: 10000
+  effective: '2026-06-08'
+- name: Application instance - per day
+  scope: per application instance (tenant), regardless of token type
+  window: 1 day (resets 12:00 AM UTC)
+  limit: 250000
+  effective: '2026-06-08'
+- name: Spike arrest
+  scope: gateway-wide spike policy
+  window: 1 second
+  limit: 25
+  metered: false
+  note: Keap states no metrics headers are returned for this policy.
+headers:
+  quota:
+  - name: x-keap-product-quota-limit
+    means: daily quota ceiling for the token
+  - name: x-keap-product-quota-available
+    means: requests remaining in the daily quota
+  - name: x-keap-product-quota-used
+    means: requests consumed in the daily quota
+  - name: x-keap-product-quota-expiry-time
+    means: when the daily quota period resets
+  throttle:
+  - name: x-keap-product-throttle-limit
+    means: per-minute ceiling for the token
+  - name: x-keap-product-throttle-available
+    means: requests remaining this minute
+  - name: x-keap-product-throttle-used
+    means: requests consumed this minute
+  tenant_throttle:
+  - name: x-keap-tenant-throttle-limit
+    means: per-minute ceiling for the application instance
+  - name: x-keap-tenant-throttle-available
+    means: requests remaining this minute for the tenant
+  - name: x-keap-tenant-throttle-used
+    means: requests consumed this minute for the tenant
+  standard:
+  - name: Retry-After
+    present: false
+    note: Keap does not document a Retry-After header; it documents its own x-keap-* families instead.
+      No RateLimit-* (RFC 9238-style) headers are published either.

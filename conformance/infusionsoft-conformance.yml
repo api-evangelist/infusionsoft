@@ -1,0 +1,110 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/*.json, https://developer.keap.com/getting-started-oauth-keys/, https://keap.com/legal,
+  https://developer.keap.com/rest-hook-documentation/
+note: Keap conforms to OAuth 2.0 and to the REST Hooks pattern, and nothing else in the cross-cutting
+  standards set. It declares no OpenID Connect, no RFC 9457 problem details, no RFC 8594 deprecation headers,
+  no standard RateLimit headers, and no idempotency. On the compliance side, Keap offers a HIPAA Business
+  Associate Agreement, which is a real, published, named compliance commitment; no SOC 2, ISO 27001, PCI
+  DSS or FedRAMP attestation is published on keap.com or thryv.com, and no trust centre exists.
+standards:
+- id: oauth2
+  name: OAuth 2.0 (RFC 6749) authorization code grant
+  conforms: true
+  evidence: securitySchemes.oauth2.flows.authorizationCode in all three specs; authorizationUrl https://accounts.infusionsoft.com/app/oauth/authorize,
+    tokenUrl https://api.infusionsoft.com/token, documented at https://developer.keap.com/getting-started-oauth-keys/
+- id: oauth2-refresh-rotation
+  name: Refresh token rotation
+  conforms: true
+  evidence: Keap returns a new refresh token on every refresh - https://developer.keap.com/getting-started-oauth-keys/
+- id: oauth2-metadata
+  name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns 404 on every Keap host (well-known/infusionsoft-well-known.yml)
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: No openIdConnect securityScheme in any spec; /.well-known/openid-configuration 404s on every
+    host
+- id: rest-hooks
+  name: REST Hooks subscription webhook pattern
+  conforms: true
+  evidence: 8 subscription operations under /rest/v1/hooks with Unverified/Verified/Inactive lifecycle
+    - https://developer.keap.com/rest-hook-documentation/
+- id: webhook-signing
+  name: Signed webhook delivery (HMAC or similar)
+  conforms: false
+  evidence: No signature header documented in the REST Hooks reference
+- id: rfc9457
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence: No application/problem+json media type in v1, v2 or the Pipelines spec; v2 uses a Google-style
+    {code,message,status,details} envelope
+- id: rfc8594
+  name: RFC 8594 Sunset / Deprecation headers
+  conforms: false
+  evidence: No Sunset or Deprecation response headers documented; XML-RPC is marked deprecated in prose
+    with no date
+- id: idempotency
+  name: Idempotency keys on unsafe methods
+  conforms: false
+  evidence: No parameter matching /idempot/ across 585 operations in the three specs
+- id: pagination
+  name: Documented pagination
+  conforms: true
+  evidence: v1 offset/limit; v2 opaque page_token/page_size cursors with next_page_token on 57 operations
+- id: ratelimit-headers
+  name: RateLimit header fields (IETF draft) / Retry-After
+  conforms: false
+  evidence: Keap returns proprietary x-keap-product-quota-* / x-keap-product-throttle-* / x-keap-tenant-throttle-*
+    headers instead; no Retry-After documented
+- id: openapi
+  name: OpenAPI 3.x machine-readable contract
+  conforms: true
+  evidence: OpenAPI 3.1.0 served live for v1 and v2 at https://crm.infusionsoft.com/app/v3/api-docs/{V1,V2};
+    OpenAPI 3.0.1 for the Pipelines API
+- id: asyncapi
+  name: AsyncAPI event contract
+  conforms: false
+  evidence: No AsyncAPI document published; the event surface is documented in prose only
+- id: hipaa
+  name: HIPAA - Business Associate Agreement offered
+  conforms: true
+  evidence: https://keap.com/legal/keap-crm-business-associate-agreement-baa (HTTP 200, 2026-08-13)
+- id: tcpa-sms
+  name: SMS / messaging compliance policy published
+  conforms: true
+  evidence: https://keap.com/legal/sms-compliance
+- id: soc2
+  name: SOC 2
+  conforms: false
+  evidence: No SOC 2 report or attestation published on keap.com or thryv.com; keap.com/security and thryv.com/security
+    both 404
+- id: iso27001
+  name: ISO/IEC 27001
+  conforms: false
+  evidence: No certification published
+- id: pci-dss
+  name: PCI DSS
+  conforms: false
+  evidence: Keap Pay processes cards but no PCI attestation or AOC is published; only a processing agreement
+    at keap.com/legal/keap-pay-processing-agreement
+- id: gdpr
+  name: GDPR / privacy policy published
+  conforms: true
+  evidence: https://www.thryv.com/privacy/ and https://keap.com/legal/privacy-choices
+compliance_programs:
+- name: HIPAA Business Associate Agreement
+  url: https://keap.com/legal/keap-crm-business-associate-agreement-baa
+  status: published
+- name: SMS compliance policy
+  url: https://keap.com/legal/sms-compliance
+  status: published
+- name: PGP key for encrypted data migration
+  url: https://keap.com/legal/pgp-key
+  resolves_to: https://www.thryv.com/policies/pgp-key/
+  status: published
+  note: RSA-4096 key CB6C C91C F5A5 80DB 23FF 42A5 4BBB 5A40 953D D6E8, expires 2027-08-06. Scoped to
+    encrypting sensitive data (e.g. card data) for MIGRATION into Thryv - it is explicitly NOT a security-reporting
+    or vulnerability-disclosure contact, and is recorded here so it is not mistaken for one.
+certifications: []

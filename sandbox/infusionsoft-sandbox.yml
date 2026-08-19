@@ -1,0 +1,30 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.keap.com/resources/sandbox-application/
+docs: https://developer.keap.com/resources/sandbox-application/
+signup: https://sandbox.keap.com/
+note: 'Keap runs a real free sandbox tenant programme rather than a test-mode key prefix. There is no
+  separate sandbox HOST and no test/live key prefix pair: a sandbox application is a normal Keap tenant
+  with restricted capacity, reached over the same api.infusionsoft.com / api.keap.com base URLs with credentials
+  issued for that tenant. That means an integration cannot tell test from live from the token or the URL
+  - it is distinguished only by which application instance the credentials belong to.'
+model: separate free tenant (sandbox application), same API hosts and same OAuth flow
+test_key_prefixes: null
+test_mode_flag: null
+limits:
+- name: user licenses
+  value: 3
+- name: contacts
+  value: 250
+- name: emails per month
+  value: 250
+- name: fax
+  value: available with a credit card on file, billed $0.15 per fax sent
+lifecycle_policy: Keap periodically disables inactive sandbox applications, giving owners two weeks notice
+  and a form to request retention.
+test_data:
+  test_cards: null
+  test_bank_accounts: null
+  time_simulation: null
+  note: Keap publishes no test card numbers, test bank accounts, magic identifiers, or time/clock simulation
+    tooling. Sandbox testing uses ordinary data entered into the sandbox tenant.

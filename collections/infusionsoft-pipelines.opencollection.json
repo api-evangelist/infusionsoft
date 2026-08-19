@@ -1,0 +1,1354 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SLAAPI",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Custom Fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves a list of custom fields in a tenant.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/customFields",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of custom fields in a tenant."
+        },
+        {
+          "info": {
+            "name": "Creates a new custom field.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/customFields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new custom field."
+        },
+        {
+          "info": {
+            "name": "Updates a custom field",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.infusionsoft.com/v2/customFields/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the identifier of the custom field to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a custom field"
+        },
+        {
+          "info": {
+            "name": "Deletes a custom field",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.infusionsoft.com/v2/customFields/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the identifier of the custom field to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a custom field"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DateExpression",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "queryDateExpressions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/dateExpressions",
+            "params": [
+              {
+                "name": "time_zone",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists entities based on the provided ListCommand.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/deals",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists entities based on the provided ListCommand."
+        },
+        {
+          "info": {
+            "name": "Creates a new entity.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/deals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new entity."
+        },
+        {
+          "info": {
+            "name": "Retrieves a list of deals by their IDs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/deals/-/bulk",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "the deal IDs to list"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a list of deals by their IDs."
+        },
+        {
+          "info": {
+            "name": "Deletes a list of deals by their IDs.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.infusionsoft.com/v2/deals/-/bulk",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "each ID of each deal to delete"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a list of deals by their IDs."
+        },
+        {
+          "info": {
+            "name": "Lists all deals associated with a specific contact.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/deals/-/contacts/:contact_id",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "the contact ID to list deals for"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all deals associated with a specific contact."
+        },
+        {
+          "info": {
+            "name": "Creates new notes in bulk.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/deals/-/notes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates new notes in bulk."
+        },
+        {
+          "info": {
+            "name": "Retrieves a specific deal note by its ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/deals/-/notes/:note_id",
+            "params": [
+              {
+                "name": "note_id",
+                "value": "",
+                "type": "path",
+                "description": "the ID of the note to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a specific deal note by its ID."
+        },
+        {
+          "info": {
+            "name": "Updates a specific deal note by its ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.infusionsoft.com/v2/deals/-/notes/:note_id",
+            "params": [
+              {
+                "name": "note_id",
+                "value": "",
+                "type": "path",
+                "description": "the ID of the note to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a specific deal note by its ID."
+        },
+        {
+          "info": {
+            "name": "Deletes a specific deal note by its ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.infusionsoft.com/v2/deals/-/notes/:note_id",
+            "params": [
+              {
+                "name": "note_id",
+                "value": "",
+                "type": "path",
+                "description": "the ID of the note to delete"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a specific deal note by its ID."
+        },
+        {
+          "info": {
+            "name": "Creates multiple deals in bulk.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/deals/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates multiple deals in bulk."
+        },
+        {
+          "info": {
+            "name": "Moves the active deals of specified contacts from one stage to another, in bulk.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/deals/moveByContactIds",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Moves the active deals of specified contacts from one stage to another, in bulk."
+        },
+        {
+          "info": {
+            "name": "Retrieves an entity by its identifier.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/deals/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the entity identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves an entity by its identifier."
+        },
+        {
+          "info": {
+            "name": "Updates an existing entity.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.infusionsoft.com/v2/deals/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the entity identifier"
+              },
+              {
+                "name": "update_mask",
+                "value": "",
+                "type": "query",
+                "description": "the fields to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing entity."
+        },
+        {
+          "info": {
+            "name": "Deletes an entity by its identifier.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.infusionsoft.com/v2/deals/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the entity identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an entity by its identifier."
+        },
+        {
+          "info": {
+            "name": "Validates the custom fields in a Deal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/deals/:id/customFields:validate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the ID of the deal to move"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Validates the custom fields in a Deal."
+        },
+        {
+          "info": {
+            "name": "Lists all notes associated with a specific deal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/deals/:id/notes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the deal ID to list notes for"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all notes associated with a specific deal."
+        },
+        {
+          "info": {
+            "name": "Creates a new note for a specific deal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/deals/:id/notes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the deal ID to associate the new note with"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new note for a specific deal."
+        },
+        {
+          "info": {
+            "name": "Retrieves the count of deals based on the specified filter criteria.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/deals/:id:count",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the deal IDs to list"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the count of deals based on the specified filter criteria."
+        },
+        {
+          "info": {
+            "name": "Moves the specified deal to a specified stage.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/deals/:id:move",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the ID of the deal to move"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Moves the specified deal to a specified stage."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pipelines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists entities based on the provided ListCommand.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/pipelines",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists entities based on the provided ListCommand."
+        },
+        {
+          "info": {
+            "name": "Creates a new entity.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/pipelines",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new entity."
+        },
+        {
+          "info": {
+            "name": "Retrieves a list of pipeline summaries.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/pipelines/summaries",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a list of pipeline summaries."
+        },
+        {
+          "info": {
+            "name": "Retrieves an entity by its identifier.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the entity identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves an entity by its identifier."
+        },
+        {
+          "info": {
+            "name": "Updates an existing entity.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the entity identifier"
+              },
+              {
+                "name": "update_mask",
+                "value": "",
+                "type": "query",
+                "description": "the fields to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing entity."
+        },
+        {
+          "info": {
+            "name": "Deletes a pipeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id",
+            "params": [
+              {
+                "name": "new_stage_id",
+                "value": "",
+                "type": "query",
+                "description": "the new stage identifier, can be null"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the pipeline identifier"
+              },
+              {
+                "name": "allow_cleanup",
+                "value": "",
+                "type": "query",
+                "description": "flag indicating whether cleanup is allowed, can be null"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a pipeline."
+        },
+        {
+          "info": {
+            "name": "Updates a pipeline's deals in bulk.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id/bulk",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the pipeline ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a pipeline's deals in bulk."
+        },
+        {
+          "info": {
+            "name": "Retrieves the list of deals for a specific pipeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id/deals",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the pipeline identifier"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the list of deals for a specific pipeline."
+        },
+        {
+          "info": {
+            "name": "Gets the outcome labels for a pipeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id/outcomes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the pipeline identifier"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the outcome labels for a pipeline."
+        },
+        {
+          "info": {
+            "name": "Sets the outcome labels for a pipeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id/outcomes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the pipeline identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sets the outcome labels for a pipeline."
+        },
+        {
+          "info": {
+            "name": "Retrieves a list of stages for a specific pipeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id/stages",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the pipeline identifier"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a list of stages for a specific pipeline."
+        },
+        {
+          "info": {
+            "name": "Retrieves the count of deals for a specific pipeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id:dealsCount",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the pipeline identifier"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves the count of deals for a specific pipeline."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Display Forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves a specific display form by a pipeline ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id/form",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the ID of the pipeline containing the form"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific display form by a pipeline ID."
+        },
+        {
+          "info": {
+            "name": "Updates a display form",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.infusionsoft.com/v2/pipelines/:id/form",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the ID of the pipeline containing the form"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a display form"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lists entities based on the provided ListCommand.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/stages",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists entities based on the provided ListCommand."
+        },
+        {
+          "info": {
+            "name": "Creates a new entity.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.infusionsoft.com/v2/stages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new entity."
+        },
+        {
+          "info": {
+            "name": "Retrieves an entity by its identifier.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/stages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the entity identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves an entity by its identifier."
+        },
+        {
+          "info": {
+            "name": "Updates an existing entity.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.infusionsoft.com/v2/stages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the entity identifier"
+              },
+              {
+                "name": "update_mask",
+                "value": "",
+                "type": "query",
+                "description": "the fields to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an existing entity."
+        },
+        {
+          "info": {
+            "name": "Deletes a stage by its identifier for a given tenant.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.infusionsoft.com/v2/stages/:id",
+            "params": [
+              {
+                "name": "new_stage_id",
+                "value": "",
+                "type": "query",
+                "description": "the new stage identifier, can be null"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the stage identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a stage by its identifier for a given tenant."
+        },
+        {
+          "info": {
+            "name": "Counts the number of deals in a specific stage.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/stages/:id/dealCount",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the stage identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Counts the number of deals in a specific stage."
+        },
+        {
+          "info": {
+            "name": "Retrieves a list of deals for a specific stage.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.infusionsoft.com/v2/stages/:id/deals",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the stage identifier"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieves a list of deals for a specific stage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

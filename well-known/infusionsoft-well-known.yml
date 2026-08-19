@@ -1,0 +1,166 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTPS probes of every apis.yml baseURL host, every OpenAPI servers[] host, and the docs/portal
+  hosts
+note: No /.well-known/ document is served anywhere on Keap infrastructure. Every path 404s on api.infusionsoft.com,
+  api.keap.com, developer.infusionsoft.com, developer.keap.com and keap.com. crm.infusionsoft.com returns
+  HTTP 200 for all of them, but the body is the SPA HTML shell in every case, which is a false positive
+  rather than a discovery document. No WellKnown, SecurityTxt or APICatalog pointer is emitted, because
+  none of these surfaces exists. Keap also has no OAuth authorization-server metadata document even though
+  it runs OAuth 2.0 - the endpoints are only documented in prose at developer.keap.com/getting-started-oauth-keys/.
+hosts_probed:
+- https://api.infusionsoft.com
+- https://developer.infusionsoft.com
+- https://keap.com
+- https://developer.keap.com
+- https://crm.infusionsoft.com
+- https://api.keap.com
+documents_found: 0
+documents:
+- host: https://api.infusionsoft.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://api.infusionsoft.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: https://api.infusionsoft.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: https://api.infusionsoft.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://api.infusionsoft.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://api.infusionsoft.com
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://api.infusionsoft.com
+  path: /.well-known/agent.json
+  status: 404
+- host: https://developer.infusionsoft.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://developer.infusionsoft.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: https://developer.infusionsoft.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: https://developer.infusionsoft.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://developer.infusionsoft.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://developer.infusionsoft.com
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://developer.infusionsoft.com
+  path: /.well-known/agent.json
+  status: 404
+- host: https://keap.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://keap.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: https://keap.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: https://keap.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://keap.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://keap.com
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://keap.com
+  path: /.well-known/agent.json
+  status: 404
+- host: https://developer.keap.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://developer.keap.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: https://developer.keap.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: https://developer.keap.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://developer.keap.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://developer.keap.com
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://developer.keap.com
+  path: /.well-known/agent.json
+  status: 404
+- host: https://crm.infusionsoft.com
+  path: /.well-known/security.txt
+  status: 200
+  result: html-shell
+  note: crm.infusionsoft.com is a single-page application whose catch-all route answers 200 with the app
+    HTML for every /.well-known/* path. This is NOT a served document and is recorded as a miss.
+- host: https://crm.infusionsoft.com
+  path: /.well-known/openid-configuration
+  status: 200
+  result: html-shell
+  note: crm.infusionsoft.com is a single-page application whose catch-all route answers 200 with the app
+    HTML for every /.well-known/* path. This is NOT a served document and is recorded as a miss.
+- host: https://crm.infusionsoft.com
+  path: /.well-known/oauth-authorization-server
+  status: 200
+  result: html-shell
+  note: crm.infusionsoft.com is a single-page application whose catch-all route answers 200 with the app
+    HTML for every /.well-known/* path. This is NOT a served document and is recorded as a miss.
+- host: https://crm.infusionsoft.com
+  path: /.well-known/api-catalog
+  status: 200
+  result: html-shell
+  note: crm.infusionsoft.com is a single-page application whose catch-all route answers 200 with the app
+    HTML for every /.well-known/* path. This is NOT a served document and is recorded as a miss.
+- host: https://crm.infusionsoft.com
+  path: /.well-known/ai-plugin.json
+  status: 200
+  result: html-shell
+  note: crm.infusionsoft.com is a single-page application whose catch-all route answers 200 with the app
+    HTML for every /.well-known/* path. This is NOT a served document and is recorded as a miss.
+- host: https://crm.infusionsoft.com
+  path: /.well-known/agent-card.json
+  status: 200
+  result: html-shell
+  note: crm.infusionsoft.com is a single-page application whose catch-all route answers 200 with the app
+    HTML for every /.well-known/* path. This is NOT a served document and is recorded as a miss.
+- host: https://crm.infusionsoft.com
+  path: /.well-known/agent.json
+  status: 200
+  result: html-shell
+  note: crm.infusionsoft.com is a single-page application whose catch-all route answers 200 with the app
+    HTML for every /.well-known/* path. This is NOT a served document and is recorded as a miss.
+- host: https://api.keap.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://api.keap.com
+  path: /.well-known/openid-configuration
+  status: 404
+- host: https://api.keap.com
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: https://api.keap.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://api.keap.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://api.keap.com
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://api.keap.com
+  path: /.well-known/agent.json
+  status: 404

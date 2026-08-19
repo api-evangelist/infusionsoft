@@ -1,0 +1,53 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements - Keap Pipelines (SLAAPI)
+  version: 1.0.0
+extends: ../openapi/infusionsoft-pipelines-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: Derived from repo artifacts and the ownership check recorded in apis.yml.
+actions:
+- target: $.info
+  description: Record provenance and resolve the host/brand confusion this spec creates.
+  update:
+    x-apievangelist:
+      profile: https://apis.io/provider/infusionsoft/
+      harvested: '2026-08-13'
+      source: https://slaapi.thryv-apis.com/swagger/swagger.yml
+      ownership: 'This is a Keap API despite being served from thryv-apis.com: Keap own developer portal loads it
+        as the Pipelines reference at developer.keap.com/docs/restv2Pipelines/, info.contact.email is gryffindor@keap.com,
+        and servers[] is https://api.infusionsoft.com. Thryv Holdings owns Keap, which is why the spec is hosted
+        on a Thryv domain and why the Keap v1/v2 specs point termsOfService at thryv.com.'
+      title_note: info.title is the internal service name SLAAPI (Service Level Aggregation API), not a product
+        name a developer would recognise. The product is Keap Pipelines / Deals.
+- target: $.info
+  description: Give the spec the product-facing title and description its own info block lacks.
+  update:
+    x-product:
+      name: Keap Pipelines
+      entity: Deal
+      docs: https://developer.keap.com/docs/restv2Pipelines/
+      note: Deals are the pipeline entity; they relate to contacts via /v2/deals/-/contacts/{contact_id} and carry
+        their own notes and custom fields.
+- target: $.info
+  description: Attach the quota contract and the conventions inherited from Keap v2.
+  update:
+    x-conventions:
+      pagination:
+        style: opaque cursor
+        params:
+        - page_token
+        - page_size
+      filtering:
+        param: filter
+      idempotency:
+        supported: false
+      rate_limits: Same gateway quotas as Keap v1/v2 - https://developer.keap.com/api-token-quota-and-usage-measurements/
+- target: $.info
+  description: Flag the missing error contract.
+  update:
+    x-errors:
+      declared_4xx_5xx: 0
+      note: This spec declares ONLY 200/201/204 across its 45 operations - no error responses at all, even though
+        the same gateway returns the Apigee 401 fault envelope and the documented 429. Treat errors/infusionsoft-problem-types.yml
+        as the error contract for this surface.

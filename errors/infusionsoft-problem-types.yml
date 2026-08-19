@@ -1,0 +1,114 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/infusionsoft-rest-v1-openapi.json, openapi/infusionsoft-rest-v2-openapi.json, live 401
+  probe of api.infusionsoft.com, https://developer.keap.com/api-token-quota-and-usage-measurements/
+format: vendor-specific (NOT RFC 9457) - no application/problem+json media type appears in any Keap spec
+note: 'Keap has THREE different error shapes depending on how far the request got. The Apigee gateway
+  rejects bad tokens before the API sees them and returns a fault envelope that appears in NO published
+  spec - observed live on 2026-08-13 as {"fault":{"faultstring":"Invalid access token","detail":{"errorcode":"oauth.v2.InvalidAccessToken"}}}
+  from both api.infusionsoft.com and api.keap.com. v1 documents a Spring ModelAndView body. v2 documents
+  a Google-style Error object. Keap publishes no error-code registry: the 4xx/5xx set is declared uniformly
+  on every operation with only the HTTP reason phrase as the description, so the catalogue below is the
+  complete published error semantics. 429 is documented in the quota guide but is declared on ZERO operations
+  in either spec, which is the single largest gap between the docs and the contract.'
+envelopes:
+- layer: gateway (Apigee)
+  applies_to: auth failures before routing
+  shape:
+    fault:
+      faultstring: string
+      detail:
+        errorcode: string
+  observed_example_codes:
+  - oauth.v2.InvalidAccessToken
+  method: probed
+  source: https://api.infusionsoft.com/crm/rest/v2/contacts (HTTP 401, 2026-08-13)
+- layer: REST v1
+  applies_to: all v1 4xx/5xx
+  shape: '#/components/schemas/ModelAndView'
+  source: openapi/infusionsoft-rest-v1-openapi.json
+- layer: REST v2
+  applies_to: all v2 4xx/5xx
+  shape:
+    code: integer
+    message: string
+    status: string
+    details:
+    - domain: string
+      resource: string
+  source: openapi/infusionsoft-rest-v2-openapi.json
+error_count: 11
+errors:
+- status: 400
+  title: Bad Request
+  v1_operations: 141
+  v2_operations: 399
+  documented_in_spec: true
+  remediation: Validate the request body against the operation schema; v2 returns details[] naming the
+    offending domain and resource.
+- status: 401
+  title: Unauthorized
+  v1_operations: 141
+  v2_operations: 399
+  documented_in_spec: true
+  remediation: Access token missing, malformed or expired. Refresh using the rotating refresh token, or
+    reissue the PAT/SAK. The gateway answers first with the Apigee fault envelope, not the API error envelope.
+- status: 403
+  title: Forbidden
+  v1_operations: 141
+  v2_operations: 399
+  documented_in_spec: true
+  remediation: The authenticated user or service account lacks permission for this object. A PAT inherits
+    the creating user visibility; a Service Account Key has admin access.
+- status: 404
+  title: Not Found
+  v1_operations: 141
+  v2_operations: 399
+  documented_in_spec: true
+  remediation: The id does not exist in this application instance. Ids are per-tenant.
+- status: 405
+  title: Method Not Allowed
+  v1_operations: 141
+  v2_operations: 399
+  documented_in_spec: true
+  remediation: The path exists but not for this verb - v2 uses colon-suffixed custom verbs on POST rather
+    than PUT/PATCH for actions.
+- status: 406
+  title: Not Acceptable
+  v1_operations: 141
+  v2_operations: 0
+  documented_in_spec: true
+  remediation: 'Set Accept: application/json.'
+- status: 409
+  title: Conflict
+  v1_operations: 141
+  v2_operations: 399
+  documented_in_spec: true
+  remediation: Conflicting state, e.g. merging or linking contacts that are already linked. Keap has no
+    idempotency key, so a retried create that conflicts must be reconciled by reading first.
+- status: 412
+  title: Precondition Failed
+  v1_operations: 141
+  v2_operations: 0
+  documented_in_spec: true
+  remediation: A precondition on the request was not met.
+- status: 429
+  title: Too Many Requests
+  v1_operations: 0
+  v2_operations: 0
+  documented_in_spec: false
+  remediation: Rate or quota limit exhausted. Read the x-keap-product-throttle-* and x-keap-product-quota-*
+    headers and back off exponentially with jitter.
+- status: 500
+  title: Internal Server Error
+  v1_operations: 141
+  v2_operations: 399
+  documented_in_spec: true
+  remediation: Server error. Safe to retry idempotent GETs; unsafe to blind-retry POSTs because Keap provides
+    no idempotency key.
+- status: 501
+  title: Not Implemented
+  v1_operations: 141
+  v2_operations: 399
+  documented_in_spec: true
+  remediation: Operation not implemented on this application instance.

@@ -1,0 +1,74 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements - Keap REST API v1
+  version: 1.0.0
+extends: ../openapi/infusionsoft-rest-v1-openapi.json
+x-generated: '2026-08-13'
+x-method: generated
+x-source: 'Derived from repo artifacts: rate-limits/, authentication/, scopes/, conventions/, errors/, lifecycle/,
+  asyncapi/.'
+actions:
+- target: $.info
+  description: Record the API Evangelist provenance and the runtime facts the published spec omits.
+  update:
+    x-apievangelist:
+      profile: https://apis.io/provider/infusionsoft/
+      harvested: '2026-08-13'
+      source: https://crm.infusionsoft.com/app/v3/api-docs/V1
+      note: Overlay of API Evangelist enhancements. The original document is unmodified in openapi/_original/.
+- target: $.info
+  description: Mark the lifecycle position of v1 relative to v2.
+  update:
+    x-lifecycle:
+      status: current
+      successor: REST v2
+      successor_docs: https://developer.keap.com/docs/restv2/
+      note: Labelled Current (not Default) in the Keap developer guide. v1 remains the ONLY place REST Hooks are
+        managed, so a v2-based integration still needs v1 for events.
+- target: $.info
+  description: Attach the same published quota contract; it is enforced at the gateway across both versions.
+  update:
+    x-rate-limits:
+      docs: https://developer.keap.com/api-token-quota-and-usage-measurements/
+      status: 429
+      headers:
+      - x-keap-product-quota-limit
+      - x-keap-product-throttle-limit
+      - x-keap-tenant-throttle-limit
+- target: $.info
+  description: Record the v1 conventions, which differ from v2 in every respect.
+  update:
+    x-conventions:
+      pagination:
+        style: offset/limit
+        params:
+        - offset
+        - limit
+      filtering:
+        params:
+        - since
+        - order
+        - order_direction
+      sparse_fields:
+        supported: false
+      idempotency:
+        supported: false
+      error_envelope: ModelAndView (Spring)
+- target: $.info
+  description: Document the event surface that this spec carries but does not explain.
+  update:
+    x-events:
+      style: REST Hooks
+      subscribe: POST /rest/v1/hooks
+      activate: POST /rest/v1/hooks/{key}/verify
+      catalog: GET /rest/v1/hooks/event_keys (authenticated)
+      retries: 4
+      batched: true
+      max_objects_per_event: 1000
+      signed_deliveries: false
+      docs: https://developer.keap.com/rest-hook-documentation/
+- target: $.components.securitySchemes.oauth2.flows.authorizationCode
+  description: Declare the single valid scope value.
+  update:
+    scopes:
+      full: Complete read and write access to the authorising Keap application.

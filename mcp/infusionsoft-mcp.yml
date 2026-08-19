@@ -1,0 +1,102 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/infusionsoft-rest-v2-openapi.json + npm registry search for "keap" and "infusionsoft"
+  MCP servers
+status: candidate
+note: 'Keap publishes NO Model Context Protocol server. Searched the npm registry, the infusionsoft GitHub
+  organisation (12 public repos, none MCP), and the whole developer portal (developer.keap.com developer
+  guide, resources, helper libraries, FAQs) on 2026-08-13 - MCP is not mentioned anywhere. The one npm
+  package named keap-mcp-server (1.0.2, 2026-02-15) is published by a third party, github.com/mrgizmo212/keap-mcp-server,
+  and is NOT first-party; it is recorded here as ecosystem context only and is deliberately not treated
+  as a Keap agent surface. The tools below are a CANDIDATE set derived from real operationIds in Keap
+  REST v2 - nobody ships them. NO MCPServer pointer is emitted in apis.yml, deliberately: the pointer
+  asserts that the PROVIDER ships an agent surface, and Keap does not. This file records the absence and
+  holds a candidate tool set for whenever Keap (or an integrator) builds one.'
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+third_party_servers:
+- name: keap-mcp-server
+  registry: npm
+  version: 1.0.2
+  published: '2026-02-15'
+  repo: https://github.com/mrgizmo212/keap-mcp-server
+  official: false
+tools:
+- name: keap_list_contacts
+  description: List contacts in the Keap CRM, with filter and page_token paging.
+  rest: listContacts
+  method: GET
+  path: /rest/v2/contacts
+- name: keap_get_contact
+  description: Retrieve one contact by id.
+  rest: getContact
+  method: GET
+  path: /rest/v2/contacts/{contact_id}
+- name: keap_create_contact
+  description: Create a contact.
+  rest: createContact
+  method: POST
+  path: /rest/v2/contacts
+- name: keap_update_contact
+  description: Partially update a contact.
+  rest: updateContact
+  method: PATCH
+  path: /rest/v2/contacts/{contact_id}
+- name: keap_apply_tag
+  description: Apply a tag to one or more contacts.
+  rest: applyTags
+  method: POST
+  path: /rest/v2/tags/{tag_id}/contacts:applyTags
+- name: keap_remove_tag
+  description: Remove a tag from one or more contacts.
+  rest: removeTags
+  method: POST
+  path: /rest/v2/tags/{tag_id}/contacts:removeTags
+- name: keap_list_tags
+  description: List tags available in the account.
+  rest: listTags
+  method: GET
+  path: /rest/v2/tags
+- name: keap_achieve_goal
+  description: Trigger an automation goal for a contact, the primary way to start a Keap campaign from
+    outside.
+  rest: achieveGoal
+  method: POST
+  path: /rest/v2/automations/goals/achieve
+- name: keap_add_contacts_to_sequence
+  description: Add contacts to an automation sequence.
+  rest: addContactsToAutomationSequence
+  method: POST
+  path: /rest/v2/automations/{automation_id}/sequences/{sequence_id}:addContacts
+- name: keap_list_opportunities
+  description: List sales opportunities.
+  rest: listOpportunities
+  method: GET
+  path: /rest/v2/opportunities
+- name: keap_create_opportunity
+  description: Create a sales opportunity.
+  rest: createOpportunity
+  method: POST
+  path: /rest/v2/opportunities
+- name: keap_list_orders
+  description: List e-commerce orders.
+  rest: listOrders
+  method: GET
+  path: /rest/v2/orders
+- name: keap_create_order
+  description: Create an order.
+  rest: createOrder
+  method: POST
+  path: /rest/v2/orders
+- name: keap_send_email
+  description: Send a one-off email to a contact and record it.
+  rest: sendEmail
+  method: POST
+  path: /rest/v2/emails:send
+- name: keap_list_subscriptions
+  description: List recurring subscriptions.
+  rest: listSubscriptions
+  method: GET
+  path: /rest/v2/subscriptions

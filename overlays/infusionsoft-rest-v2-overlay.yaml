@@ -1,0 +1,114 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements - Keap REST API v2
+  version: 1.0.0
+extends: ../openapi/infusionsoft-rest-v2-openapi.json
+x-generated: '2026-08-13'
+x-method: generated
+x-source: 'Derived from repo artifacts: rate-limits/, authentication/, scopes/, conventions/, errors/, lifecycle/,
+  asyncapi/.'
+actions:
+- target: $.info
+  description: Record the API Evangelist provenance and the runtime facts the published spec omits.
+  update:
+    x-apievangelist:
+      profile: https://apis.io/provider/infusionsoft/
+      harvested: '2026-08-13'
+      source: https://crm.infusionsoft.com/app/v3/api-docs/V2
+      note: Overlay of API Evangelist enhancements. The original document is unmodified in openapi/_original/.
+- target: $.info
+  description: Attach the published rate-limit and quota contract, which the spec does not declare anywhere.
+  update:
+    x-rate-limits:
+      docs: https://developer.keap.com/api-token-quota-and-usage-measurements/
+      oauth2:
+        per_minute: 1500
+        per_day: 150000
+      pat_sak:
+        per_second: 10
+        per_minute: 240
+        per_day: 30000
+      application_instance:
+        per_minute: 10000
+        per_day: 250000
+        effective: '2026-06-08'
+      spike_arrest_per_second: 25
+      status: 429
+      headers:
+      - x-keap-product-quota-limit
+      - x-keap-product-quota-available
+      - x-keap-product-quota-used
+      - x-keap-product-quota-expiry-time
+      - x-keap-product-throttle-limit
+      - x-keap-product-throttle-available
+      - x-keap-product-throttle-used
+      - x-keap-tenant-throttle-limit
+      - x-keap-tenant-throttle-available
+      - x-keap-tenant-throttle-used
+      note: 429 is not declared on ANY of the 399 operations in the source spec, though the docs describe it in
+        detail.
+- target: $.info
+  description: State the authentication reality the single oauth2 scheme hides.
+  update:
+    x-authentication:
+      credential_types:
+      - oauth2 authorization_code
+      - Personal Access Token
+      - Service Account Key
+      presentation: 'Authorization: Bearer <token> for all three'
+      granular_scopes: false
+      only_scope: full
+      refresh_token_rotation: true
+      docs:
+      - https://developer.keap.com/getting-started-oauth-keys/
+      - https://developer.keap.com/pat-and-sak/
+- target: $.components.securitySchemes.oauth2.flows.authorizationCode
+  description: Declare the single valid scope value, which the source spec leaves as an empty object.
+  update:
+    scopes:
+      full: Complete read and write access to the authorising Keap application. Keap accepts no other scope value.
+- target: $.info
+  description: Record the conventions an agent must follow and the guarantee it must not assume.
+  update:
+    x-conventions:
+      pagination:
+        style: opaque cursor
+        params:
+        - page_token
+        - page_size
+        response: next_page_token
+      filtering:
+        param: filter
+      sparse_fields:
+        param: fields
+      custom_verbs: colon-suffixed POST actions, e.g. /rest/v2/contacts:merge and /rest/v2/tags/{tag_id}/contacts:applyTags
+      custom_fields: read /rest/v2/{entity}/model first - custom field ids are per-tenant
+      idempotency:
+        supported: false
+        note: No idempotency key exists. Retrying a create after a timeout duplicates the record.
+      error_envelope:
+        code: integer
+        message: string
+        status: string
+        details:
+        - domain: string
+          resource: string
+      gateway_error_envelope: '{"fault":{"faultstring":"...","detail":{"errorcode":"..."}}} - returned by the Apigee
+        gateway on auth failure and documented in no spec'
+- target: $.info
+  description: Point at the event surface, which lives entirely in v1.
+  update:
+    x-events:
+      style: REST Hooks
+      location: REST v1 only - /rest/v1/hooks
+      operations_in_v2: 0
+      docs: https://developer.keap.com/rest-hook-documentation/
+      signed_deliveries: false
+- target: $.servers
+  description: Record the second production host Keap serves the same API on.
+  update:
+  - url: https://api.infusionsoft.com/crm
+    description: Primary host, used by the live api-docs.
+  - url: https://api.keap.com/crm
+    description: Equivalent host; the servers[] value in the SDK-repo copy of this spec. Verified live 2026-08-13
+      (401 on an unauthenticated /crm/rest/v2/contacts, i.e. routed and authenticating).

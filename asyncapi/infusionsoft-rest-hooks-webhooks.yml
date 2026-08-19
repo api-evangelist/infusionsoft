@@ -1,0 +1,105 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.keap.com/rest-hook-documentation/ + openapi/infusionsoft-rest-v1-openapi.json
+  (REST Hooks tag)
+docs: https://developer.keap.com/rest-hook-documentation/
+style: REST Hooks (subscription webhooks managed as a REST resource)
+asyncapi_published: false
+note: Keap publishes no AsyncAPI. Its event surface is REST Hooks, and it lives ONLY on REST v1 - there
+  are eight hook operations under /rest/v1/hooks and zero hook operations anywhere in the 399-operation
+  v2 spec. An integration on v2 must still reach back into v1 to subscribe to events. The event key catalogue
+  is not published as a static list; it is retrieved at runtime from GET /rest/v1/hooks/event_keys, which
+  requires authentication, so only the two event keys named in the docs are recorded here as verified
+  examples rather than a complete enumeration.
+subscription_api:
+  base: https://api.infusionsoft.com/crm/rest/v1
+  spec: openapi/infusionsoft-rest-v1-openapi.json
+  operations:
+  - operationId: list_hook_event_types
+    method: GET
+    path: /rest/v1/hooks/event_keys
+    purpose: Retrieve the live catalogue of subscribable event keys for this application instance.
+  - operationId: create_a_hook_subscription
+    method: POST
+    path: /rest/v1/hooks
+    purpose: Subscribe a hookUrl to an eventKey. Body is {eventKey, hookUrl}.
+  - operationId: list_stored_hook_subscriptions
+    method: GET
+    path: /rest/v1/hooks
+    purpose: List current subscriptions.
+  - operationId: retrieve_a_hook_subscription
+    method: GET
+    path: /rest/v1/hooks/{key}
+    purpose: Read one subscription.
+  - operationId: update_a_hook_subscription
+    method: PUT
+    path: /rest/v1/hooks/{key}
+    purpose: Change the eventKey or hookUrl of a subscription.
+  - operationId: delete_a_hook_subscription
+    method: DELETE
+    path: /rest/v1/hooks/{key}
+    purpose: Unsubscribe.
+  - operationId: verify_a_hook_subscription
+    method: POST
+    path: /rest/v1/hooks/{key}/verify
+    purpose: Activate a subscription, or reactivate one Keap marked Inactive after four failed deliveries.
+  - operationId: verify_a_hook_subscription_delayed
+    method: POST
+    path: /rest/v1/hooks/{key}/delayedVerify
+    purpose: Delayed variant of the verification handshake.
+subscription_model:
+  schema:
+    key: string
+    eventKey: string
+    hookUrl: string
+    status: Unverified | Verified | Inactive
+  source: '#/components/schemas/RestHook in openapi/infusionsoft-rest-v1-openapi.json'
+  note: Events are delivered ONLY while status is Verified.
+delivery:
+  batched: true
+  max_objects_per_event: 1000
+  payload:
+    event_key: <event key>
+    object_type: <resource name>
+    object_keys:
+    - id: <resource object id>
+      apiUrl: <REST API URL for the resource, may be present>
+      timestamp: <event timestamp>
+  note: The payload carries ids and a fetch URL, not the changed object - the receiver must call back
+    into the REST API to read state.
+retries:
+  attempts: 4
+  schedule:
+  - attempt: 1
+    delay: 30-60 seconds after the originating change (5-10 minutes for contactGroup.applied and contactGroup.delete)
+  - attempt: 2
+    delay: 30-60 seconds after the prior failure
+  - attempt: 3
+    delay: 5 minutes after the prior failure
+  - attempt: 4
+    delay: 30 minutes after the prior failure
+  failure_conditions:
+  - receiver does not respond within 30 seconds
+  - receiver responds with a status code <200 or >=400, except 410
+  terminal: After a fourth failure the subscription is marked Inactive and must be reactivated via /verify.
+    A 410 from the receiver marks the subscription Inactive immediately.
+security:
+  signing: false
+  shared_secret: false
+  note: Keap documents no HMAC signature header, no X-Hook-Secret handshake and no shared secret on delivery.
+    Receiver authenticity rests on the /verify handshake and the secrecy of the hookUrl alone - a receiver
+    cannot cryptographically verify that a delivery came from Keap.
+events:
+- event_key: contactGroup.applied
+  object_type: contactGroup
+  verified: true
+  source: https://developer.keap.com/rest-hook-documentation/
+  note: Named in the retry policy as having a 5-10 minute first-attempt window.
+- event_key: contactGroup.delete
+  object_type: contactGroup
+  verified: true
+  source: https://developer.keap.com/rest-hook-documentation/
+  note: Named in the retry policy as having a 5-10 minute first-attempt window.
+event_key_naming: resource.action
+event_catalog_complete: false
+event_catalog_source: GET /rest/v1/hooks/event_keys (authenticated)

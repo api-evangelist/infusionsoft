@@ -1,0 +1,38 @@
+generated: '2026-08-13'
+method: searched
+source: https://keap.com/pricing
+docs: https://keap.com/pricing
+note: 'Keap consolidated to a single platform plan. The published price is for 2 users at a base contact
+  tier; contact volume is selected on the page and re-prices the plan, so the ceiling is not a fixed published
+  number. API and webhook access is a listed feature of the plan - there is no separate API SKU and no
+  metered API pricing. The developer program itself is free (developer.keap.com/faqs/cost-become-developer-partner/):
+  API access requires a Keap subscription or a free developer sandbox, not an API purchase.'
+plan_count: 1
+currency: USD
+api_access_model: included in the platform subscription; no separate API plan, no per-call pricing
+plans:
+- name: Keap
+  price_monthly: 299
+  price_annual: 2988
+  currency: USD
+  billing_period: monthly or annual
+  included_users: 2
+  additional_user:
+    price: 39
+    period: month
+  included_contacts: selected on the pricing page; base tier priced at the published figure
+  overage: Additional contacts are priced in volume tiers, with per-contact cost falling as volume rises.
+  api_included: true
+  features_relevant_to_api:
+  - API & webhooks
+  - Native Zapier integration
+add_ons:
+- name: Text marketing
+  tiers: 6
+  price_range: included with subscription up to $279/month
+  currency: USD
+free_tier:
+  name: Developer sandbox
+  price: 0
+  source: https://developer.keap.com/resources/sandbox-application/
+  note: 3 users, 250 contacts, 250 emails/month; fax use billed at $0.15 per fax.

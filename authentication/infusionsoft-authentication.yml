@@ -1,0 +1,77 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.keap.com/getting-started-oauth-keys/, https://developer.keap.com/pat-and-sak/,
+  https://developer.keap.com/faqs/can-use-api-key/, openapi/infusionsoft-rest-v1-openapi.json, openapi/infusionsoft-rest-v2-openapi.json,
+  openapi/infusionsoft-pipelines-openapi.yml
+docs: https://developer.keap.com/getting-started-oauth-keys/
+note: 'The OpenAPI under-describes Keap authentication. All three specs declare only an oauth2 authorizationCode
+  scheme, but Keap actually supports THREE credential types in production: OAuth 2.0 user-authorized tokens,
+  Personal Access Tokens, and Service Account Keys. All three are presented identically as `Authorization:
+  Bearer <token>`, so a server cannot tell them apart from the header - only the rate limits and the permission
+  model differ. Legacy Infusionsoft API keys are retired and no longer accepted. The Pipelines spec is
+  the only one that names a second scheme (BearerAuth) alongside oauth2.'
+summary:
+  types:
+  - oauth2
+  - bearer
+  oauth2_flows:
+  - authorizationCode
+  credential_types: 3
+schemes:
+- name: oauth2
+  type: oauth2
+  flow: authorizationCode
+  authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+  tokenUrl: https://api.infusionsoft.com/token
+  token_endpoint_auth: HTTP Basic - base64(client_id:client_secret)
+  authorize_params:
+    client_id: from the developer portal at https://keys.developer.keap.com
+    redirect_uri: must be HTTPS
+    response_type: code
+    scope: full (the only valid value)
+  token_request: POST application/x-www-form-urlencoded with client_id, client_secret, code, grant_type=authorization_code,
+    redirect_uri
+  refresh:
+    supported: true
+    rotating: true
+    note: Each refresh returns a NEW refresh token; the old one is discarded and the new one must be persisted
+      or the integration will lock itself out.
+  access_token_lifetime: communicated per-response in expires_in; no fixed value published
+  presentation: 'Authorization: Bearer <access_token>'
+  sources:
+  - openapi/infusionsoft-rest-v1-openapi.json
+  - openapi/infusionsoft-rest-v2-openapi.json
+  - openapi/infusionsoft-pipelines-openapi.yml
+  - https://developer.keap.com/getting-started-oauth-keys/
+- name: Personal Access Token (PAT)
+  type: http
+  scheme: bearer
+  presentation: 'Authorization: Bearer <token>'
+  prefix: null
+  created_by: any app user, from API Settings (Settings menu in Keap, Profile menu in Keap Classic)
+  permission_model: runs under the creating user context, with that user visibility and editing permissions
+  scope: a single Keap application
+  expiry: none published
+  revocation: delete the key in API Settings
+  rate_limits: 10/sec, 240/min, 30,000/day per key
+  source: https://developer.keap.com/pat-and-sak/
+- name: Service Account Key (SAK)
+  type: http
+  scheme: bearer
+  presentation: 'Authorization: Bearer <token>'
+  prefix: null
+  created_by: administrators only
+  permission_model: admin access to ALL stored data in the application - there is no way to narrow it
+  scope: a single Keap application
+  expiry: none published
+  rate_limits: 10/sec, 240/min, 30,000/day per key
+  source: https://developer.keap.com/pat-and-sak/
+retired:
+- name: Legacy Infusionsoft API key
+  status: retired
+  note: Keap states API keys are no longer supported and OAuth 2.0 (or PAT/SAK) is mandatory - https://developer.keap.com/faqs/can-use-api-key/
+scopes:
+  granular: false
+  see: scopes/infusionsoft-scopes.yml
+mtls: false
+openid_connect: false

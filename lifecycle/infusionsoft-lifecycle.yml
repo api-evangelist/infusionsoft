@@ -1,0 +1,51 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.keap.com/developer-guide/ + https://developer.keap.com/docs/xml-rpc/ + https://status.thryv.com/
+note: 'Keap runs three concurrent API generations and labels their status in the developer guide, but
+  publishes no dated deprecation policy, no sunset schedule, and no Deprecation/Sunset response headers
+  (RFC 8594). XML-RPC is marked Deprecated with no stated end-of-life date, which is the weakest form
+  of a deprecation signal: consumers are told the surface is going away but not when. The status page
+  is Thryv-branded because Thryv Holdings acquired Keap; Keap components are listed on it.'
+versioning:
+  scheme: path-based major version under /crm/rest/{v1,v2}
+  current: v2
+  header_negotiation: null
+  versions:
+  - name: REST v2
+    status: default
+    docs: https://developer.keap.com/docs/restv2/
+    spec_version: v2
+    base: https://api.infusionsoft.com/crm/rest/v2
+  - name: REST v1
+    status: current
+    docs: https://developer.keap.com/docs/rest/
+    spec_version: v1
+    base: https://api.infusionsoft.com/crm/rest/v1
+  - name: XML-RPC
+    status: deprecated
+    docs: https://developer.keap.com/docs/xml-rpc/
+    sunset_date: null
+    note: Labelled Deprecated in the developer guide. No sunset date published.
+deprecation_policy:
+  published: true
+  url: https://developer.keap.com/developer-guide/
+  form: prose status labels only (Default / Current / Deprecated)
+  sunset_headers: false
+  deprecation_header: false
+  notice_period: null
+  note: 'No RFC 8594 Sunset or Deprecation headers are documented or returned; no notice window is stated.
+    Field-level deprecation IS expressed in the OpenAPI - v2 marks individual properties with `deprecated:
+    true` (for example the commission `percentage` fields) - so the machine-readable deprecation signal
+    exists at the schema level but not at the operation or version level.'
+status_page:
+  url: https://status.keap.com/
+  resolves_to: https://status.thryv.com/
+  platform: Atlassian Statuspage
+  api: https://status.thryv.com/api/v2/summary.json
+  subscribe: true
+  note: status.keap.com 301s to the Thryv status page, which exposes the standard Statuspage JSON API
+    (summary.json / components.json returned HTTP 200 on 2026-08-13).
+sla:
+  published: false
+  note: No public SLA document found on keap.com or developer.keap.com.
+deprecated_operations: []

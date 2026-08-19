@@ -1,0 +1,179 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/infusionsoft-rest-v2-openapi.json, openapi/infusionsoft-rest-v1-openapi.json, openapi/infusionsoft-pipelines-openapi.yml
+note: 'Contact is the hub of the Keap model - opportunities, orders, subscriptions, notes, tasks, emails
+  and deals all hang off it, and tags are the many-to-many labelling layer over contacts and companies.
+  The most important structural fact for an integrator is that EVERY major entity carries a per-tenant
+  custom-field model: Contact, Company, Order, Opportunity and Subscription each expose /model plus customFields,
+  customFields/tabs and customFields/groups sub-resources. Custom field ids are not portable between Keap
+  application instances, so an agent must read the model endpoint before writing custom data. Ids are
+  plain integers/strings with no type prefix, so an id carries no information about which entity it belongs
+  to.'
+entity_count: 20
+schema_count: 384
+id_prefixes: null
+id_note: Keap ids are unprefixed and scoped to the application instance (tenant). The same numeric id
+  in two Keap accounts refers to different records.
+entities:
+- name: Contact
+  primary: true
+  v2_operations: 27
+  model_endpoint: /rest/v2/contacts/model
+  custom_fields: true
+- name: Company
+  v2_operations: 22
+  model_endpoint: /rest/v2/companies/model
+  custom_fields: true
+- name: Tag
+  v2_operations: 14
+  note: Many-to-many labelling over contacts and companies; grouped by tag category.
+- name: Opportunity
+  v2_operations: 26
+  model_endpoint: /rest/v2/opportunities/model
+  custom_fields: true
+  note: Has stages and a stageMoves audit trail.
+- name: Order
+  v2_operations: 29
+  model_endpoint: /rest/v2/orders/model
+  custom_fields: true
+- name: Product
+  v2_operations: 17
+- name: Subscription
+  v2_operations: 20
+  model_endpoint: /rest/v2/subscriptions/model
+  custom_fields: true
+- name: Note
+  v2_operations: 21
+- name: Task
+  v2_operations: 19
+- name: Email
+  v2_operations: 10
+- name: Affiliate
+  v2_operations: 48
+  note: The largest single resource family in v2 - referral partner programs, commissions and payouts.
+- name: Automation
+  v2_operations: 10
+  note: Campaigns/sequences; entered from outside via achieveGoal.
+- name: Appointment
+  v1_only: true
+  v1_operations: 8
+- name: File
+  v2_operations: 6
+- name: User
+  v2_operations: 5
+- name: LeadSource
+  v2_operations: 5
+- name: Referral
+  v2_operations: 2
+- name: Merchant
+  v2_operations: 1
+- name: Deal
+  source: openapi/infusionsoft-pipelines-openapi.yml
+  note: Pipelines API entity, served on the same api.infusionsoft.com host under /v2/deals but specified
+    separately.
+relationships:
+- from: Contact
+  type: has_many
+  to: Tag
+  via: GET /rest/v2/contacts/{contact_id}/tags (listTagsForContact)
+- from: Tag
+  type: has_many
+  to: Contact
+  via: GET /rest/v2/tags/{tag_id}/contacts (listContactsWithTagId)
+- from: Tag
+  type: has_many
+  to: Company
+  via: GET /rest/v2/tags/{tag_id}/companies (listCompaniesForTagId)
+- from: Company
+  type: has_many
+  to: Tag
+  via: GET /rest/v2/companies/{company_id}/tags (listTagsForCompany)
+- from: Contact
+  type: belongs_to
+  to: Company
+  via: company_id field on the contact record
+- from: Contact
+  type: has_many
+  to: Contact
+  via: POST /rest/v2/contacts:link / :unlink with a link type (listContactLinkTypes)
+- from: Opportunity
+  type: belongs_to
+  to: Contact
+  via: contact id on the opportunity
+- from: Opportunity
+  type: belongs_to
+  to: OpportunityStage
+  via: stage id; stage transitions recorded as stageMoves
+- from: Order
+  type: belongs_to
+  to: Contact
+  via: contact id on the order
+- from: Order
+  type: has_many
+  to: OrderItem
+  via: POST/GET /rest/v2/orders/{order_id}/items
+- from: Order
+  type: has_many
+  to: Payment
+  via: GET /rest/v2/orders/{order_id}/payments (listOrderPayments)
+- from: OrderItem
+  type: belongs_to
+  to: Product
+  via: product id on the order item
+- from: Product
+  type: has_many
+  to: ProductOption
+  via: /rest/v2/products/{product_id}/options
+- from: Product
+  type: has_many
+  to: SubscriptionPlan
+  via: GET /rest/v2/products/{product_id}/subscriptions (listSubscriptionPlans)
+- from: Subscription
+  type: belongs_to
+  to: Contact
+  via: contact id on the subscription
+- from: Subscription
+  type: belongs_to
+  to: SubscriptionPlan
+  via: plan id on the subscription
+- from: Note
+  type: belongs_to
+  to: Contact
+  via: contact id on the note
+- from: Task
+  type: belongs_to
+  to: Contact
+  via: contact id on the task
+- from: Email
+  type: belongs_to
+  to: Contact
+  via: contact id on the recorded email
+- from: Automation
+  type: has_many
+  to: Sequence
+  via: POST /rest/v2/automations/{automation_id}/sequences/{sequence_id}:addContacts
+- from: Automation
+  type: belongs_to
+  to: AutomationCategory
+  via: POST /rest/v2/automations/categories/batchAssign
+- from: Affiliate
+  type: has_many
+  to: Commission
+  via: affiliate commission programs and payouts (48 Affiliate operations in v2)
+- from: LeadSource
+  type: has_many
+  to: LeadSourceExpense
+  via: /rest/v2 lead source expense and recurring expense resources
+- from: LeadSource
+  type: belongs_to
+  to: LeadSourceCategory
+  via: category id on the lead source
+- from: Deal
+  type: belongs_to
+  to: Contact
+  via: GET /v2/deals/-/contacts/{contact_id} in the Pipelines API
+- from: Deal
+  type: has_many
+  to: Note
+  via: /v2/deals/{id}/notes in the Pipelines API
+relationship_count: 26

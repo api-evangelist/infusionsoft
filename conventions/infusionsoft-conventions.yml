@@ -1,0 +1,112 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.keap.com/getting-started-oauth-keys/, https://developer.keap.com/pat-and-sak/,
+  https://developer.keap.com/api-token-quota-and-usage-measurements/, openapi/infusionsoft-rest-v1-openapi.json,
+  openapi/infusionsoft-rest-v2-openapi.json
+note: v1 and v2 are conventionally DIFFERENT APIs sharing a host. v1 uses offset/limit paging and a Spring
+  ModelAndView error body; v2 uses opaque page_token cursors, a Google-style Error envelope, a `filter`
+  query language and colon-suffixed custom verbs (:merge, :applyTags, :achieve). Anything written against
+  v1 conventions will not port to v2.
+auth:
+  style: OAuth 2.0 authorization_code bearer tokens, plus Personal Access Tokens and Service Account Keys
+    sent as the same Bearer header
+  header: 'Authorization: Bearer <token>'
+  token_endpoint: https://api.infusionsoft.com/token
+  token_endpoint_auth: HTTP Basic with base64(client_id:client_secret)
+  refresh: refresh tokens rotate - each refresh returns a NEW refresh token that must be persisted
+  scope_param: scope=full is the only valid value
+  see: authentication/infusionsoft-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: Keap publishes no idempotency mechanism. No Idempotency-Key header appears in the docs, and no
+    parameter matching /idempot/ exists anywhere in the v1 (141 ops), v2 (399 ops) or Pipelines (45 ops)
+    OpenAPI. Retrying a POST such as createOrder or createContact after a timeout will create a duplicate.
+    No Idempotency pointer is emitted, because the capability does not exist.
+pagination:
+  v1:
+    style: offset/limit
+    params:
+    - offset
+    - limit
+    response_fields:
+    - count
+    - next
+    - previous
+    source: openapi/infusionsoft-rest-v1-openapi.json
+  v2:
+    style: opaque cursor
+    params:
+    - page_token
+    - page_size
+    response_fields:
+    - next_page_token
+    source: openapi/infusionsoft-rest-v2-openapi.json
+    note: 57 of 399 v2 operations accept page_token/page_size; list responses return next_page_token.
+filtering:
+  v2:
+    param: filter
+    style: Keap filter expression string passed on 57 list operations
+    note: v2 also exposes /rest/v2/dateExpressions-style helpers in the Pipelines surface.
+  v1:
+    params:
+    - since
+    - order
+    - order_direction
+    style: named query parameters per resource
+sparse_fields:
+  v2:
+    param: fields
+    operations: 21
+    note: 21 v2 operations accept a `fields` parameter to select returned properties.
+  v1:
+    supported: false
+custom_verbs:
+  style: colon-suffixed action segments on v2
+  examples:
+  - POST /rest/v2/contacts:merge
+  - POST /rest/v2/tags/{tag_id}/contacts:applyTags
+  - POST /rest/v2/automations/goals/achieve
+  - POST /rest/v2/subscriptions/{subscription_id}:deactivate
+  - POST /rest/v2/orders/{order_id}:applyTax
+custom_fields:
+  note: Every major v2 entity exposes a /model endpoint plus customFields, customFields/tabs and customFields/groups
+    sub-resources. Read the model first - custom field ids are per-tenant and cannot be hard-coded.
+  model_endpoints:
+  - /rest/v2/contacts/model
+  - /rest/v2/companies/model
+  - /rest/v2/orders/model
+  - /rest/v2/opportunities/model
+  - /rest/v2/subscriptions/model
+request_id:
+  supported: false
+  note: No request-id / correlation-id response header is documented.
+versioning:
+  style: path segment /crm/rest/v1 vs /crm/rest/v2
+  see: lifecycle/infusionsoft-lifecycle.yml
+errors:
+  v1_envelope: ModelAndView (Spring) JSON body on 400/401/403/404/405/406/409/412/500/501
+  v2_envelope: '{code:int, message:string, status:string, details:[{domain, resource}]}'
+  gateway_envelope: '{"fault":{"faultstring":"...","detail":{"errorcode":"oauth.v2.InvalidAccessToken"}}}
+    - returned by the Apigee gateway BEFORE the API is reached, and it does not match either documented
+    envelope'
+  rfc9457: false
+  see: errors/infusionsoft-problem-types.yml
+rate_limit_signaling:
+  headers:
+  - x-keap-product-quota-limit
+  - x-keap-product-quota-available
+  - x-keap-product-quota-used
+  - x-keap-product-quota-expiry-time
+  - x-keap-product-throttle-limit
+  - x-keap-product-throttle-available
+  - x-keap-product-throttle-used
+  - x-keap-tenant-throttle-limit
+  - x-keap-tenant-throttle-available
+  - x-keap-tenant-throttle-used
+  status: 429
+  retry_after: false
+  see: rate-limits/infusionsoft-rate-limits.yml
+events:
+  style: REST Hooks subscription webhooks on v1
+  see: asyncapi/infusionsoft-rest-hooks-webhooks.yml

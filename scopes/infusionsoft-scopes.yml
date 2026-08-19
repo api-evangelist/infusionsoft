@@ -1,0 +1,38 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.keap.com/getting-started-oauth-keys/, https://developer.keap.com/pat-and-sak/,
+  openapi/infusionsoft-rest-v1-openapi.json, openapi/infusionsoft-rest-v2-openapi.json
+docs: https://developer.keap.com/getting-started-oauth-keys/
+note: 'Keap runs OAuth 2.0 with NO granular scope model. The authorize endpoint accepts a scope parameter
+  whose only valid value is `full`, and every spec declares the oauth2 scheme with an empty scopes object
+  - so a user authorising an integration grants complete access to their CRM, and there is no way for
+  an application to request less. There is no read-only grant, no per-resource scope, and no incremental
+  consent. Service Account Keys are worse: they carry administrator access to all stored data by construction.
+  For an agent this is the single highest-risk property of the Keap API - a token that can list contacts
+  can also delete orders and cancel subscriptions.'
+model: all-or-nothing
+scope_count: 1
+scopes:
+- name: full
+  description: 'Complete access to the authorising Keap application: read and write across contacts, companies,
+    tags, opportunities, orders, products, subscriptions, emails, automations, affiliates and settings.'
+  source: https://developer.keap.com/getting-started-oauth-keys/
+granular_scopes: false
+least_privilege_alternative: A Personal Access Token created by a limited (non-admin) user is the ONLY
+  way to narrow effective access, because a PAT inherits that user visibility and editing permissions.
+  This is a user-permission workaround, not an API scope.
+schemes:
+- name: oauth2
+  source: openapi/infusionsoft-rest-v1-openapi.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+    tokenUrl: https://api.infusionsoft.com/token
+    declared_scopes: 0
+- name: oauth2
+  source: openapi/infusionsoft-rest-v2-openapi.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+    tokenUrl: https://api.infusionsoft.com/token
+    declared_scopes: 0

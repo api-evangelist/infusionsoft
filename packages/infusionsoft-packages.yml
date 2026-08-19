@@ -1,0 +1,145 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.keap.com/api_helper_libraries/ + https://github.com/infusionsoft/keap-sdk +
+  npm/PyPI/NuGet/Packagist registry metadata endpoints
+note: Keap generates its v2 SDKs from its own OpenAPI (sdks/v2/swagger.yml) in github.com/infusionsoft/keap-sdk
+  and publishes them across six ecosystems. The whole generated set moved to version 2.0.20 on 2026-08-13,
+  so the first-party client surface is current with the API. The Java SDK is the one language Keap does
+  NOT publish to a public registry (com.keap.core:core-service-v2-java-sdk returns 0 results on Maven
+  Central) - it must be built from source. Legacy Infusionsoft-era libraries are recorded separately and
+  are years stale.
+packages:
+- language: typescript
+  registry: npm
+  name: keap-core-service-v2-sdk-ts
+  url: https://www.npmjs.com/package/keap-core-service-v2-sdk-ts
+  install: npm install keap-core-service-v2-sdk-ts
+  official: true
+  license: Apache-2.0
+  version: 2.0.20
+  published: '2026-08-13'
+  repo: https://github.com/infusionsoft/keap-sdk
+- language: javascript
+  registry: npm
+  name: keap-core-service-v2-sdk-js
+  url: https://www.npmjs.com/package/keap-core-service-v2-sdk-js
+  install: npm install keap-core-service-v2-sdk-js
+  official: true
+  license: Apache-2.0
+  version: 2.0.20
+  published: '2026-08-13'
+  repo: https://github.com/infusionsoft/keap-sdk
+- language: javascript
+  registry: npm
+  name: keap-core-service-v2-sdk
+  url: https://www.npmjs.com/package/keap-core-service-v2-sdk
+  install: npm install keap-core-service-v2-sdk
+  official: true
+  license: Apache-2.0
+  version: 2.0.20
+  published: '2026-08-13'
+  repo: https://github.com/infusionsoft/keap-sdk
+  note: The name the generated JavaScript README instructs consumers to install.
+- language: python
+  registry: pypi
+  name: keap-core-v2-sdk
+  url: https://pypi.org/project/keap-core-v2-sdk/
+  install: pip install keap-core-v2-sdk
+  official: true
+  license: Apache 2.0
+  version: 2.0.20
+  published: '2026-08-13'
+  repo: https://github.com/infusionsoft/keap-sdk
+- language: csharp
+  registry: nuget
+  name: Thryv.Keap.Core.V2
+  url: https://www.nuget.org/packages/Thryv.Keap.Core.V2
+  install: dotnet add package Thryv.Keap.Core.V2
+  official: true
+  version: 2.0.20
+  published: '2026-08-13'
+  repo: https://github.com/infusionsoft/keap-sdk
+  note: Current .NET package, republished under the Thryv namespace after Thryv Holdings acquired Keap.
+- language: csharp
+  registry: nuget
+  name: Keap.Core.V2
+  url: https://www.nuget.org/packages/Keap.Core.V2
+  install: dotnet add package Keap.Core.V2
+  official: true
+  version: 1.0.22
+  published: null
+  repo: https://github.com/infusionsoft/keap-sdk
+  note: Superseded pre-Thryv .NET package. api.nuget.org returns a null/1900-01-01 publish date for the
+    latest version, so the date is recorded as unknown rather than guessed. Use Thryv.Keap.Core.V2 instead.
+- language: php
+  registry: packagist
+  name: keap/keap-sdk
+  url: https://packagist.org/packages/keap/keap-sdk
+  install: composer require keap/keap-sdk
+  official: true
+  license: Apache-2.0
+  version: 2.0.20
+  published: '2026-08-13'
+  repo: https://github.com/infusionsoft/keap-sdk-php
+- language: java
+  registry: maven-central
+  name: com.keap.core:core-service-v2-java-sdk
+  url: https://github.com/infusionsoft/keap-sdk/tree/main/sdks/v2/java
+  install: 'mvn clean install  # from sdks/v2/java in github.com/infusionsoft/keap-sdk'
+  official: true
+  version: null
+  published: null
+  repo: https://github.com/infusionsoft/keap-sdk
+  note: 'Checked Maven Central (search.maven.org solrsearch for g:com.keap.core and a:core-service-v2-java-sdk)
+    on 2026-08-13: 0 results. Keap ships the generated Java client as source only; the README tells consumers
+    to run `mvn clean install` to install it into their local repository. No registry metadata exists
+    to read a version or date from.'
+- language: php
+  registry: packagist
+  name: infusionsoft/php-sdk
+  url: https://packagist.org/packages/infusionsoft/php-sdk
+  install: composer require infusionsoft/php-sdk
+  official: true
+  license: MIT
+  version: 1.6.8
+  published: '2025-04-17'
+  repo: https://github.com/infusionsoft/infusionsoft-php
+  note: Legacy Infusionsoft-era PHP client (XML-RPC + REST v1), still first-party but superseded by keap/keap-sdk
+    for v2.
+- language: python
+  registry: github
+  name: infusionsoft/Official-API-Python-Library
+  url: https://github.com/infusionsoft/Official-API-Python-Library
+  install: git clone https://github.com/infusionsoft/Official-API-Python-Library
+  official: true
+  version: null
+  published: null
+  repo: https://github.com/infusionsoft/Official-API-Python-Library
+  note: 'Legacy XML-RPC Python library. Never published to PyPI (pypi.org/pypi/infusionsoft/json resolves
+    to an unrelated third-party package), and the repo has not been pushed to since 2024-11-05. version:
+    null because there is no registry to read.'
+- language: javascript
+  registry: npm
+  name: infusionsoft-sdk
+  url: https://www.npmjs.com/package/infusionsoft-sdk
+  install: npm install infusionsoft-sdk
+  official: true
+  version: 0.0.3
+  published: '2018-08-15'
+  repo: https://github.com/infusionsoft/infusionsoft-sdk-nodejs
+  note: Abandoned first-party Node SDK generated from the old Swagger definition. Last release 2018 -
+    eight years behind the API it wraps.
+sample_code:
+- name: API-Sample-Code
+  url: https://github.com/infusionsoft/API-Sample-Code
+  languages:
+  - DOTNET
+  - Java
+  - Node
+  - PHP
+  - Perl
+  - Ruby
+  - asp
+  - python
+  official: true
+  note: Per-language sample code, not a packaged client.
