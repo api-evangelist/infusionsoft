@@ -37,6 +37,17 @@ tags:
   - E-Commerce
   - Small Business
   - Contacts
+  - Subscription
+  - Webhook
+  - Authentication
+tags_raw:
+  - CRM
+  - Marketing Automation
+  - Sales Automation
+  - Email Marketing
+  - E-Commerce
+  - Small Business
+  - Contacts
   - Subscriptions
   - Webhooks
   - OAuth 2.0
@@ -61,6 +72,14 @@ apis:
     humanURL: https://developer.keap.com/docs/restv2/
     baseURL: https://api.infusionsoft.com/crm/rest/v2
     tags:
+      - CRM
+      - Contacts
+      - Opportunities
+      - Order
+      - Subscription
+      - Tags
+      - Authentication
+    tags_raw:
       - CRM
       - Contacts
       - Opportunities
@@ -94,6 +113,14 @@ apis:
     humanURL: https://developer.keap.com/docs/rest/
     baseURL: https://api.infusionsoft.com/crm/rest/v1
     tags:
+      - CRM
+      - Order
+      - Product
+      - Campaigns
+      - REST Hooks
+      - Webhook
+      - Authentication
+    tags_raw:
       - CRM
       - Orders
       - Products
