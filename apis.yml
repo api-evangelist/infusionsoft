@@ -57,137 +57,1666 @@ created: '2026-05-11'
 modified: '2026-08-13'
 specificationVersion: '0.23'
 apis:
-  - aid: infusionsoft:rest-v2
-    name: Keap REST API v2
-    description: >-
-      The default Keap REST API: 237 paths and 399 operations covering contacts,
-      companies, tags, opportunities and stages, orders and order items,
-      products, subscriptions and plans, notes, tasks, emails, automations,
-      affiliates, lead sources, users and settings. Pages with opaque
-      page_token cursors, filters with a filter expression parameter, and uses
-      colon-suffixed custom verbs such as :merge, :applyTags and :achieve.
-      Every major entity carries a per-tenant custom-field model. Authentication
-      is a bearer token - OAuth 2.0 authorization code, a Personal Access Token,
-      or a Service Account Key.
-    humanURL: https://developer.keap.com/docs/restv2/
-    baseURL: https://api.infusionsoft.com/crm/rest/v2
-    tags:
-      - CRM
-      - Contacts
-      - Opportunities
-      - Order
-      - Subscription
-      - Tags
-      - Authentication
-    tags_raw:
-      - CRM
-      - Contacts
-      - Opportunities
-      - Orders
-      - Subscriptions
-      - Tags
-      - OAuth 2.0
-    properties:
-      - type: OpenAPI
-        url: openapi/infusionsoft-rest-v2-openapi.json
-      - type: Overlay
-        url: overlays/infusionsoft-rest-v2-overlay.yaml
-      - type: Documentation
-        url: https://developer.keap.com/docs/restv2/
-      - type: APIReference
-        url: https://developer.keap.com/docs/restv2/
-      - type: OAuth Guide
-        url: https://developer.keap.com/getting-started-oauth-keys/
-      - type: Authentication
-        url: https://developer.keap.com/authentication/
-  - aid: infusionsoft:rest-v1
-    name: Keap REST API v1
-    description: >-
-      The original Keap REST API, still labelled Current: 92 paths and 141
-      operations covering contacts, companies, orders, products,
-      subscriptions, campaigns, appointments, files, tags, notes, tasks,
-      affiliates, merchants and account info - plus the REST Hooks
-      subscription surface, which exists nowhere else in the Keap platform.
-      Pages with offset and limit. A v2 integration still has to call v1 to
-      manage its event subscriptions.
-    humanURL: https://developer.keap.com/docs/rest/
-    baseURL: https://api.infusionsoft.com/crm/rest/v1
-    tags:
-      - CRM
-      - Order
-      - Product
-      - Campaigns
-      - REST Hooks
-      - Webhook
-      - Authentication
-    tags_raw:
-      - CRM
-      - Orders
-      - Products
-      - Campaigns
-      - REST Hooks
-      - Webhooks
-      - OAuth 2.0
-    properties:
-      - type: OpenAPI
-        url: openapi/infusionsoft-rest-v1-openapi.json
-      - type: Overlay
-        url: overlays/infusionsoft-rest-v1-overlay.yaml
-      - type: Webhooks
-        url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
-      - type: Documentation
-        url: https://developer.keap.com/docs/rest/
-      - type: APIReference
-        url: https://developer.keap.com/docs/rest/
-      - type: OAuth Guide
-        url: https://developer.keap.com/getting-started-oauth-keys/
-  - aid: infusionsoft:pipelines
-    name: Keap Pipelines API
-    description: >-
-      The Keap Pipelines (deals) API - 28 paths and 45 operations for deals,
-      deal notes, deal custom fields, date expressions and bulk deal
-      operations. Keap's own developer portal loads this as the Pipelines
-      reference, and its servers block names api.infusionsoft.com, but the
-      document is served from Thryv's API host because Thryv Holdings owns
-      Keap. Its info.title is the internal service name SLAAPI (Service Level
-      Aggregation API) and its contact address is gryffindor@keap.com. It
-      declares no error responses at all - only 200, 201 and 204.
-    humanURL: https://developer.keap.com/docs/restv2Pipelines/
-    baseURL: https://api.infusionsoft.com
-    tags:
-      - CRM
-      - Deals
-      - Pipelines
-      - Sales Automation
-    properties:
-      - type: OpenAPI
-        url: openapi/infusionsoft-pipelines-openapi.yml
-      - type: Overlay
-        url: overlays/infusionsoft-pipelines-overlay.yaml
-      - type: Documentation
-        url: https://developer.keap.com/docs/restv2Pipelines/
-      - type: APIReference
-        url: https://developer.keap.com/docs/restv2Pipelines/
-  - aid: infusionsoft:xml-rpc
-    name: Infusionsoft XML-RPC API
-    description: >-
-      The legacy Infusionsoft XML-RPC API, explicitly labelled Deprecated in
-      the Keap developer guide. It remains documented, with a published table
-      schema reference, but Keap publishes no sunset date for it and no
-      machine-readable contract exists for the surface.
-    humanURL: https://developer.keap.com/docs/xml-rpc/
-    baseURL: https://api.infusionsoft.com/crm/xmlrpc/v1
-    tags:
-      - CRM
-      - XML-RPC
-      - Deprecated
-    properties:
-      - type: Documentation
-        url: https://developer.keap.com/docs/xml-rpc/
-      - type: TableSchema
-        url: https://developer.keap.com/docs/table-schema/
+- aid: infusionsoft:xml-rpc
+  name: Infusionsoft XML-RPC API
+  description: >-
+    The legacy Infusionsoft XML-RPC API, explicitly labelled Deprecated in the Keap developer guide. It
+    remains documented, with a published table schema reference, but Keap publishes no sunset date for
+    it and no machine-readable contract exists for the surface.
+  humanURL: https://developer.keap.com/docs/xml-rpc/
+  baseURL: https://api.infusionsoft.com/crm/xmlrpc/v1
+  tags:
+  - CRM
+  - XML-RPC
+  - Deprecated
+  properties:
+  - type: Documentation
+    url: https://developer.keap.com/docs/xml-rpc/
+  - type: TableSchema
+    url: https://developer.keap.com/docs/table-schema/
+- aid: infusionsoft:infusionsoft-account-info-api
+  name: Infusionsoft (Keap) Account Info API
+  description: Account Info-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Account Info
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-account-info-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-affiliate-api
+  name: Infusionsoft (Keap) Affiliate API
+  description: Affiliates-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Affiliate
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-affiliate-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-appointment-api
+  name: Infusionsoft (Keap) Appointment API
+  description: >-
+    Access Appointment objects stored in Keap Max Classic.  Appointment objects stored in Keap Pro or
+    Keap Max are not available via these methods.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Appointment
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-appointment-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-automation-api
+  name: Infusionsoft (Keap) Automation API
+  description: The Automation API from Infusionsoft (Keap) — 9 operation(s) for automation.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Automation
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-automation-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-automationcategory-api
+  name: Infusionsoft (Keap) Automation Category API
+  description: >-
+    The AutomationCategory API from Infusionsoft (Keap) — 2 operation(s) for automationcategory.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - AutomationCategory
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-automationcategory-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-business-profile-api
+  name: Infusionsoft (Keap) Business Profile API
+  description: The Business Profile API from Infusionsoft (Keap) — 1 operation(s) for business profile.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Business Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-business-profile-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-campaign-api
+  name: Infusionsoft (Keap) Campaign API
+  description: Campaigns-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Campaign
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-campaign-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-category-discounts-api
+  name: Infusionsoft (Keap) Category Discounts API
+  description: >-
+    The Category Discounts API from Infusionsoft (Keap) — 4 operation(s) for category discounts.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Category Discounts
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-category-discounts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-company-api
+  name: Infusionsoft (Keap) Company API
+  description: Companies-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Company
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-company-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-contact-api
+  name: Infusionsoft (Keap) Contact API
+  description: Contact-Tag-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Contact
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-contact-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-custom-fields-api
+  name: Infusionsoft (Keap) Custom Fields API
+  description: The Custom Fields API from Infusionsoft (Keap) — 2 operation(s) for custom fields.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-custom-fields-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-dateexpression-api
+  name: Infusionsoft (Keap) Date Expression API
+  description: The DateExpression API from Infusionsoft (Keap) — 1 operation(s) for dateexpression.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - DateExpression
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-dateexpression-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-deals-api
+  name: Infusionsoft (Keap) Deals API
+  description: The Deals API from Infusionsoft (Keap) — 12 operation(s) for deals.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Deals
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-deals-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-display-forms-api
+  name: Infusionsoft (Keap) Display Forms API
+  description: The Display Forms API from Infusionsoft (Keap) — 1 operation(s) for display forms.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Display Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-display-forms-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-e-commerce-api
+  name: Infusionsoft (Keap) E Commerce API
+  description: E-Commerce-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - E-Commerce
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-e-commerce-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-email-address-api
+  name: Infusionsoft (Keap) Email Address API
+  description: Email-Addresses-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Email Address
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-email-address-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-email-api
+  name: Infusionsoft (Keap) Email API
+  description: Emails-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Email
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-email-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-file-api
+  name: Infusionsoft (Keap) File API
+  description: File-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - File
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-file-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-files-api
+  name: Infusionsoft (Keap) Files API
+  description: The Files API from Infusionsoft (Keap) — 3 operation(s) for files.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-files-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-free-trial-discounts-api
+  name: Infusionsoft (Keap) Free Trial Discounts API
+  description: >-
+    The Free Trial Discounts API from Infusionsoft (Keap) — 4 operation(s) for free trial discounts.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Free Trial Discounts
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-free-trial-discounts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-integrations-api
+  name: Infusionsoft (Keap) Integrations API
+  description: The Integrations API from Infusionsoft (Keap) — 3 operation(s) for integrations.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-lead-source-categories-api
+  name: Infusionsoft (Keap) Lead Source Categories API
+  description: >-
+    The Lead Source Categories API from Infusionsoft (Keap) — 2 operation(s) for lead source categories.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Lead Source Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-lead-source-categories-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-lead-source-expenses-api
+  name: Infusionsoft (Keap) Lead Source Expenses API
+  description: >-
+    The Lead Source Expenses API from Infusionsoft (Keap) — 2 operation(s) for lead source expenses.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Lead Source Expenses
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-lead-source-expenses-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-lead-source-recurring-expenses-api
+  name: Infusionsoft (Keap) Lead Source Recurring Expenses API
+  description: >-
+    The Lead Source Recurring Expenses API from Infusionsoft (Keap) — 3 operation(s) for lead source recurring
+    expenses.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Lead Source Recurring Expenses
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-lead-source-recurring-expenses-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-lead-sources-api
+  name: Infusionsoft (Keap) Lead Sources API
+  description: The Lead Sources API from Infusionsoft (Keap) — 2 operation(s) for lead sources.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Lead Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-lead-sources-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-leadscore-api
+  name: Infusionsoft (Keap) Lead Score API
+  description: The LeadScore API from Infusionsoft (Keap) — 1 operation(s) for leadscore.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - LeadScore
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-leadscore-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-locale-api
+  name: Infusionsoft (Keap) Locale API
+  description: Locale-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Locale
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-locale-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-merchant-api
+  name: Infusionsoft (Keap) Merchant API
+  description: Merchant-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Merchant
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-merchant-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-merchants-api
+  name: Infusionsoft (Keap) Merchants API
+  description: The Merchants API from Infusionsoft (Keap) — 1 operation(s) for merchants.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Merchants
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-merchants-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-note-api
+  name: Infusionsoft (Keap) Note API
+  description: Notes-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Note
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-note-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-opportunity-api
+  name: Infusionsoft (Keap) Opportunity API
+  description: Opportunities-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Opportunity
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-opportunity-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-order-total-discounts-api
+  name: Infusionsoft (Keap) Order Total Discounts API
+  description: >-
+    The Order Total Discounts API from Infusionsoft (Keap) — 4 operation(s) for order total discounts.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Order Total Discounts
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-order-total-discounts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-orders-api
+  name: Infusionsoft (Keap) Orders API
+  description: The Orders API from Infusionsoft (Keap) — 16 operation(s) for orders.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-payment-method-configs-api
+  name: Infusionsoft (Keap) Payment Method Configs API
+  description: >-
+    The Payment Method Configs API from Infusionsoft (Keap) — 1 operation(s) for payment method configs.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Payment Method Configs
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-payment-method-configs-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-payment-methods-api
+  name: Infusionsoft (Keap) Payment Methods API
+  description: The Payment Methods API from Infusionsoft (Keap) — 4 operation(s) for payment methods.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Payment Methods
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-payment-methods-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-pipelines-api
+  name: Infusionsoft (Keap) Pipelines API
+  description: The Pipelines API from Infusionsoft (Keap) — 8 operation(s) for pipelines.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Pipelines
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-pipelines-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-product-api
+  name: Infusionsoft (Keap) Product API
+  description: Products-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Product
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-product-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-product-categories-api
+  name: Infusionsoft (Keap) Product Categories API
+  description: >-
+    The Product Categories API from Infusionsoft (Keap) — 5 operation(s) for product categories.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Product Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-product-categories-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-product-discounts-api
+  name: Infusionsoft (Keap) Product Discounts API
+  description: >-
+    The Product Discounts API from Infusionsoft (Keap) — 4 operation(s) for product discounts.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Product Discounts
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-product-discounts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-product-interest-bundles-api
+  name: Infusionsoft (Keap) Product Interest Bundles API
+  description: >-
+    The Product Interest Bundles API from Infusionsoft (Keap) — 4 operation(s) for product interest bundles.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Product Interest Bundles
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-product-interest-bundles-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-products-api
+  name: Infusionsoft (Keap) Products API
+  description: The Products API from Infusionsoft (Keap) — 9 operation(s) for products.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-products-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-referral-api
+  name: Infusionsoft (Keap) Referral API
+  description: The Referral API from Infusionsoft (Keap) — 1 operation(s) for referral.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Referral
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-referral-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-reporting-api
+  name: Infusionsoft (Keap) Reporting API
+  description: The Reporting API from Infusionsoft (Keap) — 4 operation(s) for reporting.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Reporting
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-reporting-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-rest-hooks-api
+  name: Infusionsoft (Keap) REST Hooks API
+  description: >-
+    ### _What are REST Hooks?_
 
+
+    _REST Hooks itself is not a specification, it is a collection of patterns that treat webhooks like
+    subscriptions. These subscriptions are manipulated via a REST API just like any other resource._
+
+
+    _With most modern REST APIs, polling is the only way to detect changes. But it doesn't have to be.
+    On average, 98.5% of polls are wasted. There is a better way. REST Hooks enable real-time communication
+    and eliminate polling._ -- [RESTHooks.org](http://RESTHooks.org)
+
+
+    Infusionsoft offers a growing set of REST Hooks to keep you notified of changes in your data. To get
+    started, use [List Hook Event Types](#!/REST_Hooks/list_hook_event_types) to discover event types.
+    Event types are identified using _noun.verb dot syntax_, e.g.: `contact.add` or `invoice.delete`.
+
+
+    After you’ve read this documentation, you might be interested in the [REST Hook Event and Retry policies](https://developer.infusionsoft.com/rest-hook-documentation/).
+
+
+    NB: REST Hooks are **not** triggered by legacy action sets.
+
+
+    Once you've chosen the events you're interested in, subscribe to them via [Create a Hook Subscription](#!/REST_Hooks/create_a_hook_subscription).
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - REST Hooks
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-rest-hooks-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-sales-api
+  name: Infusionsoft (Keap) Sales API
+  description: The Sales API from Infusionsoft (Keap) — 3 operation(s) for sales.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Sales
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-sales-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-setting-api
+  name: Infusionsoft (Keap) Setting API
+  description: Setting-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Setting
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-setting-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-settings-api
+  name: Infusionsoft (Keap) Settings API
+  description: The Settings API from Infusionsoft (Keap) — 3 operation(s) for settings.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-settings-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-shipping-api
+  name: Infusionsoft (Keap) Shipping API
+  description: The Shipping API from Infusionsoft (Keap) — 1 operation(s) for shipping.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Shipping
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-shipping-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-shipping-discounts-api
+  name: Infusionsoft (Keap) Shipping Discounts API
+  description: >-
+    The Shipping Discounts API from Infusionsoft (Keap) — 4 operation(s) for shipping discounts.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Shipping Discounts
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-shipping-discounts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-stages-api
+  name: Infusionsoft (Keap) Stages API
+  description: The Stages API from Infusionsoft (Keap) — 4 operation(s) for stages.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Stages
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-stages-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-subscription-plans-api
+  name: Infusionsoft (Keap) Subscription Plans API
+  description: >-
+    The Subscription Plans API from Infusionsoft (Keap) — 2 operation(s) for subscription plans.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Subscription Plans
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-subscription-plans-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-subscriptions-api
+  name: Infusionsoft (Keap) Subscriptions API
+  description: The Subscriptions API from Infusionsoft (Keap) — 11 operation(s) for subscriptions.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-tags-api
+  name: Infusionsoft (Keap) Tags API
+  description: Tag-Company-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-tags-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-task-api
+  name: Infusionsoft (Keap) Task API
+  description: Tasks-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Task
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-task-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-user-groups-api
+  name: Infusionsoft (Keap) User Groups API
+  description: The User Groups API from Infusionsoft (Keap) — 2 operation(s) for user groups.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - User Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-user-groups-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-users-api
+  name: Infusionsoft (Keap) Users API
+  description: Users-Endpoint
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-users-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-webforms-api
+  name: Infusionsoft (Keap) Webforms API
+  description: The Webforms API from Infusionsoft (Keap) — 2 operation(s) for webforms.
+  humanURL: https://developer.keap.com/docs/restv2/
+  baseURL: https://api.infusionsoft.com/crm/rest/v2
+  tags:
+  - Webforms
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-webforms-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
 common:
+  - type: Overlay
+    url: overlays/infusionsoft-rest-v2-overlay.yaml
+  - type: Overlay
+    url: overlays/infusionsoft-rest-v1-overlay.yaml
+  - type: Overlay
+    url: overlays/infusionsoft-pipelines-overlay.yaml
   - type: AgenticAccess
     url: agentic-access/infusionsoft-agentic-access.yml
   - type: OAuthScopes
