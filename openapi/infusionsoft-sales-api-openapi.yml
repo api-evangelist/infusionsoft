@@ -1,0 +1,1060 @@
+openapi: 3.2.0
+info:
+  title: Infusionsoft Sales API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: '1.0'
+  description: 'Operations tagged Sales across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.keap.com/crm
+- url: https://api.infusionsoft.com/crm/rest
+- url: https://api.infusionsoft.com/crm
+tags:
+- name: Sales
+paths:
+  /rest/v2/sales/merchants/{id}:setDefault:
+    post:
+      tags:
+      - Sales
+      summary: Set default Merchant Account
+      description: Sets the specified Merchant Account as the default Merchant Account.
+      operationId: setMerchantGatewayAsDefault
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '501':
+          description: Method Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://api.keap.com/crm
+  /rest/v2/sales/transactions:
+    get:
+      tags:
+      - Sales
+      summary: List Transactions
+      description: Retrieves a list of sales transactions
+      operationId: listTransactions
+      parameters:
+      - name: filter
+        in: query
+        description: 'Filter to apply, allowed fields are:
+
+          - (String) `amount` - Allowable operators: "==","<=", "<", ">=", ">", "!="
+
+          - (String) `order_id`
+
+          - (String) `contact_id`
+
+          - (String) `since_time`
+
+          - (String) `until_time`
+
+          - (String) `merchant_account_id`
+
+          - (String) `merchant_account_type`
+
+          - (String) `status`
+
+          - (String) `transaction_method`
+
+          - (String) `is_successful`
+
+
+          You will need to apply the `==` operator to check the equality of one of the filters with your searched
+
+          word, in the encoded form `%3D%3D`. For the filters listed above, here are some examples:
+
+          - `filter=order_id%3D%3D123`
+
+          - `filter=order_id%3D%3D123%3Bcontact_id%3D%3D567`'
+        required: false
+        schema:
+          type: string
+      - name: page_token
+        in: query
+        description: Page token
+        required: false
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: 'Attribute and direction to order items.
+
+          One of the following fields:
+
+          - `amount`
+
+          - `transaction_time`
+
+          - `contact_id`
+
+
+          One of the following directions:
+
+          - `asc`
+
+          - `desc`'
+        required: false
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Total number of items to return per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 0
+        example: 0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTransactions'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '501':
+          description: Method Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://api.keap.com/crm
+  /rest/v2/sales/payments:
+    get:
+      tags:
+      - Sales
+      summary: List Payments
+      description: Retrieves a list of payments
+      operationId: listPayments
+      parameters:
+      - name: filter
+        in: query
+        description: 'Filter to apply, allowed fields are:
+
+          - (String) `id` - Allowable operators: "==",">",">=","<","<="
+
+          - (List[String]) `ids`
+
+          - (String) `amount` - Allowable operators: "==","<=", "<", ">=", ">", "!="
+
+          - (String) `order_id`
+
+          - (List[String]) `order_ids`
+
+          - (String) `contact_id`
+
+          - (String) `since_time`
+
+          - (String) `until_time`
+
+          - (String) `merchant_account_id`
+
+          - (String) `merchant_account_type`
+
+
+          You will need to apply the `==` operator to check the equality of one of the filters with your searched
+
+          word, in the encoded form `%3D%3D`. For the filters listed above, here are some examples:
+
+          - `filter=id%3D%3D123`
+
+          - `filter=ids%3D%3D1,10,4,24`
+
+          - `filter=order_id%3D%3D123%3Bcontact_id%3D%3D567`
+
+          - `filter=order_ids%3D%3D1,2,3`'
+        required: false
+        schema:
+          type: string
+      - name: page_token
+        in: query
+        description: Page token
+        required: false
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: 'Attribute and direction to order items.
+
+          One of the following fields:
+
+          - `id`
+
+          - `amount`
+
+          - `payment_time`
+
+          - `contact_id`
+
+
+          One of the following directions:
+
+          - `asc`
+
+          - `desc`'
+        required: false
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Total number of items to return per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 0
+        example: 0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPayments'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '501':
+          description: Method Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://api.keap.com/crm
+  /v2/sales/merchants/{id}:setDefault:
+    post:
+      tags:
+      - Sales
+      summary: Set default Merchant Account
+      description: Sets the specified Merchant Account as the default Merchant Account.
+      operationId: setMerchantGatewayAsDefaultUsingPOST
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+    servers:
+    - url: https://api.infusionsoft.com/crm/rest
+components:
+  schemas:
+    PaymentMethod:
+      type: object
+      properties:
+        contact_id:
+          type: string
+          description: The id of the contact the payment method is associated with.
+          example: 123
+        payment_method_id:
+          type: string
+          description: The unique identifier of the payment method.
+          example: 123
+        credit_card_id:
+          type: string
+          description: For backward-compatibility with v1 endpoints. If present, it's the credit card id this payment method refers to.
+        merchant_account_type:
+          type: string
+          description: The merchant account type through which the payment method was tokenized.
+          enum:
+          - PAYPAL
+          - UNSUPPORTED
+          - AUTHORIZE
+          - EWAY
+          - WEPAY
+          - STRIPE
+          - KEAP_PAY
+          example: STRIPE
+        merchant_account_id:
+          type: string
+          description: The merchant account id through which the payment method was tokenize.
+        payment_method_type:
+          type: string
+          description: The type of payment method. For now, only CARD is supported.
+          enum:
+          - CARD
+        created_time:
+          type: string
+          format: date-time
+          description: When this payment method was made. In ISO-8601 format.
+          example: '2024-05-21T14:30:00Z'
+        card_info:
+          $ref: '#/components/schemas/CardInfo'
+          description: If present, it provides additional details for payment methods of payment_method_type CARD.
+        status:
+          type: string
+          description: Status of the payment method. Fow now, only EXPIRED is supported.
+          enum:
+          - EXPIRED
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
+    ListTransactions:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionV2'
+        next_page_token:
+          type: string
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the payment.
+          example: 123
+        type:
+          type: string
+          description: A label describing the type of payment made.
+          example: Credit Card
+        amount:
+          type: number
+          format: double
+          description: The payment amount.
+          example: 123.34
+        note:
+          type: string
+          description: A note about the payment.
+        status:
+          type: string
+          description: Provides the current status of the payment, if available.
+          enum:
+          - PENDING
+          - APPROVED
+          - COMPLETED
+          - NONE
+          example: COMPLETED
+        commissioned:
+          type: boolean
+          description: Whether this payment had a commission.
+        synced:
+          type: boolean
+          description: Whether or not the data is synced externally.
+        payment_time:
+          type: string
+          format: date-time
+          description: When this payment was made. In ISO-8601 format.
+          example: '2024-05-21T14:30:00Z'
+        refund_payment_id:
+          type: string
+          description: If this payment had a refund, this refers to the id of the refund payment.
+          example: 123
+        contact_id:
+          type: string
+          description: The id of the contact the payment is associated with.
+          example: 123
+        order_ids:
+          type: array
+          description: List of order ids the payment was made was against.
+          example:
+          - '123'
+          - '456'
+          items:
+            type: string
+        update_time:
+          type: string
+          format: date-time
+          description: When this payment was updated. In ISO-8601 format.
+          example: '2024-05-21T14:30:00Z'
+        external_transaction_id:
+          type: string
+          description: An external id - typically from a payment processor - that references this transaction.
+          example: txn_123
+        merchant_account_id:
+          type: string
+          description: The merchant account id through which the transaction was made.
+        merchant_account_type:
+          type: string
+          description: The merchant account type through which the transaction was made.
+          enum:
+          - PAYPAL
+          - UNSUPPORTED
+          - AUTHORIZE
+          - EWAY
+          - WEPAY
+          - STRIPE
+          - KEAP_PAY
+          example: PAYPAL
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+          description: Details of the payment method used for this transaction.
+    BasicContact:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        given_name:
+          type: string
+        family_name:
+          type: string
+    ListPayments:
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+        next_page_token:
+          type: string
+    TransactionV2:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          description: The amount of the transaction.
+          example: 123.34
+        status:
+          type: string
+          description: The resulting status of the transaction.
+          enum:
+          - APPROVED
+          - PENDING
+          - ERROR
+          - FAILED
+          - NONE
+          example: APPROVED
+        description:
+          type: string
+          description: A description of the transaction.
+        contact:
+          $ref: '#/components/schemas/BasicContact'
+          description: Contact associated with this order
+        order_ids:
+          type: array
+          description: List of order ids transaction was against.
+          example:
+          - '123'
+          - '456'
+          items:
+            type: string
+        contact_id:
+          type: string
+          description: The id of the contact the transaction was for.
+          example: 123
+        transaction_method:
+          type: string
+          description: The method of transaction.
+          enum:
+          - CAPTURE
+          - REFUND
+          - VOID
+          - MANUAL
+          example: ONLINE
+        transaction_time:
+          type: string
+          format: date-time
+          description: When this transaction was made. In ISO-8601 format.
+          example: '2024-05-21T14:30:00Z'
+        external_reference_id:
+          type: string
+          description: An external reference id - typically from a payment processor - that references this transaction.
+          example: txn_123
+        external_response_code:
+          type: string
+          description: An external response code generated by payment processor
+          example: abc123
+        error_details:
+          type: string
+          description: Any details if the transaction failed.
+        payment_id:
+          type: string
+          description: Identifier of an order/invoice payment created by the transaction.
+        is_successful:
+          type: boolean
+          description: If the transaction completed in a successful state. PENDING transactions are treated `false`.
+        merchant_account_id:
+          type: string
+          description: The merchant account id through which the transaction was made.
+        merchant_account_type:
+          type: string
+          description: The merchant account id through which the transaction was made.
+          enum:
+          - PAYPAL
+          - UNSUPPORTED
+          - AUTHORIZE
+          - EWAY
+          - WEPAY
+          - STRIPE
+          - KEAP_PAY
+          example: PAYPAL
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+          description: Details of the payment method used for this transaction.
+    CardInfo:
+      type: object
+      properties:
+        brand:
+          type: string
+        fingerprint:
+          type: string
+          description: A token that uniquely identifies the card info
+        card_type:
+          type: string
+          description: 'The card type. Valid values are: CREDIT, DEBIT, PREPAID.'
+          enum:
+          - CREDIT
+          - DEBIT
+          - PREPAID
+          - ACH
+        last_four:
+          type: string
+        expiration_year:
+          type: string
+          description: Four-digit expiration year
+        expiration_month:
+          type: string
+          description: Two-digit expiration month
+    Throwable:
+      title: Throwable
+      type: object
+      properties:
+        cause:
+          $ref: '#/components/schemas/Throwable'
+        localizedMessage:
+          type: string
+        message:
+          type: string
+        stackTrace:
+          type: array
+          items:
+            title: StackTraceElement
+            type: object
+            properties:
+              classLoaderName:
+                type: string
+              className:
+                type: string
+              fileName:
+                type: string
+              lineNumber:
+                type: integer
+                format: int32
+              methodName:
+                type: string
+              moduleName:
+                type: string
+              moduleVersion:
+                type: string
+              nativeMethod:
+                type: boolean
+        suppressed:
+          type: array
+          items:
+            $ref: '#/components/schemas/Throwable'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+          tokenUrl: https://api.infusionsoft.com/token
+          scopes: {}
+x-refined-from:
+- infusionsoft-keap-sdk-v2-swagger-original.yml
+- infusionsoft-rest-v2-2025-11-05-openapi-original.json
+- infusionsoft-rest-v2-openapi-original.json
+- infusionsoft-rest-v2-openapi.json

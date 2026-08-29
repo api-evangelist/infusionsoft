@@ -1,0 +1,1468 @@
+openapi: 3.2.0
+info:
+  title: Infusionsoft Webforms API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: '1.0'
+  description: 'Operations tagged Webforms across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.keap.com/crm
+- url: https://api.infusionsoft.com/crm/rest
+- url: https://api.infusionsoft.com/crm
+tags:
+- name: Webforms
+paths:
+  /rest/v2/webforms:
+    get:
+      tags:
+      - Webforms
+      summary: List Webforms with filter
+      description: Retrieves a list of webforms
+      operationId: listWebforms
+      parameters:
+      - name: filter
+        in: query
+        description: 'Filter to apply, allowed fields are:
+
+          - (String) `name`
+
+          - (String) `webform_type`
+
+          - (String) `since_create_time`
+
+          - (String) `until_create_time`
+
+          - (String) `since_update_time`
+
+          - (String) `until_update_time`
+
+
+          You will need to apply the `==` operator to check the equality of one of the filters with your searched
+
+          word, in the encoded form `%3D%3D`. For the filters listed above, here are some examples:
+
+          - `filter=name%3D%3DContact Us`
+
+          - `filter=webform_type%3D%3Dlegacy`'
+        required: false
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: 'Attribute and direction to order items.
+
+          One of the following fields:
+
+          - `name`
+
+          - `webform_type`
+
+          - `create_time`
+
+          - `update_time`
+
+
+          One of the following directions:
+
+          - `asc`
+
+          - `desc`'
+        required: false
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Total number of items to return per page
+        required: false
+        schema:
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 0
+        example: 0
+      - name: page_token
+        in: query
+        description: Page token
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWebformsResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '501':
+          description: Method Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://api.keap.com/crm
+  /rest/v2/webforms/{webform_id}:data:
+    get:
+      tags:
+      - Webforms
+      summary: Get Webform HTML
+      description: Returns the HTML
+      operationId: getHtml
+      parameters:
+      - name: webform_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: HTML content of the webform
+          content:
+            text/html:
+              schema:
+                type: string
+                description: Raw HTML content of the webform
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '501':
+          description: Method Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://api.keap.com/crm
+  /v2/webforms:
+    get:
+      tags:
+      - Webforms
+      summary: List Webforms with filter
+      description: Retrieves a list of webforms
+      operationId: listWebformsUsingGET
+      parameters:
+      - name: filter
+        in: query
+        description: 'Filter to apply, allowed fields are:
+
+          - (String) `name`
+
+          - (String) `webform_type`
+
+          - (String) `since_create_time`
+
+          - (String) `until_create_time`
+
+          - (String) `since_update_time`
+
+          - (String) `until_update_time`
+
+
+          You will need to apply the `==` operator to check the equality of one of the filters with your searched
+
+          word, in the encoded form `%3D%3D`. For the filters listed above, here are some examples:
+
+          - `filter=name%3D%3DContact Us`
+
+          - `filter=webform_type%3D%3Dlegacy`'
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: 'Attribute and direction to order items.
+
+          One of the following fields:
+
+          - `name`
+
+          - `webform_type`
+
+          - `create_time`
+
+          - `update_time`
+
+
+          One of the following directions:
+
+          - `asc`
+
+          - `desc`'
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: Total number of items to return per page
+        schema:
+          maximum: 1000
+          minimum: 1
+          type: integer
+          format: int32
+        example: 0
+      - name: page_token
+        in: query
+        description: Page token
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: ListWebformsResponse
+                type: object
+                properties:
+                  next_page_token:
+                    type: string
+                  webforms:
+                    type: array
+                    description: The webforms in the current page
+                    items:
+                      title: Webform
+                      type: object
+                      properties:
+                        create_time:
+                          type: string
+                          description: When the webform was created
+                        custom_slug:
+                          type: string
+                          description: The custom slug of the webform. Used in pretty webform URLs
+                        duplicate_check_option:
+                          type: string
+                          description: The option that determines if the lead submitted through the form is a duplicate or not. If it's a duplicate, then the lead will be merged with the existing contact record
+                          enum:
+                          - EMAIL
+                          - EMAIL_AND_NAME
+                          - EMAIL_AND_NAME_AND_COMPANY
+                          - NO_CHECK
+                        exit_option:
+                          type: string
+                          description: The option that determines what happens after the form is submitted
+                          enum:
+                          - REDIRECT
+                          - FUNNEL_LINK
+                          - HOSTED
+                          - LANDING_PAGE
+                          - WEB_FORM
+                          - SURVEY
+                          - UPDATE
+                          - UPDATE_OPT_OUT
+                          - OPT_OUT
+                          - CONFIRM
+                          - MESSAGE
+                          - AUTHORING_MESSAGE
+                          - MANUAL
+                          - CLOSE
+                          - DISPLAY_TEXT_AND_BUTTON
+                          - ERROR
+                          - HOSTED_PAGE
+                        funnel_id:
+                          type: string
+                          description: The id of the funnel this webform belongs to, if any
+                        id:
+                          type: string
+                          description: The unique identifier for this webform
+                        name:
+                          type: string
+                          description: The name of this webform
+                        pretty_webform_url:
+                          type: string
+                          description: The URL for this webform that uses the custom slug to identify it
+                        thank_you_page_url:
+                          type: string
+                          description: The URL of the thank you page for this webform
+                        update_time:
+                          type: string
+                          description: When the webform was last updated
+                        webform_type:
+                          type: string
+                          description: The type of webform this is
+                          enum:
+                          - LEGACY
+                          - STANDALONE
+                          - FUNNEL
+                          - LANDING_PAGE
+                          - SURVEY
+                          - INTERNAL
+                          - TWITTER
+                          - UNKNOWN
+                        webform_url:
+                          type: string
+                          description: The URL for this webform that uses the xid to identify it
+                        xid:
+                          type: string
+                          description: The public unique identifier for this tag, used in webform URLs
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+    servers:
+    - url: https://api.infusionsoft.com/crm/rest
+  /v2/webforms/{webform_id}:data:
+    get:
+      tags:
+      - Webforms
+      summary: Get Webform HTML
+      description: Returns the HTML
+      operationId: getHtmlUsingGET
+      parameters:
+      - name: webform_id
+        in: path
+        description: webform_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
+                format: byte
+        '401':
+          description: Unauthorized
+          content:
+            text/html:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            text/html:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '404':
+          description: Not Found
+          content:
+            text/html:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            text/html:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+    servers:
+    - url: https://api.infusionsoft.com/crm/rest
+components:
+  schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
+    Webform:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this webform
+          example: 42
+        xid:
+          type: string
+          description: The public unique identifier for this webform, used in webform URLs
+          example: a1b2c3d4e5
+        name:
+          type: string
+          description: The name of this webform
+          example: Newsletter Signup Form
+        funnel_id:
+          type: string
+          description: The id of the funnel this webform belongs to, if any
+          example: 15
+        custom_slug:
+          type: string
+          description: The custom slug of the webform. Used in pretty webform URLs
+          example: newsletter-signup
+        webform_url:
+          type: string
+          description: The URL for this webform that uses the xid to identify it
+          example: https://thryv.com/app/form/a1b2c3d4e5
+        pretty_webform_url:
+          type: string
+          description: The URL for this webform that uses the custom slug to identify it
+          example: https://thryv.com/app/form/newsletter-signup
+        thank_you_page_url:
+          type: string
+          description: The URL of the thank you page for this webform
+          example: https://thryv.com/thank-you
+        duplicate_check_option:
+          type: string
+          description: The option that determines if the lead submitted through the form is a duplicate or not. If it's a duplicate, then the lead will be merged with the existing contact record
+          enum:
+          - EMAIL
+          - EMAIL_AND_NAME
+          - EMAIL_AND_NAME_AND_COMPANY
+          - NO_CHECK
+          example: EMAIL
+        exit_option:
+          type: string
+          description: The option that determines what happens after the form is submitted
+          enum:
+          - REDIRECT
+          - FUNNEL_LINK
+          - HOSTED
+          - LANDING_PAGE
+          - WEB_FORM
+          - SURVEY
+          - UPDATE
+          - UPDATE_OPT_OUT
+          - OPT_OUT
+          - CONFIRM
+          - MESSAGE
+          - AUTHORING_MESSAGE
+          - MANUAL
+          - CLOSE
+          - DISPLAY_TEXT_AND_BUTTON
+          - ERROR
+          - HOSTED_PAGE
+          example: REDIRECT
+        webform_type:
+          type: string
+          description: The type of webform this is
+          enum:
+          - LEGACY
+          - STANDALONE
+          - FUNNEL
+          - LANDING_PAGE
+          - SURVEY
+          - INTERNAL
+          - TWITTER
+          - UNKNOWN
+          example: STANDALONE
+        create_time:
+          type: string
+          format: date-time
+          description: When the webform was created
+          example: '2024-01-15T10:30:00Z'
+        update_time:
+          type: string
+          format: date-time
+          description: When the webform was last updated
+          example: '2024-06-20T14:45:00Z'
+    ListWebformsResponse:
+      type: object
+      properties:
+        webforms:
+          type: array
+          description: The webforms in the current page
+          items:
+            $ref: '#/components/schemas/Webform'
+        next_page_token:
+          type: string
+    Throwable:
+      title: Throwable
+      type: object
+      properties:
+        cause:
+          $ref: '#/components/schemas/Throwable'
+        localizedMessage:
+          type: string
+        message:
+          type: string
+        stackTrace:
+          type: array
+          items:
+            title: StackTraceElement
+            type: object
+            properties:
+              classLoaderName:
+                type: string
+              className:
+                type: string
+              fileName:
+                type: string
+              lineNumber:
+                type: integer
+                format: int32
+              methodName:
+                type: string
+              moduleName:
+                type: string
+              moduleVersion:
+                type: string
+              nativeMethod:
+                type: boolean
+        suppressed:
+          type: array
+          items:
+            $ref: '#/components/schemas/Throwable'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+          tokenUrl: https://api.infusionsoft.com/token
+          scopes: {}
+x-refined-from:
+- infusionsoft-keap-sdk-v2-swagger-original.yml
+- infusionsoft-rest-v2-2025-11-05-openapi-original.json
+- infusionsoft-rest-v2-openapi-original.json
+- infusionsoft-rest-v2-openapi.json

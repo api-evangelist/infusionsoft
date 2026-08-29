@@ -1,0 +1,5208 @@
+openapi: 3.2.0
+info:
+  title: Infusionsoft Appointment API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: '1.0'
+  description: 'Operations tagged Appointment across 3 of this provider''s published API definitions: infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v1-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.infusionsoft.com/crm/rest
+- url: https://api.infusionsoft.com/crm
+tags:
+- name: Appointment
+  description: Access Appointment objects stored in Keap Max Classic.  Appointment objects stored in Keap Pro or Keap Max are not available via these methods.
+paths:
+  /v1/appointments:
+    get:
+      tags:
+      - Appointment
+      summary: List Appointments
+      description: Retrieves all appointments for the authenticated user
+      operationId: listAppointmentsUsingGET
+      parameters:
+      - name: contact_id
+        in: query
+        description: Optionally find appointments with a contact
+        schema:
+          type: integer
+          format: int64
+        example: 0
+      - name: limit
+        in: query
+        description: Sets a total of items to return
+        schema:
+          type: integer
+          format: int32
+        example: 0
+      - name: offset
+        in: query
+        description: Sets a beginning range of items to return
+        schema:
+          type: integer
+          format: int32
+        example: 0
+      - name: since
+        in: query
+        description: Date to start searching from ex. `2017-01-01T22:17:59.039Z`
+        schema:
+          type: string
+      - name: until
+        in: query
+        description: Date to search to ex. `2017-01-01T22:17:59.039Z`
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: AppointmentList
+                type: object
+                properties:
+                  appointments:
+                    type: array
+                    items:
+                      title: Appointment
+                      required:
+                      - end_date
+                      - start_date
+                      - title
+                      type: object
+                      properties:
+                        contact_id:
+                          type: integer
+                          description: Required for pop-up reminders
+                          format: int64
+                        description:
+                          type: string
+                        end_date:
+                          type: string
+                          format: date-time
+                          example: '2019-08-24T15:15:22.000Z'
+                          description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T15:15:22.000Z)
+                        location:
+                          type: string
+                        remind_time:
+                          type: integer
+                          description: Value in minutes before start_date to show pop-up reminder.  Acceptable values are [5,10,15,30,60,120,240,480,1440,2880]
+                          format: int32
+                        start_date:
+                          type: string
+                          format: date-time
+                          example: '2019-08-24T14:15:22.000Z'
+                          description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T14:15:22.000Z)
+                        title:
+                          type: string
+                        user:
+                          type: integer
+                          description: Required only for pop-up reminders
+                          format: int64
+                  count:
+                    type: integer
+                    format: int32
+                  next:
+                    type: string
+                  previous:
+                    type: string
+                  sync_token:
+                    type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+    post:
+      tags:
+      - Appointment
+      summary: Create an Appointment
+      description: Creates a new appointment as the authenticated user
+      operationId: createAppointmentUsingPOST
+      requestBody:
+        description: appointment
+        content:
+          application/json:
+            schema:
+              title: Appointment
+              required:
+              - end_date
+              - start_date
+              - title
+              type: object
+              properties:
+                contact_id:
+                  type: integer
+                  description: Required for pop-up reminders
+                  format: int64
+                description:
+                  type: string
+                end_date:
+                  type: string
+                  format: date-time
+                  example: '2019-08-24T15:15:22.000Z'
+                  description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T15:15:22.000Z)
+                location:
+                  type: string
+                remind_time:
+                  type: integer
+                  description: Value in minutes before start_date to show pop-up reminder.  Acceptable values are [5,10,15,30,60,120,240,480,1440,2880]
+                  format: int32
+                start_date:
+                  type: string
+                  format: date-time
+                  example: '2019-08-24T14:15:22.000Z'
+                  description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T14:15:22.000Z)
+                title:
+                  type: string
+                user:
+                  type: integer
+                  description: Required only for pop-up reminders
+                  format: int64
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                title: Appointment
+                required:
+                - end_date
+                - start_date
+                - title
+                type: object
+                properties:
+                  contact_id:
+                    type: integer
+                    description: Required for pop-up reminders
+                    format: int64
+                  description:
+                    type: string
+                  end_date:
+                    type: string
+                    format: date-time
+                    example: '2019-08-24T15:15:22.000Z'
+                    description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T15:15:22.000Z)
+                  location:
+                    type: string
+                  remind_time:
+                    type: integer
+                    description: Value in minutes before start_date to show pop-up reminder.  Acceptable values are [5,10,15,30,60,120,240,480,1440,2880]
+                    format: int32
+                  start_date:
+                    type: string
+                    format: date-time
+                    example: '2019-08-24T14:15:22.000Z'
+                    description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T14:15:22.000Z)
+                  title:
+                    type: string
+                  user:
+                    type: integer
+                    description: Required only for pop-up reminders
+                    format: int64
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+      x-codegen-request-body-name: appointment
+    servers:
+    - url: https://api.infusionsoft.com/crm/rest
+  /v1/appointments/model:
+    get:
+      tags:
+      - Appointment
+      summary: Retrieve Appointment Model
+      description: Get the custom fields for the Appointment object
+      operationId: retrieveAppointmentModelUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: ObjectModel
+                type: object
+                properties:
+                  custom_fields:
+                    type: array
+                    items:
+                      title: CustomFieldMetaData
+                      type: object
+                      properties:
+                        default_value:
+                          type: string
+                        field_name:
+                          type: string
+                        field_type:
+                          type: string
+                          enum:
+                          - Currency
+                          - Date
+                          - DateTime
+                          - DayOfWeek
+                          - Drilldown
+                          - Email
+                          - Month
+                          - ListBox
+                          - Name
+                          - WholeNumber
+                          - DecimalNumber
+                          - Percent
+                          - PhoneNumber
+                          - Radio
+                          - Dropdown
+                          - SocialSecurityNumber
+                          - State
+                          - Text
+                          - TextArea
+                          - User
+                          - UserListBox
+                          - Website
+                          - Year
+                          - YesNo
+                        id:
+                          type: integer
+                          format: int64
+                        label:
+                          type: string
+                        options:
+                          type: array
+                          items:
+                            title: CustomFieldOption
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              label:
+                                type: string
+                              options:
+                                type: array
+                                items:
+                                  $ref: '#/components/schemas/CustomFieldOption'
+                        record_type:
+                          type: string
+                          enum:
+                          - CONTACT
+                          - REFERRAL_PARTNER
+                          - OPPORTUNITY
+                          - TASK_NOTE_APPOINTMENT
+                          - COMPANY
+                          - ORDER
+                          - SUBSCRIPTION
+                  optional_properties:
+                    type: array
+                    items:
+                      type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+    servers:
+    - url: https://api.infusionsoft.com/crm/rest
+  /v1/appointments/model/customFields:
+    post:
+      tags:
+      - Appointment
+      summary: Create a Custom Field
+      description: Adds a custom field of the specified type and options to the Appointment object.
+      operationId: createAppointmentCustomFieldUsingPOST
+      requestBody:
+        description: customField
+        content:
+          application/json:
+            schema:
+              title: CreateRestCustomField
+              required:
+              - field_type
+              - label
+              type: object
+              properties:
+                field_type:
+                  type: string
+                  enum:
+                  - Currency
+                  - Date
+                  - DateTime
+                  - DayOfWeek
+                  - Drilldown
+                  - Email
+                  - Month
+                  - ListBox
+                  - Name
+                  - WholeNumber
+                  - DecimalNumber
+                  - Percent
+                  - PhoneNumber
+                  - Radio
+                  - Dropdown
+                  - SocialSecurityNumber
+                  - State
+                  - Text
+                  - TextArea
+                  - User
+                  - UserListBox
+                  - Website
+                  - Year
+                  - YesNo
+                group_id:
+                  type: integer
+                  description: An optional tab group to place the field under in the interface.  If not specified, will default to the 'Custom Fields' tab.
+                  format: int64
+                label:
+                  type: string
+                options:
+                  type: array
+                  items:
+                    title: CreateRestCustomFieldOption
+                    type: object
+                    properties:
+                      label:
+                        type: string
+                      options:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/CreateRestCustomFieldOption'
+                user_group_id:
+                  type: integer
+                  description: An optional user group to choose from when selecting values for User or UserListBox fields.
+                  format: int64
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                title: CustomFieldMetaData
+                type: object
+                properties:
+                  default_value:
+                    type: string
+                  field_name:
+                    type: string
+                  field_type:
+                    type: string
+                    enum:
+                    - Currency
+                    - Date
+                    - DateTime
+                    - DayOfWeek
+                    - Drilldown
+                    - Email
+                    - Month
+                    - ListBox
+                    - Name
+                    - WholeNumber
+                    - DecimalNumber
+                    - Percent
+                    - PhoneNumber
+                    - Radio
+                    - Dropdown
+                    - SocialSecurityNumber
+                    - State
+                    - Text
+                    - TextArea
+                    - User
+                    - UserListBox
+                    - Website
+                    - Year
+                    - YesNo
+                  id:
+                    type: integer
+                    format: int64
+                  label:
+                    type: string
+                  options:
+                    type: array
+                    items:
+                      title: CustomFieldOption
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        label:
+                          type: string
+                        options:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/CustomFieldOption'
+                  record_type:
+                    type: string
+                    enum:
+                    - CONTACT
+                    - REFERRAL_PARTNER
+                    - OPPORTUNITY
+                    - TASK_NOTE_APPOINTMENT
+                    - COMPANY
+                    - ORDER
+                    - SUBSCRIPTION
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+      x-codegen-request-body-name: customField
+    servers:
+    - url: https://api.infusionsoft.com/crm/rest
+  /v1/appointments/{appointmentId}:
+    get:
+      tags:
+      - Appointment
+      summary: Retrieve an Appointment
+      description: Retrieves a specific appointment with respect to user permissions. The authenticated user will need the "can view all records" permission for Task/Appt/Notes
+      operationId: getAppointmentUsingGET
+      parameters:
+      - name: appointmentId
+        in: path
+        description: appointmentId
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Appointment
+                required:
+                - end_date
+                - start_date
+                - title
+                type: object
+                properties:
+                  contact_id:
+                    type: integer
+                    description: Required for pop-up reminders
+                    format: int64
+                  description:
+                    type: string
+                  end_date:
+                    type: string
+                    format: date-time
+                    example: '2019-08-24T15:15:22.000Z'
+                    description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T15:15:22.000Z)
+                  location:
+                    type: string
+                  remind_time:
+                    type: integer
+                    description: Value in minutes before start_date to show pop-up reminder.  Acceptable values are [5,10,15,30,60,120,240,480,1440,2880]
+                    format: int32
+                  start_date:
+                    type: string
+                    format: date-time
+                    example: '2019-08-24T14:15:22.000Z'
+                    description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T14:15:22.000Z)
+                  title:
+                    type: string
+                  user:
+                    type: integer
+                    description: Required only for pop-up reminders
+                    format: int64
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+    put:
+      tags:
+      - Appointment
+      summary: Replace an Appointment
+      description: Replaces all values of a given appointment
+      operationId: updateAppointmentUsingPUT
+      parameters:
+      - name: appointmentId
+        in: path
+        description: appointmentId
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: appointmentDTO
+        content:
+          application/json:
+            schema:
+              title: Appointment
+              required:
+              - end_date
+              - start_date
+              - title
+              type: object
+              properties:
+                contact_id:
+                  type: integer
+                  description: Required for pop-up reminders
+                  format: int64
+                description:
+                  type: string
+                end_date:
+                  type: string
+                  format: date-time
+                  example: '2019-08-24T15:15:22.000Z'
+                  description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T15:15:22.000Z)
+                location:
+                  type: string
+                remind_time:
+                  type: integer
+                  description: Value in minutes before start_date to show pop-up reminder.  Acceptable values are [5,10,15,30,60,120,240,480,1440,2880]
+                  format: int32
+                start_date:
+                  type: string
+                  format: date-time
+                  example: '2019-08-24T14:15:22.000Z'
+                  description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T14:15:22.000Z)
+                title:
+                  type: string
+                user:
+                  type: integer
+                  description: Required only for pop-up reminders
+                  format: int64
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Appointment
+                required:
+                - end_date
+                - start_date
+                - title
+                type: object
+                properties:
+                  contact_id:
+                    type: integer
+                    description: Required for pop-up reminders
+                    format: int64
+                  description:
+                    type: string
+                  end_date:
+                    type: string
+                    format: date-time
+                    example: '2019-08-24T15:15:22.000Z'
+                    description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T15:15:22.000Z)
+                  location:
+                    type: string
+                  remind_time:
+                    type: integer
+                    description: Value in minutes before start_date to show pop-up reminder.  Acceptable values are [5,10,15,30,60,120,240,480,1440,2880]
+                    format: int32
+                  start_date:
+                    type: string
+                    format: date-time
+                    example: '2019-08-24T14:15:22.000Z'
+                    description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T14:15:22.000Z)
+                  title:
+                    type: string
+                  user:
+                    type: integer
+                    description: Required only for pop-up reminders
+                    format: int64
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+      x-codegen-request-body-name: appointmentDTO
+    delete:
+      tags:
+      - Appointment
+      summary: Delete an Appointment
+      description: Deletes the specified appointment
+      operationId: deleteAppointmentUsingDELETE
+      parameters:
+      - name: appointmentId
+        in: path
+        description: appointmentId
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+    patch:
+      tags:
+      - Appointment
+      summary: Update an Appointment
+      description: Updates the provided values of a given appointment
+      operationId: updatePropertiesOnAppointmentUsingPATCH
+      parameters:
+      - name: appointmentId
+        in: path
+        description: appointmentId
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        description: appointmentDTO
+        content:
+          application/json:
+            schema:
+              title: Appointment
+              required:
+              - end_date
+              - start_date
+              - title
+              type: object
+              properties:
+                contact_id:
+                  type: integer
+                  description: Required for pop-up reminders
+                  format: int64
+                description:
+                  type: string
+                end_date:
+                  type: string
+                  format: date-time
+                  example: '2019-08-24T15:15:22.000Z'
+                  description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T15:15:22.000Z)
+                location:
+                  type: string
+                remind_time:
+                  type: integer
+                  description: Value in minutes before start_date to show pop-up reminder.  Acceptable values are [5,10,15,30,60,120,240,480,1440,2880]
+                  format: int32
+                start_date:
+                  type: string
+                  format: date-time
+                  example: '2019-08-24T14:15:22.000Z'
+                  description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T14:15:22.000Z)
+                title:
+                  type: string
+                user:
+                  type: integer
+                  description: Required only for pop-up reminders
+                  format: int64
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Appointment
+                required:
+                - end_date
+                - start_date
+                - title
+                type: object
+                properties:
+                  contact_id:
+                    type: integer
+                    description: Required for pop-up reminders
+                    format: int64
+                  description:
+                    type: string
+                  end_date:
+                    type: string
+                    format: date-time
+                    example: '2019-08-24T15:15:22.000Z'
+                    description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T15:15:22.000Z)
+                  location:
+                    type: string
+                  remind_time:
+                    type: integer
+                    description: Value in minutes before start_date to show pop-up reminder.  Acceptable values are [5,10,15,30,60,120,240,480,1440,2880]
+                    format: int32
+                  start_date:
+                    type: string
+                    format: date-time
+                    example: '2019-08-24T14:15:22.000Z'
+                    description: Required. ISO 8601 datetime format with milliseconds (e.g., 2019-08-24T14:15:22.000Z)
+                  title:
+                    type: string
+                  user:
+                    type: integer
+                    description: Required only for pop-up reminders
+                    format: int64
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                title: Error
+                type: object
+                properties:
+                  cause:
+                    title: Throwable
+                    type: object
+                    properties:
+                      cause:
+                        $ref: '#/components/schemas/Throwable'
+                      localizedMessage:
+                        type: string
+                      message:
+                        type: string
+                      stackTrace:
+                        type: array
+                        items:
+                          title: StackTraceElement
+                          type: object
+                          properties:
+                            classLoaderName:
+                              type: string
+                            className:
+                              type: string
+                            fileName:
+                              type: string
+                            lineNumber:
+                              type: integer
+                              format: int32
+                            methodName:
+                              type: string
+                            moduleName:
+                              type: string
+                            moduleVersion:
+                              type: string
+                            nativeMethod:
+                              type: boolean
+                      suppressed:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Throwable'
+                  localizedMessage:
+                    type: string
+                  message:
+                    type: string
+                  stackTrace:
+                    type: array
+                    items:
+                      title: StackTraceElement
+                      type: object
+                      properties:
+                        classLoaderName:
+                          type: string
+                        className:
+                          type: string
+                        fileName:
+                          type: string
+                        lineNumber:
+                          type: integer
+                          format: int32
+                        methodName:
+                          type: string
+                        moduleName:
+                          type: string
+                        moduleVersion:
+                          type: string
+                        nativeMethod:
+                          type: boolean
+                  suppressed:
+                    type: array
+                    items:
+                      title: Throwable
+                      type: object
+                      properties:
+                        cause:
+                          $ref: '#/components/schemas/Throwable'
+                        localizedMessage:
+                          type: string
+                        message:
+                          type: string
+                        stackTrace:
+                          type: array
+                          items:
+                            title: StackTraceElement
+                            type: object
+                            properties:
+                              classLoaderName:
+                                type: string
+                              className:
+                                type: string
+                              fileName:
+                                type: string
+                              lineNumber:
+                                type: integer
+                                format: int32
+                              methodName:
+                                type: string
+                              moduleName:
+                                type: string
+                              moduleVersion:
+                                type: string
+                              nativeMethod:
+                                type: boolean
+                        suppressed:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Throwable'
+      deprecated: false
+      x-codegen-request-body-name: appointmentDTO
+    servers:
+    - url: https://api.infusionsoft.com/crm/rest
+  /rest/v1/appointments/{appointmentId}:
+    get:
+      tags:
+      - Appointment
+      summary: Retrieve an Appointment
+      description: Retrieves a specific appointment with respect to user permissions. The authenticated user will need the "can view all records" permission for Task/Appt/Notes
+      operationId: getAppointment
+      parameters:
+      - name: appointmentId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+      security:
+      - oauth2: []
+    put:
+      tags:
+      - Appointment
+      summary: Replace an Appointment
+      description: Replaces all values of a given appointment
+      operationId: updateAppointment
+      parameters:
+      - name: appointmentId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Appointment'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+      security:
+      - oauth2: []
+    delete:
+      tags:
+      - Appointment
+      summary: Delete an Appointment
+      description: Deletes the specified appointment
+      operationId: deleteAppointment
+      parameters:
+      - name: appointmentId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '204':
+          description: No Content
+      security:
+      - oauth2: []
+    patch:
+      tags:
+      - Appointment
+      summary: Update an Appointment
+      description: Updates the provided values of a given appointment
+      operationId: updatePropertiesOnAppointment
+      parameters:
+      - name: appointmentId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Appointment'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://api.infusionsoft.com/crm
+  /rest/v1/appointments/model/customFields:
+    post:
+      tags:
+      - Appointment
+      summary: Create a Custom Field
+      description: Adds a custom field of the specified type and options to the Appointment object.
+      operationId: createAppointmentCustomField
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRestCustomField'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomFieldMetaData'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://api.infusionsoft.com/crm
+  /rest/v1/appointments:
+    get:
+      tags:
+      - Appointment
+      summary: List Appointments
+      description: Retrieves all appointments for the authenticated user
+      operationId: listAppointments
+      parameters:
+      - name: appointmentSearchCommand
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/AppointmentSearchCommand'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentList'
+      security:
+      - oauth2: []
+    post:
+      tags:
+      - Appointment
+      summary: Create an Appointment
+      description: Creates a new appointment as the authenticated user
+      operationId: createAppointment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Appointment'
+        required: true
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://api.infusionsoft.com/crm
+  /rest/v1/appointments/model:
+    get:
+      tags:
+      - Appointment
+      summary: Retrieve Appointment Model
+      description: Get the custom fields for the Appointment object
+      operationId: retrieveAppointmentModel
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectModel'
+      security:
+      - oauth2: []
+    servers:
+    - url: https://api.infusionsoft.com/crm
+components:
+  schemas:
+    CustomFieldOption:
+      title: CustomFieldOption
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldOption'
+    CreateRestCustomFieldOption:
+      title: CreateRestCustomFieldOption
+      type: object
+      properties:
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateRestCustomFieldOption'
+    Throwable:
+      title: Throwable
+      type: object
+      properties:
+        cause:
+          $ref: '#/components/schemas/Throwable'
+        localizedMessage:
+          type: string
+        message:
+          type: string
+        stackTrace:
+          type: array
+          items:
+            title: StackTraceElement
+            type: object
+            properties:
+              classLoaderName:
+                type: string
+              className:
+                type: string
+              fileName:
+                type: string
+              lineNumber:
+                type: integer
+                format: int32
+              methodName:
+                type: string
+              moduleName:
+                type: string
+              moduleVersion:
+                type: string
+              nativeMethod:
+                type: boolean
+        suppressed:
+          type: array
+          items:
+            $ref: '#/components/schemas/Throwable'
+    Appointment:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        user:
+          type: integer
+          format: int64
+          description: Required only for pop-up reminders
+        location:
+          type: string
+        contact_id:
+          type: integer
+          format: int64
+          description: Required for pop-up reminders
+        start_date:
+          type: string
+          format: date-time
+          example: '2024-01-15T09:00:00.000Z'
+        end_date:
+          type: string
+          format: date-time
+          example: '2024-01-15T10:00:00.000Z'
+        remind_time:
+          type: integer
+          format: int32
+          description: Value in minutes before start_date to show pop-up reminder.
+          enum:
+          - '5'
+          - '10'
+          - '15'
+          - '30'
+          - '60'
+          - '120'
+          - '240'
+          - '480'
+          - '1440'
+          - '2880'
+          example: 30
+      required:
+      - end_date
+      - start_date
+      - title
+    ObjectModel:
+      type: object
+      properties:
+        custom_fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldMetaData'
+        optional_properties:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+    CustomFieldMetaData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldOption_2'
+        record_type:
+          type: string
+          enum:
+          - CONTACT
+          - REFERRAL_PARTNER
+          - OPPORTUNITY
+          - TASK_NOTE_APPOINTMENT
+          - COMPANY
+          - ORDER
+          - SUBSCRIPTION
+        field_type:
+          type: string
+          enum:
+          - Currency
+          - Date
+          - DateTime
+          - DayOfWeek
+          - Drilldown
+          - Email
+          - Month
+          - ListBox
+          - Name
+          - WholeNumber
+          - DecimalNumber
+          - Percent
+          - PhoneNumber
+          - Radio
+          - Dropdown
+          - SocialSecurityNumber
+          - State
+          - Text
+          - TextArea
+          - User
+          - UserListBox
+          - Website
+          - Year
+          - YesNo
+        field_name:
+          type: string
+        default_value:
+          type: string
+    DefaultHttpStatusCode:
+      allOf:
+      - $ref: '#/components/schemas/HttpStatusCode'
+    ModelAndView:
+      type: object
+      properties:
+        view:
+          $ref: '#/components/schemas/View'
+        model:
+          type: object
+          additionalProperties: {}
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/DefaultHttpStatusCode'
+          - $ref: '#/components/schemas/HttpStatus'
+        modelMap:
+          type: object
+          additionalProperties: {}
+          properties:
+            empty:
+              type: boolean
+        reference:
+          type: boolean
+        empty:
+          type: boolean
+        viewName:
+          type: string
+    HttpStatusCode:
+      type: object
+      properties:
+        error:
+          type: boolean
+        is1xxInformational:
+          type: boolean
+        is2xxSuccessful:
+          type: boolean
+        is3xxRedirection:
+          type: boolean
+        is4xxClientError:
+          type: boolean
+        is5xxServerError:
+          type: boolean
+    HttpStatus:
+      allOf:
+      - $ref: '#/components/schemas/HttpStatusCode'
+      enum:
+      - 100 CONTINUE
+      - 101 SWITCHING_PROTOCOLS
+      - 102 PROCESSING
+      - 103 EARLY_HINTS
+      - 200 OK
+      - 201 CREATED
+      - 202 ACCEPTED
+      - 203 NON_AUTHORITATIVE_INFORMATION
+      - 204 NO_CONTENT
+      - 205 RESET_CONTENT
+      - 206 PARTIAL_CONTENT
+      - 207 MULTI_STATUS
+      - 208 ALREADY_REPORTED
+      - 226 IM_USED
+      - 300 MULTIPLE_CHOICES
+      - 301 MOVED_PERMANENTLY
+      - 302 FOUND
+      - 303 SEE_OTHER
+      - 304 NOT_MODIFIED
+      - 307 TEMPORARY_REDIRECT
+      - 308 PERMANENT_REDIRECT
+      - 400 BAD_REQUEST
+      - 401 UNAUTHORIZED
+      - 402 PAYMENT_REQUIRED
+      - 403 FORBIDDEN
+      - 404 NOT_FOUND
+      - 405 METHOD_NOT_ALLOWED
+      - 406 NOT_ACCEPTABLE
+      - 407 PROXY_AUTHENTICATION_REQUIRED
+      - 408 REQUEST_TIMEOUT
+      - 409 CONFLICT
+      - 410 GONE
+      - 411 LENGTH_REQUIRED
+      - 412 PRECONDITION_FAILED
+      - 413 CONTENT_TOO_LARGE
+      - 413 PAYLOAD_TOO_LARGE
+      - 414 URI_TOO_LONG
+      - 415 UNSUPPORTED_MEDIA_TYPE
+      - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+      - 417 EXPECTATION_FAILED
+      - 418 I_AM_A_TEAPOT
+      - 421 MISDIRECTED_REQUEST
+      - 422 UNPROCESSABLE_CONTENT
+      - 422 UNPROCESSABLE_ENTITY
+      - 423 LOCKED
+      - 424 FAILED_DEPENDENCY
+      - 425 TOO_EARLY
+      - 426 UPGRADE_REQUIRED
+      - 428 PRECONDITION_REQUIRED
+      - 429 TOO_MANY_REQUESTS
+      - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+      - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+      - 500 INTERNAL_SERVER_ERROR
+      - 501 NOT_IMPLEMENTED
+      - 502 BAD_GATEWAY
+      - 503 SERVICE_UNAVAILABLE
+      - 504 GATEWAY_TIMEOUT
+      - 505 HTTP_VERSION_NOT_SUPPORTED
+      - 506 VARIANT_ALSO_NEGOTIATES
+      - 507 INSUFFICIENT_STORAGE
+      - 508 LOOP_DETECTED
+      - 509 BANDWIDTH_LIMIT_EXCEEDED
+      - 510 NOT_EXTENDED
+      - 511 NETWORK_AUTHENTICATION_REQUIRED
+    CustomFieldOption_2:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+    CreateRestCustomField:
+      type: object
+      properties:
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateRestCustomFieldOption_2'
+        field_type:
+          type: string
+          enum:
+          - Currency
+          - Date
+          - DateTime
+          - DayOfWeek
+          - Drilldown
+          - Email
+          - Month
+          - ListBox
+          - Name
+          - WholeNumber
+          - DecimalNumber
+          - Percent
+          - PhoneNumber
+          - Radio
+          - Dropdown
+          - SocialSecurityNumber
+          - State
+          - Text
+          - TextArea
+          - User
+          - UserListBox
+          - Website
+          - Year
+          - YesNo
+        group_id:
+          type: integer
+          format: int64
+          description: An optional tab group to place the field under in the interface.  If not specified, will default to the 'Custom Fields' tab.
+        user_group_id:
+          type: integer
+          format: int64
+          description: An optional user group to choose from when selecting values for User or UserListBox fields.
+      required:
+      - field_type
+      - label
+    AppointmentList:
+      type: object
+      properties:
+        appointments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Appointment'
+        count:
+          type: integer
+          format: int32
+        next:
+          type: string
+        previous:
+          type: string
+        sync_token:
+          type: string
+    CreateRestCustomFieldOption_2:
+      type: object
+      properties:
+        label:
+          type: string
+    View:
+      type: object
+      properties:
+        contentType:
+          type: string
+    AppointmentSearchCommand:
+      type: object
+      properties:
+        since:
+          type: string
+        until:
+          type: string
+        limit:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int32
+        contact_id:
+          type: integer
+          format: int64
+        sinceAsDate:
+          type: string
+          format: date-time
+        untilAsDate:
+          type: string
+          format: date-time
+    CustomFieldMetaData_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldOption_3'
+        record_type:
+          type: string
+          enum:
+          - CONTACT
+          - REFERRAL_PARTNER
+          - OPPORTUNITY
+          - TASK_NOTE_APPOINTMENT
+          - COMPANY
+          - ORDER
+          - SUBSCRIPTION
+        field_type:
+          type: string
+          enum:
+          - Currency
+          - Date
+          - DateTime
+          - DayOfWeek
+          - Drilldown
+          - Email
+          - Month
+          - ListBox
+          - Name
+          - WholeNumber
+          - DecimalNumber
+          - Percent
+          - PhoneNumber
+          - Radio
+          - Dropdown
+          - SocialSecurityNumber
+          - State
+          - Text
+          - TextArea
+          - User
+          - UserListBox
+          - Website
+          - Year
+          - YesNo
+        field_name:
+          type: string
+        default_value:
+          type: string
+    CustomFieldOption_3:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+    CreateRestCustomField_2:
+      type: object
+      properties:
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateRestCustomFieldOption_3'
+        field_type:
+          type: string
+          enum:
+          - Currency
+          - Date
+          - DateTime
+          - DayOfWeek
+          - Drilldown
+          - Email
+          - Month
+          - ListBox
+          - Name
+          - WholeNumber
+          - DecimalNumber
+          - Percent
+          - PhoneNumber
+          - Radio
+          - Dropdown
+          - SocialSecurityNumber
+          - State
+          - Text
+          - TextArea
+          - User
+          - UserListBox
+          - Website
+          - Year
+          - YesNo
+        group_id:
+          type: integer
+          format: int64
+          description: An optional tab group to place the field under in the interface.  If not specified, will default to the 'Custom Fields' tab.
+        user_group_id:
+          type: integer
+          format: int64
+          description: An optional user group to choose from when selecting values for User or UserListBox fields.
+      required:
+      - field_type
+      - label
+    CreateRestCustomFieldOption_3:
+      type: object
+      properties:
+        label:
+          type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+          tokenUrl: https://api.infusionsoft.com/token
+x-refined-from:
+- infusionsoft-rest-v1-2025-11-05-openapi-original.json
+- infusionsoft-rest-v1-openapi-original.json
+- infusionsoft-rest-v1-openapi.json

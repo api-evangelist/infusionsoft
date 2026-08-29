@@ -1733,6 +1733,9 @@ apis:
   - type: OpenAPI
     url: openapi/infusionsoft-user-info-api-openapi.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/infusionsoft-capability-edges.yml
+    name: Infusionsoft (Keap) Business Capability Map
   - type: Overlay
     url: overlays/infusionsoft-rest-v2-overlay.yaml
   - type: Overlay

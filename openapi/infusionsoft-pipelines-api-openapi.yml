@@ -1,0 +1,893 @@
+openapi: 3.2.0
+info:
+  title: Infusionsoft Pipelines API
+  version: v1
+  contact:
+    name: Gryffindor
+    email: gryffindor@keap.com
+  description: 'Operations tagged Pipelines across 2 of this provider''s published API definitions: infusionsoft-pipelines-openapi-original.yml, infusionsoft-pipelines-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.infusionsoft.com
+tags:
+- name: Pipelines
+paths:
+  /v2/pipelines:
+    get:
+      tags:
+      - Pipelines
+      summary: Lists entities based on the provided ListCommand.
+      description: Lists entities based on the provided ListCommand.
+      operationId: listPipeline
+      parameters:
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      responses:
+        '200':
+          description: a response containing the list of entities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineListResponse'
+      security:
+      - BearerAuth: []
+    post:
+      tags:
+      - Pipelines
+      summary: Creates a new entity.
+      description: Creates a new entity.
+      operationId: createPipeline
+      requestBody:
+        description: the create request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePipelineRequest'
+        required: true
+      responses:
+        '201':
+          description: The created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/pipelines/summaries:
+    get:
+      tags:
+      - Pipelines
+      summary: Retrieves a list of pipeline summaries.
+      description: Retrieves a list of pipeline summaries.
+      operationId: listPipelineSummaries
+      parameters:
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      responses:
+        '200':
+          description: the response containing the list of pipeline summaries and the next page token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineSummariesListResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/pipelines/{id}:
+    get:
+      tags:
+      - Pipelines
+      summary: Retrieves an entity by its identifier.
+      description: Retrieves an entity by its identifier.
+      operationId: getPipeline
+      parameters:
+      - name: id
+        in: path
+        description: the entity identifier
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+      security:
+      - BearerAuth: []
+    delete:
+      tags:
+      - Pipelines
+      summary: Deletes a pipeline.
+      description: Deletes a pipeline.
+      operationId: deletePipeline
+      parameters:
+      - name: new_stage_id
+        in: query
+        description: the new stage identifier, can be null
+        schema:
+          type:
+          - string
+          - 'null'
+      - name: id
+        in: path
+        description: the pipeline identifier
+        required: true
+        schema:
+          type: string
+      - name: allow_cleanup
+        in: query
+        description: flag indicating whether cleanup is allowed, can be null
+        schema:
+          type:
+          - boolean
+          - 'null'
+      responses:
+        '204':
+          description: A response indicating no content
+      security:
+      - BearerAuth: []
+    patch:
+      tags:
+      - Pipelines
+      summary: Updates an existing entity.
+      description: Updates an existing entity.
+      operationId: updatePipeline
+      parameters:
+      - name: id
+        in: path
+        description: the entity identifier
+        required: true
+        schema:
+          type: string
+      - name: update_mask
+        in: query
+        description: the fields to update
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      requestBody:
+        description: the update request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePipelineRequest'
+        required: true
+      responses:
+        '200':
+          description: The updated entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/pipelines/{id}/bulk:
+    patch:
+      tags:
+      - Pipelines
+      summary: Updates a pipeline's deals in bulk.
+      description: Updates a pipeline's deals in bulk.
+      operationId: updatePipelinesInBulk
+      parameters:
+      - name: id
+        in: path
+        description: the pipeline ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDealsInBulkRequest'
+        required: true
+      responses:
+        '200':
+          description: the response containing the results of the bulk update operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateDealsInBulkResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/pipelines/{id}/deals:
+    get:
+      tags:
+      - Pipelines
+      summary: Retrieves the list of deals for a specific pipeline.
+      description: Retrieves the list of deals for a specific pipeline.
+      operationId: getPipelineDeals
+      parameters:
+      - name: id
+        in: path
+        description: the pipeline identifier
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      responses:
+        '200':
+          description: a Mono emitting the count of deals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineDealsListResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/pipelines/{id}/outcomes:
+    get:
+      tags:
+      - Pipelines
+      summary: Gets the outcome labels for a pipeline.
+      description: Gets the outcome labels for a pipeline.
+      operationId: getPipelineOutcomeLabels
+      parameters:
+      - name: id
+        in: path
+        description: the pipeline identifier
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      responses:
+        '200':
+          description: the updated list of the pipeline's outcome labels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineOutcomeLabelListResponse'
+      security:
+      - BearerAuth: []
+    patch:
+      tags:
+      - Pipelines
+      summary: Sets the outcome labels for a pipeline.
+      description: Sets the outcome labels for a pipeline.
+      operationId: setPipelineOutcomeLabels
+      parameters:
+      - name: id
+        in: path
+        description: the pipeline identifier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: the request containing the new outcome labels
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOutcomeLabelsRequest'
+        required: true
+      responses:
+        '200':
+          description: the updated list of the pipeline's outcome labels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineOutcomeLabelListResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/pipelines/{id}/stages:
+    get:
+      tags:
+      - Pipelines
+      summary: Retrieves a list of stages for a specific pipeline.
+      description: Retrieves a list of stages for a specific pipeline.
+      operationId: listPipelineStages
+      parameters:
+      - name: id
+        in: path
+        description: the pipeline identifier
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      responses:
+        '200':
+          description: the response containing the list of pipeline stages and the next page token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineStageListResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/pipelines/{id}:dealsCount:
+    get:
+      tags:
+      - Pipelines
+      summary: Retrieves the count of deals for a specific pipeline.
+      description: Retrieves the count of deals for a specific pipeline.
+      operationId: getDealCountForPipeline
+      parameters:
+      - name: id
+        in: path
+        description: the pipeline identifier
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      responses:
+        '200':
+          description: a Mono emitting the count of deals
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+components:
+  schemas:
+    BaseListResponse_PipelineDealWithStageName_:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+      description: The list responses.
+    PipelineOutcomeLabelListResponse:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+        outcome_labels:
+          type: array
+          description: The list of outcome labels.
+          items:
+            $ref: '#/components/schemas/PipelineOutcomeLabel'
+      description: Represents a response containing a list of pipeline outcome labels.
+    PipelineStageListResponse:
+      type: object
+      description: Response for a list of stages.
+      allOf:
+      - $ref: '#/components/schemas/BaseListResponse_Stage_'
+      - properties:
+          next_page_token:
+            type: string
+            description: Token for the next page of results.
+          stages:
+            type: array
+            description: The list of stages.
+            items:
+              $ref: '#/components/schemas/Stage'
+    CreatePipelineRequest:
+      required:
+      - name
+      - stages
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          description: The name of the pipeline.
+        stages:
+          maxItems: 100
+          minItems: 1
+          type: array
+          description: The stages of the pipeline.
+          items:
+            type: string
+      description: Request for creating a pipeline.
+    PipelineDealsListResponse:
+      type: object
+      description: Request for a list of a given deal's pipelines.
+      allOf:
+      - $ref: '#/components/schemas/BaseListResponse_PipelineDealWithStageName_'
+      - properties:
+          next_page_token:
+            type: string
+            description: Token for the next page of results.
+          deals:
+            type: array
+            description: The list of deals.
+            items:
+              $ref: '#/components/schemas/PipelineDealWithStageName'
+    BaseListResponse_Pipeline_:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+      description: The list responses.
+    PipelineSummariesListResponse:
+      type: object
+      description: Response for a list of pipeline summaries.
+      allOf:
+      - $ref: '#/components/schemas/BaseListResponse_PipelineSummary_'
+      - properties:
+          next_page_token:
+            type: string
+            description: Token for the next page of results.
+          pipeline_summaries:
+            type: array
+            description: The list of pipeline summaries.
+            items:
+              $ref: '#/components/schemas/PipelineSummary'
+    UpdateDealsInBulkResponse:
+      required:
+      - stage_move_success
+      type: object
+      properties:
+        stage_move_success:
+          type: boolean
+          description: Indicates whether the stage move was successful.
+        error_message:
+          type: string
+          description: Error message if the stage move was not successful.
+      description: Response for a bulk update for the reals in a pipeline.
+    FilterEntry:
+      required:
+      - key
+      - operator
+      - value
+      type: object
+      properties:
+        key:
+          type: string
+          description: The key of the filter entry.
+        operator:
+          description: The operator of the filter entry.
+          allOf:
+          - $ref: '#/components/schemas/FilterOperator'
+        value:
+          type: string
+          description: The value of the filter entry.
+      description: Represents an entry in a filter.
+    UpdateDealsInBulkRequest:
+      required:
+      - bulk_deal_update_type
+      - exclude_deal_ids_specified
+      - filters
+      - new_value
+      type: object
+      properties:
+        bulk_deal_update_type:
+          type: string
+          description: ''
+        new_value:
+          type: string
+          description: ''
+        deal_ids:
+          maxItems: 5000
+          minItems: 0
+          type: array
+          items:
+            type: string
+        exclude_deal_ids_specified:
+          type: boolean
+          description: ''
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterEntry'
+      description: Request for updating the deals of a pipeline.
+    UpdateOutcomeLabelsRequest:
+      required:
+      - outcome_labels
+      type: object
+      properties:
+        outcome_labels:
+          type: array
+          description: List of outcome labels to be updated.
+          items:
+            $ref: '#/components/schemas/PipelineOutcomeLabel'
+      description: Represents a request to update outcome labels for a pipeline.
+    PipelineOutcomeLabel:
+      required:
+      - value
+      type: object
+      properties:
+        value:
+          description: The status of the deal. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/DealStatus'
+        label:
+          minLength: 1
+          type:
+          - string
+          - 'null'
+          description: The label for the outcome. This field is optional but must have at least one character if provided.
+      description: Represents a label for a pipeline outcome.
+    FilterOperator:
+      type: string
+      description: Enum representing filter operators.
+      enum:
+      - EQUALS
+      - NOT_EQUALS
+      - GREATER_THAN
+      - GREATER_THAN_OR_EQUAL
+      - LESS_THAN
+      - LESS_THAN_OR_EQUAL
+      - IN
+      - NOT_IN
+      - INCLUDES_ANY
+      - EXCLUDES_ANY
+      - BETWEEN
+      - CONTAINS
+    PipelineDealWithStageName:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+        value:
+          $ref: '#/components/schemas/Money'
+        stage_id:
+          type: string
+        stage_name:
+          type: string
+        stage_assignment_time:
+          type: string
+          format: date-time
+        close_time:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        estimated_close_time:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        contact_ids:
+          type: array
+          items:
+            type: string
+        owner_ids:
+          type: array
+          items:
+            type: string
+        task_ids:
+          type: array
+          items:
+            type: string
+        status:
+          $ref: '#/components/schemas/DealStatus'
+        order:
+          type:
+          - string
+          - 'null'
+      description: A deal, including its stage name.
+    Money:
+      required:
+      - amount
+      - currency
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount of money. This field is required.
+          format: double
+        currency:
+          type: string
+          description: The currency of the money. This field is required.
+      description: Represents a monetary value with an amount and currency.
+    PipelineSummary:
+      required:
+      - pipeline_name
+      type: object
+      properties:
+        pipeline_id:
+          pattern: ^\d+$
+          type:
+          - string
+          - 'null'
+          description: The ID of the pipeline. Can be null and must be a string of digits if present.
+        pipeline_name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          description: The name of the pipeline. Must be a non-null string with a length between 1 and 255 characters.
+        stat_total_deal_count:
+          type:
+          - integer
+          - 'null'
+          description: The total count of deals in the pipeline. Can be null.
+          format: int32
+        stat_new_deal_count:
+          type:
+          - integer
+          - 'null'
+          description: The count of new deals in the pipeline. Can be null.
+          format: int32
+      description: Represents a summary of a pipeline.
+    Stage:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the model.
+        name:
+          type: string
+          description: The name of the stage.
+        pipeline_id:
+          type: string
+          description: The ID of the pipeline.
+      description: Represents a stage in a pipeline.
+    UpdatePipelineRequest:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+          description: The name of the pipeline.
+      description: Request for updating a pipeline.
+    DealStatus:
+      type: string
+      description: Enum representing the status of a deal.
+      enum:
+      - ACTIVE
+      - WON
+      - LOST
+    BaseListResponse_Stage_:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+      description: The list responses.
+    BaseListResponse_PipelineSummary_:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+      description: The list responses.
+    Pipeline:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the model.
+        name:
+          type: string
+          description: The name of the pipeline.
+      description: A pipeline
+    PipelineListResponse:
+      type: object
+      description: Response for a list of pipelines.
+      allOf:
+      - $ref: '#/components/schemas/BaseListResponse_Pipeline_'
+      - properties:
+          next_page_token:
+            type: string
+            description: Token for the next page of results.
+          pipelines:
+            type: array
+            description: The list of pipelines.
+            items:
+              $ref: '#/components/schemas/Pipeline'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+          tokenUrl: https://api.infusionsoft.com/token
+          scopes:
+            api: General API access
+x-refined-from:
+- infusionsoft-pipelines-openapi-original.yml
+- infusionsoft-pipelines-openapi.yml

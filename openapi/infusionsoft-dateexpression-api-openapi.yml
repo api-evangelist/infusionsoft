@@ -1,0 +1,121 @@
+openapi: 3.2.0
+info:
+  title: Infusionsoft Date Expression API
+  version: v1
+  contact:
+    name: Gryffindor
+    email: gryffindor@keap.com
+  description: 'Operations tagged DateExpression across 2 of this provider''s published API definitions: infusionsoft-pipelines-openapi-original.yml, infusionsoft-pipelines-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.infusionsoft.com
+tags:
+- name: DateExpression
+paths:
+  /v2/dateExpressions:
+    get:
+      tags:
+      - DateExpression
+      operationId: queryDateExpressions
+      parameters:
+      - name: time_zone
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+      - name: query
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+      responses:
+        '200':
+          description: queryDateExpressions 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DateExpressionResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+components:
+  schemas:
+    DateExpressionResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateExpression'
+    DateExpression:
+      required:
+      - date_inferred
+      - parse_end
+      - parse_start
+      - query
+      - recurring
+      - recurse_until
+      - result
+      - time_inferred
+      type: object
+      properties:
+        query:
+          type: string
+        parse_start:
+          type: integer
+          description: Where in the expression this date exists (start)
+          format: int32
+        parse_end:
+          type: integer
+          description: Where in the expression this date exists
+          format: int32
+        date_inferred:
+          type: boolean
+          description: Whether the date portion of the results has been inferred (and can be ignored)
+        time_inferred:
+          type: boolean
+          description: Whether the time portion of the results has been inferred (and can be ignored)
+        result:
+          allOf:
+          - $ref: '#/components/schemas/LogicalDate'
+          - description: ''
+        recurring:
+          type: boolean
+          description: Whether the results are recurring
+        recurse_until:
+          description: If recurring, when the recurrence ends
+          allOf:
+          - $ref: '#/components/schemas/LogicalDate'
+          - description: ''
+        complete_match:
+          type:
+          - boolean
+          - 'null'
+    LogicalDate:
+      type: object
+      properties:
+        dates:
+          type: array
+          items:
+            type: string
+            format: date-time
+        chain:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+          tokenUrl: https://api.infusionsoft.com/token
+          scopes:
+            api: General API access
+x-refined-from:
+- infusionsoft-pipelines-openapi-original.yml
+- infusionsoft-pipelines-openapi.yml

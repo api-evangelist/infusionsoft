@@ -1,0 +1,755 @@
+openapi: 3.2.0
+info:
+  title: Infusionsoft Custom Fields API
+  version: v1
+  contact:
+    name: Gryffindor
+    email: gryffindor@keap.com
+  description: 'Operations tagged Custom Fields across 2 of this provider''s published API definitions: infusionsoft-pipelines-openapi-original.yml, infusionsoft-pipelines-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.infusionsoft.com
+tags:
+- name: Custom Fields
+paths:
+  /v2/customFields:
+    get:
+      tags:
+      - Custom Fields
+      summary: Retrieves a list of custom fields in a tenant.
+      description: Retrieves a list of custom fields in a tenant.
+      operationId: getPipelineCustomFields
+      parameters:
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      responses:
+        '200':
+          description: a list of PipelineCustomFields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineCustomFields'
+    post:
+      tags:
+      - Custom Fields
+      summary: Creates a new custom field.
+      description: Creates a new custom field.
+      operationId: createPipelineCustomField
+      requestBody:
+        description: the request to create a custom field.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePipelineCustomFieldRequest'
+        required: true
+      responses:
+        '201':
+          description: The created custom field as a PipelineCustomField object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineCustomField'
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/customFields/{id}:
+    delete:
+      tags:
+      - Custom Fields
+      summary: Deletes a custom field
+      description: Deletes a custom field
+      operationId: deletePipelineCustomField
+      parameters:
+      - name: id
+        in: path
+        description: the identifier of the custom field to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: deletePipelineCustomField 204 response
+    patch:
+      tags:
+      - Custom Fields
+      summary: Updates a custom field
+      description: Updates a custom field
+      operationId: updatePipelineCustomFields
+      parameters:
+      - name: id
+        in: path
+        description: the identifier of the custom field to update
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: the request body containing updated custom field details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomFieldRequest'
+        required: true
+      responses:
+        '200':
+          description: the updated PipelineCustomField
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineCustomField'
+    servers:
+    - url: https://api.infusionsoft.com
+components:
+  schemas:
+    PipelineCustomFields:
+      required:
+      - custom_fields
+      type: object
+      description: Represents a list of custom fields in the system.
+      allOf:
+      - $ref: '#/components/schemas/BaseListResponse_PipelineCustomField_'
+      - properties:
+          next_page_token:
+            type: string
+            description: Token for the next page of results.
+          custom_fields:
+            type: array
+            description: The list of custom fields.
+            items:
+              $ref: '#/components/schemas/PipelineCustomField'
+    PipelineCustomFieldSizeValidator:
+      required:
+      - size
+      - size_type
+      type: object
+      properties:
+        size_type:
+          description: The type of size validation for the custom field. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldSizeValidationType'
+        size:
+          type: integer
+          description: The size value for the custom field.
+          format: int32
+      description: Class representing a size validator for custom fields.
+    PipelineCustomFieldRefDisplayType:
+      type: string
+      description: Enum representing the display types for a reference custom field.
+      enum:
+      - CARD
+      - DROPDOWN
+    PipelineCustomFieldOptions:
+      required:
+      - display_type
+      - groups
+      type: object
+      properties:
+        default_option_id:
+          type:
+          - string
+          - 'null'
+          description: The default option ID for the custom field.
+        display_type:
+          description: The display type of the custom field options. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldOptionDisplayType'
+        option_source:
+          description: The source of the custom field options. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldRefType'
+        groups:
+          type: array
+          description: The list of custom field option groups.
+          items:
+            $ref: '#/components/schemas/PipelineCustomFieldOptionGroup'
+      description: Class representing the options for a custom field.
+    CreatePipelineCustomFieldRequest:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          minLength: 1
+          pattern: ^[a-zA-Z]\w*$
+          type: string
+          description: The name of the custom field. This field is required.
+        type:
+          description: The type of the custom field. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldType'
+          - description: ''
+        label:
+          type:
+          - string
+          - 'null'
+          description: The label of the custom field. This field is optional.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The description of the custom field. This field is optional.
+        example_value:
+          type:
+          - object
+          - 'null'
+          description: The default value of the custom field.
+        helper_text:
+          type:
+          - string
+          - 'null'
+          description: The helper text for the custom field. This field is optional and is serialized to JSON as "helper_text".
+        default_value:
+          type:
+          - object
+          - 'null'
+          description: The default value of the custom field. This field is optional.
+        display_options:
+          description: The display options for the custom field. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldDisplayOptions'
+          - description: ''
+        options:
+          description: The options for the custom field. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldOptions'
+          - description: ''
+        validators:
+          type:
+          - array
+          - 'null'
+          description: The list of validators for the custom field. This field is optional and must be a list of valid PipelineCustomFieldPropertyValidator.
+          items:
+            $ref: '#/components/schemas/PipelineCustomFieldPropertyValidator'
+      description: Class representing a request to create a custom field.
+    PipelineCustomFieldDateTimeOptions:
+      type: object
+      properties:
+        allow_past_dates:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether past dates are allowed.
+        allow_future_dates:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether future dates are allowed.
+      description: Class representing options for date and time custom fields.
+    PipelineCustomFieldEmptyStateContent:
+      required:
+      - description
+      - title
+      type: object
+      properties:
+        title:
+          type: array
+          description: The list of titles for the empty state.
+          items:
+            type: string
+        description:
+          type: array
+          description: The list of descriptions for the empty state.
+          items:
+            type: string
+      description: Class representing the content for an empty state in custom fields.
+    PipelineCustomFieldBooleanDisplayType:
+      type: string
+      description: Enum representing the display types for a boolean custom field.
+      enum:
+      - RADIO
+      - CHECKBOX
+      - TOGGLE
+      - TOGGLE_BUTTON
+    PipelineCustomFieldPrimitiveType:
+      type: string
+      description: Enum representing various primitive types for custom fields.
+      enum:
+      - ARRAY
+      - BOOLEAN
+      - CURRENCY
+      - DATE
+      - FLEXI_DATE
+      - DATETIME
+      - DAY_OF_WEEK
+      - DECIMAL
+      - DURATION
+      - EMAIL
+      - INTEGER
+      - LONG_TEXT
+      - MONTH
+      - NAME
+      - NUMBER
+      - OBJECT
+      - PERCENT
+      - PHONE
+      - REF
+      - SEMVER
+      - TEXT
+      - TIME
+      - URL
+      - YEAR
+    PipelineCustomFieldRefPropertyType:
+      required:
+      - reference_type
+      type: object
+      properties:
+        reference_type:
+          description: The reference type for the custom field. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldRefType'
+        fields:
+          type:
+          - array
+          - 'null'
+          description: The list of fields for the reference custom field.
+          items:
+            type: string
+      description: Class representing the property type for a reference custom field.
+    PipelineCustomFieldDisplayStyle:
+      type: string
+      description: Enum representing the display styles for custom fields.
+      enum:
+      - QUOTE
+      - BOLD
+      - ALIGN_END
+      - ITALIC
+      - LARGE
+      - MEDIUM
+      - SMALL
+      - XS
+      - CENTER
+      - HYPHENATED
+      - LABELED
+    PipelineCustomFieldArrayDisplayOptions:
+      required:
+      - item_options
+      - sortable
+      type: object
+      properties:
+        sortable:
+          type: boolean
+          description: Indicates if the array is sortable.
+        item_options:
+          description: Display options for the items in the array. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldDisplayOptions'
+      description: Class representing display options for an array custom field.
+    PipelineCustomFieldSizeValidationType:
+      type: string
+      description: Enum representing the types of size validation for custom fields.
+      enum:
+      - MIN
+      - MAX
+    PipelineCustomFieldRefDisplayOptions:
+      type: object
+      properties:
+        hidden:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the reference custom field is hidden.
+        card_options:
+          description: The card display options for the reference custom field. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldCardDisplayOptions'
+        title_property:
+          type:
+          - string
+          - 'null'
+          description: The title property for the reference custom field.
+        description_property:
+          type:
+          - string
+          - 'null'
+          description: The description property for the reference custom field.
+        reference_display_type:
+          description: The display type for the reference custom field. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldRefDisplayType'
+        empty_state:
+          description: The empty state content for the reference custom field. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldEmptyStateContent'
+        component_name:
+          type:
+          - string
+          - 'null'
+          description: The component name for the reference custom field.
+      description: Class representing the display options for a reference custom field.
+    PipelineCustomFieldCardProperty:
+      type: object
+      properties:
+        property_name:
+          type:
+          - string
+          - 'null'
+          description: The name of the property.
+        styles:
+          type:
+          - array
+          - 'null'
+          description: The display styles associated with the property.
+          items:
+            $ref: '#/components/schemas/PipelineCustomFieldDisplayStyle'
+      description: Class representing a property of a card custom field.
+    UpdateCustomFieldRequest:
+      type: object
+      properties:
+        label:
+          type:
+          - string
+          - 'null'
+          description: The label of the custom field.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The description of the custom field.
+        hint:
+          type:
+          - string
+          - 'null'
+          description: The hint for the custom field.
+        helper_text:
+          type:
+          - string
+          - 'null'
+          description: The helper text for the custom field.
+        default_value:
+          type:
+          - object
+          - 'null'
+          description: The default value of the custom field.
+        display_options:
+          description: The display options for the custom field.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldDisplayOptions'
+          - description: ''
+        options:
+          description: The options for the custom field.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldOptions'
+          - description: ''
+        validators:
+          type:
+          - array
+          - 'null'
+          description: The validators for the custom field.
+          items:
+            $ref: '#/components/schemas/PipelineCustomFieldPropertyValidator'
+        deleted:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates whether the custom field is deleted.
+          deprecated: true
+      description: Represents a request to update a custom field.
+    PipelineCustomFieldBooleanDisplayOptions:
+      required:
+      - display_type
+      type: object
+      properties:
+        display_type:
+          description: The display type for the boolean custom field. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldBooleanDisplayType'
+      description: Class representing display options for a boolean custom field.
+    PipelineCustomFieldCardDisplayOptions:
+      type: object
+      properties:
+        card_properties:
+          type:
+          - array
+          - 'null'
+          description: The properties of the card custom field.
+          items:
+            $ref: '#/components/schemas/PipelineCustomFieldCardProperty'
+      description: Class representing display options for a card custom field.
+    PipelineCustomFieldDurationOptionsDurationUnit:
+      type: string
+      description: Enum representing the duration units for custom fields.
+      enum:
+      - MINUTES
+      - HOURS
+      - DAYS
+      - MONTHS
+      - YEARS
+    PipelineCustomFieldDurationDisplayOptions:
+      type: object
+      properties:
+        duration_units:
+          type: array
+          description: The list of duration units for the custom field. This field is optional.
+          items:
+            $ref: '#/components/schemas/PipelineCustomFieldDurationOptionsDurationUnit'
+      description: Class representing display options for a custom field with duration type.
+    PipelineCustomFieldOption:
+      required:
+      - id
+      - sort_order
+      - subtitle
+      - title
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier of the custom field option.
+        title:
+          type: string
+          description: The title of the custom field option.
+        subtitle:
+          type: string
+          description: The subtitle of the custom field option.
+        sort_order:
+          type: integer
+          description: The sort order of the custom field option.
+          format: int32
+      description: Class representing an option for a custom field.
+    PipelineCustomFieldType:
+      required:
+      - discriminator
+      - primitive_type
+      type: object
+      properties:
+        primitive_type:
+          description: The base primitive type of the custom field. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldPrimitiveType'
+        discriminator:
+          description: The discriminator for the model property type. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldModelPropertyTypeDiscriminator'
+        array:
+          description: The array property type of the custom field. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldArrayPropertyType'
+        ref:
+          description: The reference property type of the custom field. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldRefPropertyType'
+      description: Class representing a custom field type.
+    PipelineCustomFieldDisplayOptionsType:
+      type: string
+      description: Enum representing the types of display options for custom fields.
+      enum:
+      - ARRAY
+      - BOOLEAN
+      - DATE_TIME
+      - DEFAULT
+      - DURATION
+      - REF
+    PipelineCustomFieldOptionDisplayType:
+      type: string
+      description: Enum representing the display types for custom field options.
+      enum:
+      - DROPDOWN
+      - RADIO
+      - CHECKBOX
+    PipelineCustomFieldModelPropertyTypeDiscriminator:
+      type: string
+      description: Enum representing the types of model property type discriminators.
+      enum:
+      - SIMPLE
+      - REF
+      - ARRAY
+    PipelineCustomFieldRefType:
+      type: object
+      properties:
+        category:
+          type:
+          - string
+          - 'null'
+          description: The category of the custom field reference type.
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the custom field reference type.
+      description: Class representing a reference type for custom fields.
+    PipelineCustomFieldDisplayOptions:
+      required:
+      - hidden
+      - type
+      type: object
+      properties:
+        type:
+          description: The type of display options. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldDisplayOptionsType'
+        hidden:
+          type: boolean
+          description: Indicates whether the custom field is hidden.
+        array_display_options:
+          description: The display options for array type custom fields. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldArrayDisplayOptions'
+        reference_type_display_options:
+          description: The display options for reference type custom fields. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldRefDisplayOptions'
+        date_time_display_options:
+          description: The display options for date and time type custom fields. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldDateTimeOptions'
+        boolean_display_options:
+          description: The display options for boolean type custom fields. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldBooleanDisplayOptions'
+        duration:
+          description: The display options for duration type custom fields. This field is optional.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldDurationDisplayOptions'
+      description: Class representing display options for a custom field.
+    PipelineCustomFieldArrayPropertyType:
+      required:
+      - list_type
+      type: object
+      properties:
+        list_type:
+          description: The type of the list contained in the array property. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldType'
+      description: Class representing the type of an array property in a custom field.
+    PipelineCustomField:
+      required:
+      - default_value
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: The identifier of the custom field.
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the custom field. This field is optional.
+        type:
+          description: The type of the custom field. This field is optional and must be a valid PipelineCustomFieldType.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldType'
+          - description: ''
+        label:
+          type:
+          - string
+          - 'null'
+          description: The label of the custom field. This field is optional.
+        description:
+          type:
+          - string
+          - 'null'
+          description: The description of the custom field. This field is optional.
+        helper_text:
+          type:
+          - string
+          - 'null'
+          description: The helper text for the custom field. This field is optional and is serialized to JSON as "helper_text".
+        default_value:
+          type:
+          - object
+          - 'null'
+          description: The default value of the custom field. This field is optional and must be a valid Object.
+        validators:
+          type:
+          - array
+          - 'null'
+          description: The list of validators for the custom field. This field is optional and must be a list of valid PipelineCustomFieldPropertyValidator.
+          items:
+            $ref: '#/components/schemas/PipelineCustomFieldPropertyValidator'
+        display_options:
+          description: The display options for the custom field. This field is optional and must be a valid DisplayOptions.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldDisplayOptions'
+          - description: ''
+        options:
+          description: The options for the custom field. This field is optional and must be a valid PipelineCustomFieldOptions.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldOptions'
+          - description: ''
+      description: Represents a custom field in the system. This class extends the BaseModel and includes various properties related to custom fields.
+    PipelineCustomFieldPropertyValidator:
+      required:
+      - required
+      - size
+      type: object
+      properties:
+        size:
+          description: The size validator for the custom field. This field is required.
+          allOf:
+          - $ref: '#/components/schemas/PipelineCustomFieldSizeValidator'
+        required:
+          type: boolean
+          description: Indicates whether the custom field is required.
+      description: Class representing a validator for custom field properties.
+    PipelineCustomFieldOptionGroup:
+      required:
+      - options
+      - sort_order
+      type: object
+      properties:
+        header:
+          type:
+          - string
+          - 'null'
+          description: The header of the custom field option group.
+        options:
+          type: array
+          description: The list of custom field options in the group.
+          items:
+            $ref: '#/components/schemas/PipelineCustomFieldOption'
+        sort_order:
+          type: integer
+          description: The sort order of the custom field option group.
+          format: int32
+      description: Class representing a group of custom field options.
+    BaseListResponse_PipelineCustomField_:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+      description: The list responses.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+          tokenUrl: https://api.infusionsoft.com/token
+          scopes:
+            api: General API access
+x-refined-from:
+- infusionsoft-pipelines-openapi-original.yml
+- infusionsoft-pipelines-openapi.yml

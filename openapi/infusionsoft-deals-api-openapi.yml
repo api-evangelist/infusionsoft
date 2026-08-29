@@ -1,0 +1,1193 @@
+openapi: 3.2.0
+info:
+  title: Infusionsoft Deals API
+  version: v1
+  contact:
+    name: Gryffindor
+    email: gryffindor@keap.com
+  description: 'Operations tagged Deals across 2 of this provider''s published API definitions: infusionsoft-pipelines-openapi-original.yml, infusionsoft-pipelines-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.infusionsoft.com
+tags:
+- name: Deals
+paths:
+  /v2/deals:
+    get:
+      tags:
+      - Deals
+      summary: Lists entities based on the provided ListCommand.
+      description: Lists entities based on the provided ListCommand.
+      operationId: listDeal
+      parameters:
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      responses:
+        '200':
+          description: a response containing the list of entities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealListResponse'
+      security:
+      - BearerAuth: []
+    post:
+      tags:
+      - Deals
+      summary: Creates a new entity.
+      description: Creates a new entity.
+      operationId: createDeal
+      requestBody:
+        description: the create request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDealRequest'
+        required: true
+      responses:
+        '201':
+          description: The created entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deal'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/-/bulk:
+    get:
+      tags:
+      - Deals
+      summary: Retrieves a list of deals by their IDs.
+      description: Retrieves a list of deals by their IDs.
+      operationId: listDealsByIds
+      parameters:
+      - name: id
+        in: query
+        description: the deal IDs to list
+        required: true
+        schema:
+          minItems: 1
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: the list of requested Deal
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Deal'
+      security:
+      - BearerAuth: []
+    delete:
+      tags:
+      - Deals
+      summary: Deletes a list of deals by their IDs.
+      description: Deletes a list of deals by their IDs.
+      operationId: deleteDealsInBulk
+      parameters:
+      - name: id
+        in: query
+        description: each ID of each deal to delete
+        required: true
+        schema:
+          minItems: 1
+          type: array
+          items:
+            type: string
+      responses:
+        '204':
+          description: deleteDealsInBulk 204 response
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/-/contacts/{contact_id}:
+    get:
+      tags:
+      - Deals
+      summary: Lists all deals associated with a specific contact.
+      description: Lists all deals associated with a specific contact.
+      operationId: listDealsForContact
+      parameters:
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: contact_id
+        in: path
+        description: the contact ID to list deals for
+        required: true
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      responses:
+        '200':
+          description: a list of deals wrapped in a DealListResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealListResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/-/notes:
+    post:
+      tags:
+      - Deals
+      summary: Creates new notes in bulk.
+      description: Creates new notes in bulk.
+      operationId: createBulkNotesForDeals
+      requestBody:
+        description: the request body containing note details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkCreateDealNotesRequest'
+        required: true
+      responses:
+        '201':
+          description: the created DealNote
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkCreateDealNotesResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/-/notes/{note_id}:
+    get:
+      tags:
+      - Deals
+      summary: Retrieves a specific deal note by its ID.
+      description: Retrieves a specific deal note by its ID.
+      operationId: getDealNote
+      parameters:
+      - name: note_id
+        in: path
+        description: the ID of the note to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: the requested DealNote
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealNote'
+      security:
+      - BearerAuth: []
+    delete:
+      tags:
+      - Deals
+      summary: Deletes a specific deal note by its ID.
+      description: Deletes a specific deal note by its ID.
+      operationId: deleteDealNote
+      parameters:
+      - name: note_id
+        in: path
+        description: the ID of the note to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: a HttpResponse indicating the result of the delete operation
+      security:
+      - BearerAuth: []
+    patch:
+      tags:
+      - Deals
+      summary: Updates a specific deal note by its ID.
+      description: Updates a specific deal note by its ID.
+      operationId: updateDealNote
+      parameters:
+      - name: note_id
+        in: path
+        description: the ID of the note to update
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: the request body containing updated note details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDealNoteRequest'
+        required: true
+      responses:
+        '200':
+          description: the updated DealNote
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealNote'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/bulk:
+    post:
+      tags:
+      - Deals
+      summary: Creates multiple deals in bulk.
+      description: Creates multiple deals in bulk.
+      operationId: createDealsInBulk
+      requestBody:
+        description: the request body containing multiple deal details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDealsInBulkRequest'
+        required: true
+      responses:
+        '201':
+          description: the created deals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateDealsInBulkResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/moveByContactIds:
+    post:
+      tags:
+      - Deals
+      summary: Moves the active deals of specified contacts from one stage to another, in bulk.
+      description: Moves the active deals of specified contacts from one stage to another, in bulk.
+      operationId: moveDealsForContacts
+      requestBody:
+        description: the request body containing move details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveDealsForContactsRequest'
+        required: true
+      responses:
+        '200':
+          description: the IDs of the Deals moved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoveDealsForContactsResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/{id}:
+    get:
+      tags:
+      - Deals
+      summary: Retrieves an entity by its identifier.
+      description: Retrieves an entity by its identifier.
+      operationId: getDeal
+      parameters:
+      - name: id
+        in: path
+        description: the entity identifier
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The retrieved entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deal'
+      security:
+      - BearerAuth: []
+    delete:
+      tags:
+      - Deals
+      summary: Deletes an entity by its identifier.
+      description: Deletes an entity by its identifier.
+      operationId: deleteDeal
+      parameters:
+      - name: id
+        in: path
+        description: the entity identifier
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: A response indicating no content
+      security:
+      - BearerAuth: []
+    patch:
+      tags:
+      - Deals
+      summary: Updates an existing entity.
+      description: Updates an existing entity.
+      operationId: updateDeal
+      parameters:
+      - name: id
+        in: path
+        description: the entity identifier
+        required: true
+        schema:
+          type: string
+      - name: update_mask
+        in: query
+        description: the fields to update
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      requestBody:
+        description: the update request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDealRequest'
+        required: true
+      responses:
+        '200':
+          description: The updated entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deal'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/{id}/customFields:validate:
+    post:
+      tags:
+      - Deals
+      summary: Validates the custom fields in a Deal.
+      description: Validates the custom fields in a Deal.
+      operationId: validateCustomFields
+      parameters:
+      - name: id
+        in: path
+        description: the ID of the deal to move
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: the request body containing validation details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DealCustomFieldsValidationRequest'
+        required: true
+      responses:
+        '200':
+          description: the result of the validation containing errors and warnings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealCustomFieldsValidationResponse'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/{id}/notes:
+    get:
+      tags:
+      - Deals
+      summary: Lists all notes associated with a specific deal.
+      description: Lists all notes associated with a specific deal.
+      operationId: listNotesForDeal
+      parameters:
+      - name: id
+        in: path
+        description: the deal ID to list notes for
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      responses:
+        '200':
+          description: a list of deal notes wrapped in a DealNoteListResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealNoteListResponse'
+      security:
+      - BearerAuth: []
+    post:
+      tags:
+      - Deals
+      summary: Creates a new note for a specific deal.
+      description: Creates a new note for a specific deal.
+      operationId: createNoteForDeal
+      parameters:
+      - name: id
+        in: path
+        description: the deal ID to associate the new note with
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: the request body containing note details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDealNoteRequest'
+        required: true
+      responses:
+        '201':
+          description: the created DealNote
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealNote'
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/{id}:count:
+    get:
+      tags:
+      - Deals
+      summary: Retrieves the count of deals based on the specified filter criteria.
+      description: Retrieves the count of deals based on the specified filter criteria.
+      operationId: countDealsFiltered
+      parameters:
+      - name: filter
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Search filter to apply to results
+      - name: page_size
+        in: query
+        schema:
+          maximum: 1000
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+          description: Total number of items to return per page
+          format: int32
+          example: 100
+          default: 1000
+      - name: page_token
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Page token
+      - name: order_by
+        in: query
+        schema:
+          type:
+          - string
+          - 'null'
+          description: Attribute and direction to order items by. E.g. `given_name desc`
+      - name: id
+        in: path
+        description: the deal IDs to list
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: the count of deals matching the specified filter criteria.
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+  /v2/deals/{id}:move:
+    post:
+      tags:
+      - Deals
+      summary: Moves the specified deal to a specified stage.
+      description: Moves the specified deal to a specified stage.
+      operationId: moveDeal
+      parameters:
+      - name: id
+        in: path
+        description: the ID of the deal to move
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: the stage to move the deal to
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        '200':
+          description: the IDs of the Deals moved
+      security:
+      - BearerAuth: []
+    servers:
+    - url: https://api.infusionsoft.com
+components:
+  schemas:
+    BulkCreateDealNotesRequest:
+      required:
+      - create_note_requests
+      type: object
+      properties:
+        create_note_requests:
+          maxItems: 1000
+          minItems: 1
+          type: array
+          description: List of requests to create deal notes. Each request must not be null and must contain valid data.
+          items:
+            $ref: '#/components/schemas/BulkCreateDealNoteRequest'
+      description: Request model for creating multiple deal notes in bulk.
+    DealContact:
+      required:
+      - primary_contact
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the model.
+        primary_contact:
+          type: boolean
+          description: Indicates if this contact is the primary contact. This field is required.
+      description: Represents a contact entity in the system.
+    UpdateDealRequest:
+      required:
+      - stage_id
+      - status
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+        amount:
+          minimum: 0
+          type: number
+          format: double
+        currency_code:
+          minLength: 3
+          type: string
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealContact'
+        stage_id:
+          maxLength: 255
+          minLength: 1
+          type: string
+        owners:
+          type: array
+          items:
+            $ref: '#/components/schemas/Owner'
+        owner_id:
+          type: string
+        task_ids:
+          type: array
+          items:
+            type: string
+        previous_deal_id:
+          maxLength: 255
+          minLength: 1
+          type: string
+        next_deal_id:
+          maxLength: 255
+          minLength: 1
+          type: string
+        status:
+          type: string
+        estimated_close_date:
+          type: string
+          format: date-time
+        closed_date:
+          type: string
+          format: date-time
+        custom_fields:
+          type: object
+          additionalProperties: true
+      description: Request model for updating a deal.
+    CreateDealsInBulkRequest:
+      required:
+      - create_deal_requests
+      type: object
+      properties:
+        create_deal_requests:
+          type: array
+          description: The list of requests to create deals. This field is required.
+          items:
+            $ref: '#/components/schemas/CreateDealInBulkRequest'
+      description: Request model for creating multiple deals in bulk.
+    CreateDealRequest:
+      required:
+      - contacts
+      - name
+      - owners
+      - stage_id
+      - status
+      - task_ids
+      - value
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the deal. This field is required and must have at least one character.
+        value:
+          description: The monetary value of the deal. This field is required and must be valid.
+          allOf:
+          - $ref: '#/components/schemas/Money'
+        contacts:
+          type: array
+          description: The list of contacts associated with the deal. This field is required.
+          items:
+            $ref: '#/components/schemas/DealContact'
+        stage_id:
+          minLength: 1
+          type: string
+          description: The ID of the stage tied to the deal. This field is required and must be valid.
+        owners:
+          type: array
+          description: The list of owners of the deal. This field is required.
+          items:
+            $ref: '#/components/schemas/Owner'
+        owner_id:
+          type:
+          - string
+          - 'null'
+          description: The ID of the owner of the deal. This field is optional.
+        task_ids:
+          type: array
+          description: The list of task IDs associated with the deal. This field is required.
+          items:
+            type: string
+        status:
+          type: string
+          description: The status of the deal. This field is required.
+        estimated_close_time:
+          type:
+          - string
+          - 'null'
+          description: The estimated close time of the deal. This field is optional.
+          format: date-time
+        custom_fields:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: The custom fields associated with the deal. This field is optional.
+      description: Request model for creating a deal.
+    BulkCreateDealNoteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the note.
+        body:
+          type: string
+          description: The body content of the note.
+        deal_id:
+          type: string
+          description: The ID of the deal associated with the note.
+        created_by:
+          type: string
+          description: The ID of the user who created the note.
+        created_time:
+          type: string
+          description: The timestamp when the note was created. Formatted as a string according to the pattern "yyyy-MM-dd'T'HH:mm:ss.SSSXXX".
+          format: date-time
+        modified_time:
+          type: string
+          description: The timestamp when the note was last modified. Formatted as a string according to the pattern "yyyy-MM-dd'T'HH:mm:ss.SSSXXX".
+          format: date-time
+        create_success:
+          type: boolean
+          description: Indicates whether the note was created successfully.
+        error_message:
+          type: string
+          description: If the note creation was not successful, this field contains the error message.
+      description: Response model for creating a deal note as part of a bulk operation.
+    Owner:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the model.
+      description: Represents an owner entity in the system.
+    MoveDealsForContactsRequest:
+      required:
+      - contact_ids
+      - from_stage
+      - to_stage
+      type: object
+      properties:
+        contact_ids:
+          minItems: 1
+          type: array
+          description: List of IDs of the contacts whose active deals need to be moved.
+          items:
+            type: string
+        from_stage:
+          minLength: 1
+          type: string
+          description: The ID of the stage from which the deals should be moved.
+        to_stage:
+          minLength: 1
+          type: string
+          description: The ID of the stage to which the deals should be moved.
+      description: Request model for moving specific deals.
+    CreateDealInBulkRequest:
+      required:
+      - contacts
+      - external_system_id
+      - name
+      - owners
+      - stage_id
+      - status
+      - task_ids
+      - value
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the deal. This field is required and must have at least one character.
+        value:
+          description: The monetary value of the deal. This field is required and must be valid.
+          allOf:
+          - $ref: '#/components/schemas/Money'
+        contacts:
+          type: array
+          description: The list of contacts associated with the deal. This field is required.
+          items:
+            $ref: '#/components/schemas/DealContact'
+        stage_id:
+          minLength: 1
+          type: string
+          description: The id of the stage tied to the deal. This field is required and must be valid.
+        owners:
+          type: array
+          description: The list of owners of the deal. This field is required.
+          items:
+            $ref: '#/components/schemas/Owner'
+        owner_id:
+          type:
+          - string
+          - 'null'
+          description: The ID of the owner of the deal. This field is optional.
+        task_ids:
+          type: array
+          description: The list of task IDs associated with the deal. This field is required.
+          items:
+            type: string
+        status:
+          type: string
+          description: The status of the deal. This field is required.
+        estimated_close_time:
+          type:
+          - string
+          - 'null'
+          description: The estimated close time of the deal. This field is optional.
+          format: date-time
+        external_system_id:
+          minLength: 1
+          type: string
+        custom_fields:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: The custom fields associated with the deal. This field is optional.
+      description: Request model for creating one deal as part of a bulk creation.
+    CreateDealNoteRequest:
+      required:
+      - body
+      - created_by
+      type: object
+      properties:
+        body:
+          maxLength: 5000
+          minLength: 1
+          type: string
+          description: The body of the note. Must not be blank and must be between 1 and 5000 characters.
+        created_by:
+          maxLength: 255
+          minLength: 1
+          type: string
+          description: The creator of the note. Must not be blank and must be between 1 and 255 characters.
+      description: Request model for creating a deal note.
+    MoveDealsForContactsResponse:
+      type: object
+      properties:
+        moved_deal_ids:
+          type: array
+          description: List of IDs of the deals that have been moved.
+          items:
+            type: string
+      description: Response model for moving deals of contacts in bulk.
+    BaseListResponse_Deal_:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+      description: The list responses.
+    DealListResponse:
+      type: object
+      description: Response model for a list of deals.
+      allOf:
+      - $ref: '#/components/schemas/BaseListResponse_Deal_'
+      - properties:
+          next_page_token:
+            type: string
+            description: Token for the next page of results.
+          deals:
+            type: array
+            description: The list of Deals.
+            items:
+              $ref: '#/components/schemas/Deal'
+    Money:
+      required:
+      - amount
+      - currency
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount of money. This field is required.
+          format: double
+        currency:
+          type: string
+          description: The currency of the money. This field is required.
+      description: Represents a monetary value with an amount and currency.
+    BaseListResponse_DealNote_:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+      description: The list responses.
+    DealCustomFieldsValidationRequest:
+      required:
+      - custom_fields
+      type: object
+      properties:
+        custom_fields:
+          minItems: 1
+          type: object
+          additionalProperties: true
+      description: Request model for validating custom fields in deals.
+    CreateDealsInBulkResponse:
+      type: object
+      properties:
+        created_deals:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CreateDealInBulkResponse'
+          description: 'Map of created deals.
+
+
+            Keys: Each external_system_id specified in the CreateDealsInBulkRequest request.
+
+
+            Values: The result of the corresponding request to create a deal.'
+      description: Response model for creating multiple deals in bulk.
+    Deal:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the model.
+        name:
+          type: string
+          description: The name of the deal. This field is required and must have at least one character.
+        value:
+          description: The monetary value of the deal. This field is required and must be valid.
+          allOf:
+          - $ref: '#/components/schemas/Money'
+        contact_ids:
+          type: array
+          description: The list of IDs of contacts associated with the deal. This field is required.
+          items:
+            type: string
+        stage_id:
+          type: string
+          description: The stage of the deal. This field is required and must be valid.
+        stage_assignment_time:
+          type: string
+          description: The time when the deal was assigned to the current stage. This field is required.
+          format: date-time
+        owner_ids:
+          type: array
+          description: The list of IDs of owners of the deal. This field is required.
+          items:
+            type: string
+        task_ids:
+          type: array
+          description: The list of task IDs associated with the deal. This field is required.
+          items:
+            type: string
+        order_id:
+          type: string
+          description: The order of the deal. This field is optional.
+        status:
+          type: string
+          description: The status of the deal. This field is required.
+        estimated_close_time:
+          type: string
+          description: The estimated close time of the deal. This field is optional.
+          format: date-time
+        closed_time:
+          type: string
+          description: The actual close time of the deal. This field is optional.
+          format: date-time
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: The custom fields associated with the deal. This field is optional.
+      description: Represents a deal.
+    DealCustomFieldsValidationResponse:
+      required:
+      - errors
+      - warnings
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealCustomFieldsPropertyValidationResult'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/DealCustomFieldsPropertyValidationResult'
+      description: Response model for validating custom fields in deals.
+    CreateDealInBulkResponse:
+      type: object
+      properties:
+        deal_id:
+          type:
+          - string
+          - 'null'
+        create_success:
+          type:
+          - boolean
+          - 'null'
+        error_message:
+          type:
+          - string
+          - 'null'
+      description: Response model for creating multiple deals in bulk.
+    BulkCreateDealNotesResponse:
+      type: object
+      properties:
+        create_note_responses:
+          type: array
+          description: List of responses for each deal note creation request. Each response contains details about the creation status and any associated error messages.
+          items:
+            $ref: '#/components/schemas/BulkCreateDealNoteResponse'
+      description: Response model for creating multiple deal notes in bulk.
+    DealNote:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the model.
+        deal_id:
+          type: string
+          description: The ID of the deal associated with the note.
+        body:
+          type: string
+          description: The body content of the note.
+        created_by:
+          type: string
+          description: The ID of the user who created the note.
+        created_time:
+          type: string
+          description: The timestamp when the note was created. Formatted as a string according to the pattern "yyyy-MM-dd'T'HH:mm:ss.SSSXXX".
+          format: date-time
+        modified_time:
+          type: string
+          description: The timestamp when the note was last modified. Formatted as a string according to the pattern "yyyy-MM-dd'T'HH:mm:ss.SSSXXX".
+          format: date-time
+      description: A model representing a note associated with a deal.
+    DealNoteListResponse:
+      type: object
+      description: Response model for a list of deal notes.
+      allOf:
+      - $ref: '#/components/schemas/BaseListResponse_DealNote_'
+      - properties:
+          next_page_token:
+            type: string
+            description: Token for the next page of results.
+          notes:
+            type: array
+            description: The list of Note entities.
+            items:
+              $ref: '#/components/schemas/DealNote'
+    DealCustomFieldsPropertyValidationResult:
+      type: object
+      properties:
+        path:
+          type: array
+          items:
+            type: object
+        error_code:
+          type: string
+        message:
+          type: string
+        args:
+          description: To trace this error in the logs
+        logref:
+          type: string
+      description: Response model for validating a single custom field in a deal.
+    UpdateDealNoteRequest:
+      required:
+      - body
+      type: object
+      properties:
+        body:
+          maxLength: 5000
+          minLength: 1
+          type: string
+          description: The body of the note. Must not be blank and must be between 1 and 5000 characters.
+      description: Request model for updating a deal note.
+    BulkCreateDealNoteRequest:
+      required:
+      - body
+      - created_by
+      - deal_id
+      type: object
+      properties:
+        body:
+          maxLength: 5000
+          minLength: 1
+          type: string
+          description: The body of the note. Must not be blank and must be between 1 and 5000 characters.
+        created_by:
+          maxLength: 255
+          minLength: 1
+          type: string
+          description: The creator of the note. Must not be blank and must be between 1 and 255 characters.
+        deal_id:
+          minLength: 1
+          type: string
+          description: The ID of the deal to which the note is associated. Must not be blank.
+      description: Request model for creating a deal note as part of a bulk operation.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
+          tokenUrl: https://api.infusionsoft.com/token
+          scopes:
+            api: General API access
+x-refined-from:
+- infusionsoft-pipelines-openapi-original.yml
+- infusionsoft-pipelines-openapi.yml
