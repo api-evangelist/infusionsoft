@@ -14,6 +14,18 @@ description: >-
   There are no granular OAuth scopes and no idempotency keys anywhere in the
   API.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-service
@@ -1710,6 +1722,16 @@ apis:
     url: https://developer.keap.com/docs/restv2Pipelines/
   - type: APIReference
     url: https://developer.keap.com/docs/restv2Pipelines/
+- aid: infusionsoft:infusionsoft-user-info-api
+  name: Infusionsoft (Keap) User Info API
+  description: UserInfo-Endpoint
+  humanURL: https://developer.keap.com/docs/xml-rpc/
+  baseURL: https://api.infusionsoft.com/crm/xmlrpc/v1
+  tags:
+  - User Info
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-user-info-api-openapi.yml
 common:
   - type: Overlay
     url: overlays/infusionsoft-rest-v2-overlay.yaml
