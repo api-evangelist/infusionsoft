@@ -2,17 +2,19 @@
 kin_checks:
   slug: infusionsoft
   schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
+  scored_at: '2026-08-28'
+  run_ts: 2026-08-28T221322
   note: Actionable checks only (missed + partial). earned/na are every other check
     in rubric/scoring-0.15.1.yml; counts below let you verify that.
   counts:
     total: 130
-    earned: 54
-    partial: 8
-    missed: 44
+    earned: 51
+    partial: 18
+    missed: 37
     na: 24
   checks:
+  - id: maintainer_present
+    status: missed
   - id: well_known_published
     status: missed
   - id: llms_txt_published
@@ -21,27 +23,10 @@ kin_checks:
     status: missed
   - id: openapi_3_2
     status: missed
-    detail: 0 of 1 openapi documents pass
-  - id: openapi_3_1
-    status: missed
-    detail: 0 of 1 openapi documents pass
-  - id: response_coverage
-    status: missed
-    detail: 0 of 1 openapi documents pass
-  - id: error_responses_documented
-    status: missed
-    detail: 0 of 1 openapi documents pass
-  - id: examples_present
-    status: missed
-  - id: components_reuse
-    status: missed
-    detail: 0 of 1 openapi documents pass
-  - id: security_schemes_defined
-    status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 58 openapi documents pass
   - id: webhooks_or_callbacks
     status: missed
-    detail: 0 of 1 openapi documents pass
+    detail: 0 of 58 openapi documents pass
   - id: json_schema_present
     status: missed
   - id: json_schema_per_resource
@@ -91,8 +76,6 @@ kin_checks:
     status: missed
   - id: idempotency
     status: missed
-  - id: openapi_examples
-    status: missed
   - id: well_known_catalog
     status: missed
   - id: consent_identity
@@ -101,14 +84,47 @@ kin_checks:
     status: missed
   - id: dry_run_mode
     status: missed
-  - id: delegated_identity
-    status: missed
   - id: protected_resource_metadata
     status: missed
   - id: dynamic_client_registration
     status: missed
   - id: agentic_commerce
     status: missed
+  - id: info_complete
+    status: partial
+    earned: 0.55
+    detail: 8 of 58 openapi documents pass
+  - id: operations_summary_coverage
+    status: partial
+    earned: 5.9
+    detail: 57 of 58 openapi documents pass
+  - id: operations_description_coverage
+    status: partial
+    earned: 5.69
+    detail: 55 of 58 openapi documents pass
+  - id: operations_operation_ids
+    status: partial
+    earned: 3.17
+    detail: 46 of 58 openapi documents pass
+  - id: error_responses_documented
+    status: partial
+    earned: 3.59
+    detail: 52 of 58 openapi documents pass
+  - id: examples_present
+    status: partial
+    earned: 0.75
+  - id: components_reuse
+    status: partial
+    earned: 2.79
+    detail: 54 of 58 openapi documents pass
+  - id: security_applied
+    status: partial
+    earned: 2.85
+    detail: 55 of 58 openapi documents pass
+  - id: oauth_scopes_enumerated
+    status: partial
+    earned: 0.41
+    detail: 6 of 58 openapi documents pass
   - id: conformance_declared
     status: partial
     earned: 1.5
@@ -125,12 +141,12 @@ kin_checks:
     detail: 'authorship: derived'
   - id: auth_clarity
     status: partial
-    earned: 3.5
-    detail: 'grade: bearer'
-  - id: error_semantics
+    earned: 7.5
+    detail: 'grade: negotiable'
+  - id: openapi_examples
     status: partial
-    earned: 4.0
-    detail: 'grade: documented'
+    earned: 3.5
+    detail: 'grade: partial'
   - id: rate_limit_signal
     status: partial
     earned: 3.5
@@ -139,3 +155,7 @@ kin_checks:
     status: partial
     earned: 1.25
     detail: 'authorship: derived'
+  - id: delegated_identity
+    status: partial
+    earned: 3.0
+    detail: 'grade: documented'
