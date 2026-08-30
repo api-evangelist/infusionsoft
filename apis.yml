@@ -120,6 +120,8 @@ apis:
   humanURL: https://developer.keap.com/docs/restv2/
   baseURL: https://api.infusionsoft.com/crm/rest/v2
   tags:
+  - Affiliates
+  tags_raw:
   - Affiliate
   properties:
   - type: OpenAPI
@@ -600,6 +602,8 @@ apis:
   humanURL: https://developer.keap.com/docs/restv2/
   baseURL: https://api.infusionsoft.com/crm/rest/v2
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -657,6 +661,8 @@ apis:
   humanURL: https://developer.keap.com/docs/restv2/
   baseURL: https://api.infusionsoft.com/crm/rest/v2
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
@@ -998,6 +1004,8 @@ apis:
   humanURL: https://developer.keap.com/docs/restv2/
   baseURL: https://api.infusionsoft.com/crm/rest/v2
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -1226,6 +1234,8 @@ apis:
   humanURL: https://developer.keap.com/docs/restv2/
   baseURL: https://api.infusionsoft.com/crm/rest/v2
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -1560,6 +1570,8 @@ apis:
   humanURL: https://developer.keap.com/docs/restv2/
   baseURL: https://api.infusionsoft.com/crm/rest/v2
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
@@ -1672,6 +1684,8 @@ apis:
   humanURL: https://developer.keap.com/docs/restv2/
   baseURL: https://api.infusionsoft.com/crm/rest/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -1700,6 +1714,8 @@ apis:
   humanURL: https://developer.keap.com/docs/restv2/
   baseURL: https://api.infusionsoft.com/crm/rest/v2
   tags:
+  - Web Forms
+  tags_raw:
   - Webforms
   properties:
   - type: OpenAPI
@@ -1728,6 +1744,8 @@ apis:
   humanURL: https://developer.keap.com/docs/xml-rpc/
   baseURL: https://api.infusionsoft.com/crm/xmlrpc/v1
   tags:
+  - UserInfo
+  tags_raw:
   - User Info
   properties:
   - type: OpenAPI
