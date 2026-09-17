@@ -484,34 +484,6 @@ apis:
     url: https://developer.keap.com/docs/restv2Pipelines/
   - type: APIReference
     url: https://developer.keap.com/docs/restv2Pipelines/
-- aid: infusionsoft:infusionsoft-e-commerce-api
-  name: Infusionsoft (Keap) E Commerce API
-  description: E-Commerce-Endpoint
-  humanURL: https://developer.keap.com/docs/restv2/
-  baseURL: https://api.infusionsoft.com/crm/rest/v2
-  tags:
-  - E-Commerce
-  properties:
-  - type: OpenAPI
-    url: openapi/infusionsoft-e-commerce-api-openapi.yml
-  - type: Documentation
-    url: https://developer.keap.com/docs/restv2/
-  - type: APIReference
-    url: https://developer.keap.com/docs/restv2/
-  - type: OAuth Guide
-    url: https://developer.keap.com/getting-started-oauth-keys/
-  - type: Authentication
-    url: https://developer.keap.com/authentication/
-  - type: Webhooks
-    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
-  - type: Documentation
-    url: https://developer.keap.com/docs/rest/
-  - type: APIReference
-    url: https://developer.keap.com/docs/rest/
-  - type: Documentation
-    url: https://developer.keap.com/docs/restv2Pipelines/
-  - type: APIReference
-    url: https://developer.keap.com/docs/restv2Pipelines/
 - aid: infusionsoft:infusionsoft-email-address-api
   name: Infusionsoft (Keap) Email Address API
   description: Email-Addresses-Endpoint
@@ -1750,6 +1722,34 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/infusionsoft-user-info-api-openapi.yml
+- aid: infusionsoft:infusionsoft-ecommerce-api
+  name: Infusionsoft (Keap) Ecommerce API
+  description: E-Commerce-Endpoint
+  humanURL: https://developer.keap.com/docs/xml-rpc/
+  baseURL: https://api.infusionsoft.com/crm/xmlrpc/v1
+  tags:
+  - Ecommerce
+  properties:
+  - type: OpenAPI
+    url: openapi/infusionsoft-ecommerce-api-openapi.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2/
+  - type: OAuth Guide
+    url: https://developer.keap.com/getting-started-oauth-keys/
+  - type: Authentication
+    url: https://developer.keap.com/authentication/
+  - type: Webhooks
+    url: asyncapi/infusionsoft-rest-hooks-webhooks.yml
+  - type: Documentation
+    url: https://developer.keap.com/docs/rest/
+  - type: APIReference
+    url: https://developer.keap.com/docs/rest/
+  - type: Documentation
+    url: https://developer.keap.com/docs/restv2Pipelines/
+  - type: APIReference
+    url: https://developer.keap.com/docs/restv2Pipelines/
 common:
   - type: CapabilityMap
     url: capabilities/infusionsoft-capability-edges.yml
