@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Lead Sources across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Lead Sources across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Lead Sources
 paths:
@@ -3366,6 +3365,16 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
+    ListLeadSourcesResponse:
+      type: object
+      properties:
+        lead_sources:
+          type: array
+          description: The lead sources in the current page
+          items:
+            $ref: '#/components/schemas/LeadSource'
+        next_page_token:
+          type: string
     ErrorDetails:
       type: object
       properties:
@@ -3387,60 +3396,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorDetails'
-    ListLeadSourcesResponse:
-      type: object
-      properties:
-        lead_sources:
-          type: array
-          description: The lead sources in the current page
-          items:
-            $ref: '#/components/schemas/LeadSource'
-        next_page_token:
-          type: string
-    CreateLeadSourceRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the lead source
-          example: Google Ads
-        description:
-          type: string
-          description: A description of the lead source
-          example: Paid search advertising
-        vendor:
-          type: string
-          description: The vendor of the lead source
-          example: Google
-        medium:
-          type: string
-          description: The medium of the lead source
-          example: cpc
-        message:
-          type: string
-          description: A message on the lead source
-          example: Spring promotion
-        status:
-          type: string
-          description: The status of the lead source
-          enum:
-          - ACTIVE
-          - INACTIVE
-          example: ACTIVE
-        lead_source_category_id:
-          type: string
-          description: The lead source category that the lead source belongs to
-          example: 456
-        start_time:
-          type: string
-          format: date-time
-          description: When the lead source starts
-          example: '2024-01-01T00:00:00Z'
-        end_time:
-          type: string
-          format: date-time
-          description: When the lead source ends
-          example: '2024-12-31T23:59:59Z'
     LeadSource:
       type: object
       properties:
@@ -3499,6 +3454,50 @@ components:
           format: date-time
           description: The time that this lead source was last updated
           example: '2024-03-15T10:30:00Z'
+    CreateLeadSourceRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the lead source
+          example: Google Ads
+        description:
+          type: string
+          description: A description of the lead source
+          example: Paid search advertising
+        vendor:
+          type: string
+          description: The vendor of the lead source
+          example: Google
+        medium:
+          type: string
+          description: The medium of the lead source
+          example: cpc
+        message:
+          type: string
+          description: A message on the lead source
+          example: Spring promotion
+        status:
+          type: string
+          description: The status of the lead source
+          enum:
+          - ACTIVE
+          - INACTIVE
+          example: ACTIVE
+        lead_source_category_id:
+          type: string
+          description: The lead source category that the lead source belongs to
+          example: 456
+        start_time:
+          type: string
+          format: date-time
+          description: When the lead source starts
+          example: '2024-01-01T00:00:00Z'
+        end_time:
+          type: string
+          format: date-time
+          description: When the lead source ends
+          example: '2024-12-31T23:59:59Z'
     Throwable:
       title: Throwable
       type: object
@@ -3547,5 +3546,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

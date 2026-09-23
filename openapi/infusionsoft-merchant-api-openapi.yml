@@ -5,7 +5,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Merchant across 3 of this provider''s published API definitions: infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v1-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Merchant across 2 of this provider''s published API definitions: infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.infusionsoft.com/crm/rest
 - url: https://api.infusionsoft.com/crm
@@ -611,6 +611,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Throwable'
+    View:
+      type: object
+      properties:
+        contentType:
+          type: string
     DefaultHttpStatusCode:
       allOf:
       - $ref: '#/components/schemas/HttpStatusCode'
@@ -652,6 +657,28 @@ components:
         is4xxClientError:
           type: boolean
         is5xxServerError:
+          type: boolean
+    RestMerchantAccountResponse:
+      type: object
+      properties:
+        default_merchant_account:
+          type: integer
+          format: int64
+        merchant_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Merchant'
+    Merchant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+        account_name:
+          type: string
+        is_test:
           type: boolean
     HttpStatus:
       allOf:
@@ -721,33 +748,6 @@ components:
       - 509 BANDWIDTH_LIMIT_EXCEEDED
       - 510 NOT_EXTENDED
       - 511 NETWORK_AUTHENTICATION_REQUIRED
-    RestMerchantAccountResponse:
-      type: object
-      properties:
-        default_merchant_account:
-          type: integer
-          format: int64
-        merchant_accounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Merchant'
-    View:
-      type: object
-      properties:
-        contentType:
-          type: string
-    Merchant:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        type:
-          type: string
-        account_name:
-          type: string
-        is_test:
-          type: boolean
   securitySchemes:
     oauth2:
       type: oauth2
@@ -758,4 +758,3 @@ components:
 x-refined-from:
 - infusionsoft-rest-v1-2025-11-05-openapi-original.json
 - infusionsoft-rest-v1-openapi-original.json
-- infusionsoft-rest-v1-openapi.json

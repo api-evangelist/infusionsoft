@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Infusionsoft Stages API
-  version: v1
+  title: SLA Stages API
+  description: Service Level Aggregation API (SLAAPI) to handle public API spec compliance
   contact:
     name: Gryffindor
     email: gryffindor@keap.com
-  description: 'Operations tagged Stages across 2 of this provider''s published API definitions: infusionsoft-pipelines-openapi-original.yml, infusionsoft-pipelines-openapi.yml. Each path carries the servers of the definition it was published in.'
+  version: v1
 servers:
 - url: https://api.infusionsoft.com
 tags:
@@ -15,7 +15,7 @@ paths:
     get:
       tags:
       - Stages
-      summary: Lists entities based on the provided ListCommand.
+      summary: Lists entities based on the provided ListCommand
       description: Lists entities based on the provided ListCommand.
       operationId: listStages
       parameters:
@@ -64,7 +64,7 @@ paths:
     post:
       tags:
       - Stages
-      summary: Creates a new entity.
+      summary: Creates a new entity
       description: Creates a new entity.
       operationId: createStages
       requestBody:
@@ -83,13 +83,11 @@ paths:
                 $ref: '#/components/schemas/Stage'
       security:
       - BearerAuth: []
-    servers:
-    - url: https://api.infusionsoft.com
   /v2/stages/{id}:
     get:
       tags:
       - Stages
-      summary: Retrieves an entity by its identifier.
+      summary: Retrieves an entity by its identifier
       description: Retrieves an entity by its identifier.
       operationId: getStages
       parameters:
@@ -111,7 +109,7 @@ paths:
     delete:
       tags:
       - Stages
-      summary: Deletes a stage by its identifier for a given tenant.
+      summary: Deletes a stage by its identifier for a given tenant
       description: Deletes a stage by its identifier for a given tenant.
       operationId: deleteStage
       parameters:
@@ -136,7 +134,7 @@ paths:
     patch:
       tags:
       - Stages
-      summary: Updates an existing entity.
+      summary: Updates an existing entity
       description: Updates an existing entity.
       operationId: updateStages
       parameters:
@@ -170,13 +168,11 @@ paths:
                 $ref: '#/components/schemas/Stage'
       security:
       - BearerAuth: []
-    servers:
-    - url: https://api.infusionsoft.com
   /v2/stages/{id}/dealCount:
     get:
       tags:
       - Stages
-      summary: Counts the number of deals in a specific stage.
+      summary: Counts the number of deals in a specific stage
       description: Counts the number of deals in a specific stage.
       operationId: countDealsInStage
       parameters:
@@ -196,13 +192,11 @@ paths:
                 format: int64
       security:
       - BearerAuth: []
-    servers:
-    - url: https://api.infusionsoft.com
   /v2/stages/{id}/deals:
     get:
       tags:
       - Stages
-      summary: Retrieves a list of deals for a specific stage.
+      summary: Retrieves a list of deals for a specific stage
       description: Retrieves a list of deals for a specific stage.
       operationId: listStageDeals
       parameters:
@@ -254,52 +248,8 @@ paths:
                 $ref: '#/components/schemas/StageDealListResponse'
       security:
       - BearerAuth: []
-    servers:
-    - url: https://api.infusionsoft.com
 components:
   schemas:
-    CreateStageRequest:
-      required:
-      - name
-      - pipeline_id
-      type: object
-      properties:
-        name:
-          minLength: 1
-          type: string
-          description: The name of the stage.
-        pipeline_id:
-          minLength: 1
-          type: string
-          description: The ID of the pipeline to which the stage belongs.
-      description: Request for creating a stage.
-    Stage:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the model.
-        name:
-          type: string
-          description: The name of the stage.
-        pipeline_id:
-          type: string
-          description: The ID of the pipeline.
-      description: Represents a stage in a pipeline.
-    BaseListResponse_Deal_:
-      type: object
-      properties:
-        next_page_token:
-          type: string
-          description: Token for the next page of results.
-      description: The list responses.
-    BaseListResponse_Stage_:
-      type: object
-      properties:
-        next_page_token:
-          type: string
-          description: Token for the next page of results.
-      description: The list responses.
     UpdateStageRequest:
       required:
       - name
@@ -333,20 +283,6 @@ components:
           - 'null'
           description: The ID of the pipeline.
       description: Request for updating a stage.
-    Money:
-      required:
-      - amount
-      - currency
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The amount of money. This field is required.
-          format: double
-        currency:
-          type: string
-          description: The currency of the money. This field is required.
-      description: Represents a monetary value with an amount and currency.
     StageDealListResponse:
       type: object
       description: Response for a list of deals in a stage.
@@ -361,6 +297,21 @@ components:
             description: The list of deals in a stage.
             items:
               $ref: '#/components/schemas/Deal'
+    CreateStageRequest:
+      required:
+      - name
+      - pipeline_id
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+          description: The name of the stage.
+        pipeline_id:
+          minLength: 1
+          type: string
+          description: The ID of the pipeline to which the stage belongs.
+      description: Request for creating a stage.
     Deal:
       type: object
       properties:
@@ -415,6 +366,13 @@ components:
           additionalProperties: true
           description: The custom fields associated with the deal. This field is optional.
       description: Represents a deal.
+    BaseListResponse_Stage_:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+      description: The list responses.
     StageListResponse:
       type: object
       description: Response for a list of stages.
@@ -429,6 +387,40 @@ components:
             description: The list of stages.
             items:
               $ref: '#/components/schemas/Stage'
+    BaseListResponse_Deal_:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+          description: Token for the next page of results.
+      description: The list responses.
+    Stage:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the model.
+        name:
+          type: string
+          description: The name of the stage.
+        pipeline_id:
+          type: string
+          description: The ID of the pipeline.
+      description: Represents a stage in a pipeline.
+    Money:
+      required:
+      - amount
+      - currency
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount of money. This field is required.
+          format: double
+        currency:
+          type: string
+          description: The currency of the money. This field is required.
+      description: Represents a monetary value with an amount and currency.
   securitySchemes:
     BearerAuth:
       type: http
@@ -442,6 +434,3 @@ components:
           tokenUrl: https://api.infusionsoft.com/token
           scopes:
             api: General API access
-x-refined-from:
-- infusionsoft-pipelines-openapi-original.yml
-- infusionsoft-pipelines-openapi.yml

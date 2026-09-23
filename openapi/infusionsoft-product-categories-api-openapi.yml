@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Product Categories across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Product Categories across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Product Categories
 paths:
@@ -4330,64 +4329,6 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        status:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetails'
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
-    ListAssignedProductsResponse:
-      type: object
-      properties:
-        assigned_product_categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssignedProducts'
-        next_page_token:
-          type: string
-    CreateProductCategoryRequest:
-      type: object
-      description: productCategory
-      properties:
-        name:
-          type: string
-          description: The category name
-          example: Electronics
-        display_order_index:
-          type: integer
-          format: int32
-          description: Display order of the category
-          example: 0
-        parent_category_id:
-          type: string
-          description: Parent category ID for subcategories
-          example: 2
-      required:
-      - name
-    ListProductCategoriesResponse:
-      type: object
-      properties:
-        product_categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductCategory'
-        next_page_token:
-          type: string
     ProductCategory:
       type: object
       properties:
@@ -4408,6 +4349,55 @@ components:
           type: string
           description: Parent category ID for subcategories
           example: 2
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
+    ListAssignedProductsResponse:
+      type: object
+      properties:
+        assigned_product_categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedProducts'
+        next_page_token:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
+    CreateProductCategoryRequest:
+      type: object
+      description: productCategory
+      properties:
+        name:
+          type: string
+          description: The category name
+          example: Electronics
+        display_order_index:
+          type: integer
+          format: int32
+          description: Display order of the category
+          example: 0
+        parent_category_id:
+          type: string
+          description: Parent category ID for subcategories
+          example: 2
+      required:
+      - name
     AssignedProducts:
       type: object
       properties:
@@ -4436,6 +4426,15 @@ components:
           type: string
           description: Parent category ID for subcategories
           example: 2
+    ListProductCategoriesResponse:
+      type: object
+      properties:
+        product_categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+        next_page_token:
+          type: string
     AssignProductsRequest:
       type: object
       properties:
@@ -4494,5 +4493,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

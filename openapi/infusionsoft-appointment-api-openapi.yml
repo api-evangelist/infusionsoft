@@ -5,13 +5,13 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Appointment across 3 of this provider''s published API definitions: infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v1-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Appointment across 2 of this provider''s published API definitions: infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.infusionsoft.com/crm/rest
 - url: https://api.infusionsoft.com/crm
 tags:
 - name: Appointment
-  description: Access Appointment objects stored in Keap Max Classic.  Appointment objects stored in Keap Pro or Keap Max are not available via these methods.
+  description: Access Appointment objects stored in Keap Max Classic. Appointment objects stored in Keap Pro or Keap Max are not available via these methods.
 paths:
   /v1/appointments:
     get:
@@ -4702,28 +4702,6 @@ paths:
     - url: https://api.infusionsoft.com/crm
 components:
   schemas:
-    CustomFieldOption:
-      title: CustomFieldOption
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomFieldOption'
-    CreateRestCustomFieldOption:
-      title: CreateRestCustomFieldOption
-      type: object
-      properties:
-        label:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateRestCustomFieldOption'
     Throwable:
       title: Throwable
       type: object
@@ -4761,6 +4739,151 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Throwable'
+    CustomFieldOption:
+      title: CustomFieldOption
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldOption'
+    CreateRestCustomFieldOption:
+      title: CreateRestCustomFieldOption
+      type: object
+      properties:
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateRestCustomFieldOption'
+    View:
+      type: object
+      properties:
+        contentType:
+          type: string
+    CustomFieldOption_2:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+    DefaultHttpStatusCode:
+      allOf:
+      - $ref: '#/components/schemas/HttpStatusCode'
+    ModelAndView:
+      type: object
+      properties:
+        view:
+          $ref: '#/components/schemas/View'
+        model:
+          type: object
+          additionalProperties: {}
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/DefaultHttpStatusCode'
+          - $ref: '#/components/schemas/HttpStatus'
+        modelMap:
+          type: object
+          additionalProperties: {}
+          properties:
+            empty:
+              type: boolean
+        reference:
+          type: boolean
+        empty:
+          type: boolean
+        viewName:
+          type: string
+    CustomFieldMetaData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomFieldOption_2'
+        record_type:
+          type: string
+          enum:
+          - CONTACT
+          - REFERRAL_PARTNER
+          - OPPORTUNITY
+          - TASK_NOTE_APPOINTMENT
+          - COMPANY
+          - ORDER
+          - SUBSCRIPTION
+        field_type:
+          type: string
+          enum:
+          - Currency
+          - Date
+          - DateTime
+          - DayOfWeek
+          - Drilldown
+          - Email
+          - Month
+          - ListBox
+          - Name
+          - WholeNumber
+          - DecimalNumber
+          - Percent
+          - PhoneNumber
+          - Radio
+          - Dropdown
+          - SocialSecurityNumber
+          - State
+          - Text
+          - TextArea
+          - User
+          - UserListBox
+          - Website
+          - Year
+          - YesNo
+        field_name:
+          type: string
+        default_value:
+          type: string
+    HttpStatusCode:
+      type: object
+      properties:
+        error:
+          type: boolean
+        is1xxInformational:
+          type: boolean
+        is2xxSuccessful:
+          type: boolean
+        is3xxRedirection:
+          type: boolean
+        is4xxClientError:
+          type: boolean
+        is5xxServerError:
+          type: boolean
+    AppointmentList:
+      type: object
+      properties:
+        appointments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Appointment'
+        count:
+          type: integer
+          format: int32
+        next:
+          type: string
+        previous:
+          type: string
+        sync_token:
+          type: string
     Appointment:
       type: object
       properties:
@@ -4818,28 +4941,37 @@ components:
           items:
             type: string
           uniqueItems: true
-    CustomFieldMetaData:
+    AppointmentSearchCommand:
       type: object
       properties:
-        id:
+        since:
+          type: string
+        until:
+          type: string
+        limit:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int32
+        contact_id:
           type: integer
           format: int64
+        sinceAsDate:
+          type: string
+          format: date-time
+        untilAsDate:
+          type: string
+          format: date-time
+    CreateRestCustomField:
+      type: object
+      properties:
         label:
           type: string
         options:
           type: array
           items:
-            $ref: '#/components/schemas/CustomFieldOption_2'
-        record_type:
-          type: string
-          enum:
-          - CONTACT
-          - REFERRAL_PARTNER
-          - OPPORTUNITY
-          - TASK_NOTE_APPOINTMENT
-          - COMPANY
-          - ORDER
-          - SUBSCRIPTION
+            $ref: '#/components/schemas/CreateRestCustomFieldOption_2'
         field_type:
           type: string
           enum:
@@ -4867,52 +4999,17 @@ components:
           - Website
           - Year
           - YesNo
-        field_name:
-          type: string
-        default_value:
-          type: string
-    DefaultHttpStatusCode:
-      allOf:
-      - $ref: '#/components/schemas/HttpStatusCode'
-    ModelAndView:
-      type: object
-      properties:
-        view:
-          $ref: '#/components/schemas/View'
-        model:
-          type: object
-          additionalProperties: {}
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/DefaultHttpStatusCode'
-          - $ref: '#/components/schemas/HttpStatus'
-        modelMap:
-          type: object
-          additionalProperties: {}
-          properties:
-            empty:
-              type: boolean
-        reference:
-          type: boolean
-        empty:
-          type: boolean
-        viewName:
-          type: string
-    HttpStatusCode:
-      type: object
-      properties:
-        error:
-          type: boolean
-        is1xxInformational:
-          type: boolean
-        is2xxSuccessful:
-          type: boolean
-        is3xxRedirection:
-          type: boolean
-        is4xxClientError:
-          type: boolean
-        is5xxServerError:
-          type: boolean
+        group_id:
+          type: integer
+          format: int64
+          description: An optional tab group to place the field under in the interface.  If not specified, will default to the 'Custom Fields' tab.
+        user_group_id:
+          type: integer
+          format: int64
+          description: An optional user group to choose from when selecting values for User or UserListBox fields.
+      required:
+      - field_type
+      - label
     HttpStatus:
       allOf:
       - $ref: '#/components/schemas/HttpStatusCode'
@@ -4981,216 +5078,7 @@ components:
       - 509 BANDWIDTH_LIMIT_EXCEEDED
       - 510 NOT_EXTENDED
       - 511 NETWORK_AUTHENTICATION_REQUIRED
-    CustomFieldOption_2:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-    CreateRestCustomField:
-      type: object
-      properties:
-        label:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateRestCustomFieldOption_2'
-        field_type:
-          type: string
-          enum:
-          - Currency
-          - Date
-          - DateTime
-          - DayOfWeek
-          - Drilldown
-          - Email
-          - Month
-          - ListBox
-          - Name
-          - WholeNumber
-          - DecimalNumber
-          - Percent
-          - PhoneNumber
-          - Radio
-          - Dropdown
-          - SocialSecurityNumber
-          - State
-          - Text
-          - TextArea
-          - User
-          - UserListBox
-          - Website
-          - Year
-          - YesNo
-        group_id:
-          type: integer
-          format: int64
-          description: An optional tab group to place the field under in the interface.  If not specified, will default to the 'Custom Fields' tab.
-        user_group_id:
-          type: integer
-          format: int64
-          description: An optional user group to choose from when selecting values for User or UserListBox fields.
-      required:
-      - field_type
-      - label
-    AppointmentList:
-      type: object
-      properties:
-        appointments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Appointment'
-        count:
-          type: integer
-          format: int32
-        next:
-          type: string
-        previous:
-          type: string
-        sync_token:
-          type: string
     CreateRestCustomFieldOption_2:
-      type: object
-      properties:
-        label:
-          type: string
-    View:
-      type: object
-      properties:
-        contentType:
-          type: string
-    AppointmentSearchCommand:
-      type: object
-      properties:
-        since:
-          type: string
-        until:
-          type: string
-        limit:
-          type: integer
-          format: int32
-        offset:
-          type: integer
-          format: int32
-        contact_id:
-          type: integer
-          format: int64
-        sinceAsDate:
-          type: string
-          format: date-time
-        untilAsDate:
-          type: string
-          format: date-time
-    CustomFieldMetaData_2:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        label:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomFieldOption_3'
-        record_type:
-          type: string
-          enum:
-          - CONTACT
-          - REFERRAL_PARTNER
-          - OPPORTUNITY
-          - TASK_NOTE_APPOINTMENT
-          - COMPANY
-          - ORDER
-          - SUBSCRIPTION
-        field_type:
-          type: string
-          enum:
-          - Currency
-          - Date
-          - DateTime
-          - DayOfWeek
-          - Drilldown
-          - Email
-          - Month
-          - ListBox
-          - Name
-          - WholeNumber
-          - DecimalNumber
-          - Percent
-          - PhoneNumber
-          - Radio
-          - Dropdown
-          - SocialSecurityNumber
-          - State
-          - Text
-          - TextArea
-          - User
-          - UserListBox
-          - Website
-          - Year
-          - YesNo
-        field_name:
-          type: string
-        default_value:
-          type: string
-    CustomFieldOption_3:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-    CreateRestCustomField_2:
-      type: object
-      properties:
-        label:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateRestCustomFieldOption_3'
-        field_type:
-          type: string
-          enum:
-          - Currency
-          - Date
-          - DateTime
-          - DayOfWeek
-          - Drilldown
-          - Email
-          - Month
-          - ListBox
-          - Name
-          - WholeNumber
-          - DecimalNumber
-          - Percent
-          - PhoneNumber
-          - Radio
-          - Dropdown
-          - SocialSecurityNumber
-          - State
-          - Text
-          - TextArea
-          - User
-          - UserListBox
-          - Website
-          - Year
-          - YesNo
-        group_id:
-          type: integer
-          format: int64
-          description: An optional tab group to place the field under in the interface.  If not specified, will default to the 'Custom Fields' tab.
-        user_group_id:
-          type: integer
-          format: int64
-          description: An optional user group to choose from when selecting values for User or UserListBox fields.
-      required:
-      - field_type
-      - label
-    CreateRestCustomFieldOption_3:
       type: object
       properties:
         label:
@@ -5205,4 +5093,3 @@ components:
 x-refined-from:
 - infusionsoft-rest-v1-2025-11-05-openapi-original.json
 - infusionsoft-rest-v1-openapi-original.json
-- infusionsoft-rest-v1-openapi.json

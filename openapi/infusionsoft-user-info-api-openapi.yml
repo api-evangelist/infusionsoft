@@ -22,7 +22,7 @@ paths:
       tags:
       - User Info
       summary: Retrieve User Info
-      description: Retrieves information for the current authenticated end-user, as outlined by the [OpenID Connect specification](http://openid.net/specs/openid-connect-core-1_0.html#UserInfo).
+      description: Retrieves information for the current authenticated end-user, as outlined by the OpenID Connect specification.
       operationId: getUserInfoUsingGET
       responses:
         '200':

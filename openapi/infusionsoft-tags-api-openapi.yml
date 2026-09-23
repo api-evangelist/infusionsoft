@@ -5,7 +5,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Tags across 7 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v1-openapi.json, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Tags across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
@@ -13019,6 +13019,321 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this tag
+          example: 123
+        name:
+          type: string
+          description: The unique name of this tag
+          example: VIP Customer
+        description:
+          type: string
+          description: A description of this tag
+          example: High-value customers
+        category:
+          $ref: '#/components/schemas/CategoryReference'
+          description: The category this tag belongs to
+        create_time:
+          type: string
+          format: date-time
+          description: The time this tag was created, in ISO 8601 format
+          example: '2024-01-10T08:00:00Z'
+        update_time:
+          type: string
+          format: date-time
+          description: The time this tag was last updated, in ISO 8601 format
+          example: '2024-03-15T10:30:00Z'
+    UpdateTagResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this tag
+          example: 123
+        name:
+          type: string
+          description: The unique name of this tag
+          example: VIP Customer
+        description:
+          type: string
+          description: A description of this tag
+          example: High-value customers
+        category:
+          $ref: '#/components/schemas/CategoryReference'
+          description: The category this tag belongs to
+        create_time:
+          type: string
+          format: date-time
+          description: The time this tag was created, in ISO 8601 format
+          example: '2024-01-10T08:00:00Z'
+        update_time:
+          type: string
+          format: date-time
+          description: The time this tag was last updated, in ISO 8601 format
+          example: '2024-03-15T10:30:00Z'
+    CustomFieldValue:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          description: The value of the custom field. Text custom field values have a maximum length of 65535 characters.
+    ListTaggedContactsResponse:
+      type: object
+      properties:
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaggedContact'
+        next_page_token:
+          type: string
+    PhoneNumber:
+      type: object
+      properties:
+        extension:
+          type: string
+          description: Phone extension
+          example: 101
+        number:
+          type: string
+          description: Phone number. Maximum length is 40 characters for PHONE1-PHONE3 and 20 characters for PHONE4-PHONE5.
+          example: 5551234567
+        type:
+          type: string
+          description: Phone type
+          example: Work
+        field:
+          type: string
+          description: Phone number slot
+          enum:
+          - PHONE_NUMBER_FIELD_UNSPECIFIED
+          - PHONE1
+          - PHONE2
+          - PHONE3
+          - PHONE4
+          - PHONE5
+          example: PHONE1
+        number_e164:
+          type: string
+          description: Phone number in E.164 format
+          example: '+15551234567'
+    TaggedCompany:
+      type: object
+      properties:
+        company:
+          $ref: '#/components/schemas/Company'
+          description: The company the tag is applied to
+        applied_time:
+          type: string
+          format: date-time
+          description: The time the tag was applied to the company, in ISO 8601 format.
+          example: '2023-10-01T12:00:00Z'
+    EmailAddress:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address. Maximum length is 75 characters for EMAIL1 and 100 characters for EMAIL2 and EMAIL3.
+          example: john.smith@example.com
+        field:
+          type: string
+          description: Email address slot
+          enum:
+          - EMAIL_FIELD_UNSPECIFIED
+          - EMAIL1
+          - EMAIL2
+          - EMAIL3
+          example: EMAIL1
+        opt_in_reason:
+          type: string
+          description: Reason for opting in
+          example: Subscribed via website form
+        is_opt_in:
+          type: boolean
+        email_opt_status:
+          type: string
+          enum:
+          - UNENGAGED_MARKETABLE
+          - SINGLE_OPT_IN
+          - DOUBLE_OPT_IN
+          - CONFIRMED
+          - UNENGAGED_NON_MARKETABLE
+          - NON_MARKETABLE
+          - LOCKDOWN
+          - BOUNCE
+          - HARD_BOUNCE
+          - MANUAL
+          - ADMIN
+          - SYSTEM
+          - LIST_UNSUBSCRIBE
+          - FEEDBACK
+          - SPAM
+          - INVALID
+          - DEACTIVATED
+    FaxNumber:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Fax number
+          example: 5551234568
+        type:
+          type: string
+          description: Fax type
+          example: Work
+        field:
+          type: string
+          description: Fax number slot
+          enum:
+          - FAX_NUMBER_FIELD_UNSPECIFIED
+          - FAX1
+          - FAX2
+          example: FAX1
+    TagCategory:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this tag category
+          example: 123
+        name:
+          type: string
+          description: The unique name of this tag category
+          example: Customer Segments
+        description:
+          type: string
+          description: A description of this tag category
+          example: Tags for customer segmentation
+        create_time:
+          type: string
+          format: date-time
+          description: The time this tag category was created, in ISO 8601 format
+          example: '2024-01-10T08:00:00Z'
+        update_time:
+          type: string
+          format: date-time
+          description: The time this tag category was last updated, in ISO 8601 format
+          example: '2024-03-15T10:30:00Z'
+    GetTagCategoryResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this tag category
+          example: 123
+        name:
+          type: string
+          description: The unique name of this tag category
+          example: Customer Segments
+        description:
+          type: string
+          description: A description of this tag category
+          example: Tags for customer segmentation
+        create_time:
+          type: string
+          format: date-time
+          description: The time this tag category was created, in ISO 8601 format
+          example: '2024-01-10T08:00:00Z'
+        update_time:
+          type: string
+          format: date-time
+          description: The time this tag category was last updated, in ISO 8601 format
+          example: '2024-03-15T10:30:00Z'
+    ListTaggedCompaniesResponse:
+      type: object
+      properties:
+        tagged_companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaggedCompany'
+        next_page_token:
+          type: string
+    ListTagsResponse:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        next_page_token:
+          type: string
+    ApplyRemoveTagRequest:
+      type: object
+      properties:
+        contact_ids:
+          type: array
+          description: The IDs of the contacts to apply/remove the tag to/from
+          example:
+          - '123'
+          - '456'
+          items:
+            type: string
+          uniqueItems: true
+      required:
+      - contact_ids
+    CreateUpdateTagRequest:
+      type: object
+      description: tag
+      properties:
+        name:
+          type: string
+          description: Name of the tag, up to 255 characters will be saved
+          example: VIP Customer
+        description:
+          type: string
+          description: Description of the tag
+          example: High-value customers
+        category:
+          $ref: '#/components/schemas/CategoryReference'
+          description: Category of the tag. If not provided, the tag will not be assigned to a category.
+    TaggedContact:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        given_name:
+          type: string
+        family_name:
+          type: string
+        applied_time:
+          type: string
+          format: date-time
+          description: The time the tag was applied to the contact, in ISO 8601 format.
+          example: '2023-10-01T12:00:00Z'
+    ListTagCategoriesResponse:
+      type: object
+      properties:
+        tag_categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagCategory'
+        next_page_token:
+          type: string
+    CreateUpdateTagCategoryRequest:
+      type: object
+      description: tagCategory
+      properties:
+        name:
+          type: string
+          description: The name of the tag category, must be unique
+          example: Customer Segments
+        description:
+          type: string
+          description: A description of the tag category
+          example: Tags for customer segmentation
     Address:
       type: object
       properties:
@@ -13073,75 +13388,6 @@ components:
           type: string
           description: ZIP+4 extension. Maximum length is 10 characters.
           example: 1234
-    ListTagCategoriesResponse:
-      type: object
-      properties:
-        tag_categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagCategory'
-        next_page_token:
-          type: string
-    EmailAddress:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address. Maximum length is 75 characters for EMAIL1 and 100 characters for EMAIL2 and EMAIL3.
-          example: john.smith@example.com
-        field:
-          type: string
-          description: Email address slot
-          enum:
-          - EMAIL_FIELD_UNSPECIFIED
-          - EMAIL1
-          - EMAIL2
-          - EMAIL3
-          example: EMAIL1
-        opt_in_reason:
-          type: string
-          description: Reason for opting in
-          example: Subscribed via website form
-        is_opt_in:
-          type: boolean
-        email_opt_status:
-          type: string
-          enum:
-          - UNENGAGED_MARKETABLE
-          - SINGLE_OPT_IN
-          - DOUBLE_OPT_IN
-          - CONFIRMED
-          - UNENGAGED_NON_MARKETABLE
-          - NON_MARKETABLE
-          - LOCKDOWN
-          - BOUNCE
-          - HARD_BOUNCE
-          - MANUAL
-          - ADMIN
-          - SYSTEM
-          - LIST_UNSUBSCRIBE
-          - FEEDBACK
-          - SPAM
-          - INVALID
-          - DEACTIVATED
-    ListTagsResponse:
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-        next_page_token:
-          type: string
-    ListTaggedContactsResponse:
-      type: object
-      properties:
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaggedContact'
-        next_page_token:
-          type: string
     Error:
       type: object
       properties:
@@ -13156,187 +13402,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorDetails'
-    TaggedCompany:
+    ApplyTagsResponse:
       type: object
       properties:
-        company:
-          $ref: '#/components/schemas/Company'
-          description: The company the tag is applied to
-        applied_time:
-          type: string
-          format: date-time
-          description: The time the tag was applied to the company, in ISO 8601 format.
-          example: '2023-10-01T12:00:00Z'
-    CreateUpdateTagCategoryRequest:
-      type: object
-      description: tagCategory
-      properties:
-        name:
-          type: string
-          description: The name of the tag category, must be unique
-          example: Customer Segments
-        description:
-          type: string
-          description: A description of the tag category
-          example: Tags for customer segmentation
-    CreateUpdateTagRequest:
-      type: object
-      description: tag
-      properties:
-        name:
-          type: string
-          description: Name of the tag, up to 255 characters will be saved
-          example: VIP Customer
-        description:
-          type: string
-          description: Description of the tag
-          example: High-value customers
-        category:
-          $ref: '#/components/schemas/CategoryReference'
-          description: Category of the tag. If not provided, the tag will not be assigned to a category.
-    FaxNumber:
-      type: object
-      properties:
-        number:
-          type: string
-          description: Fax number
-          example: 5551234568
-        type:
-          type: string
-          description: Fax type
-          example: Work
-        field:
-          type: string
-          description: Fax number slot
-          enum:
-          - FAX_NUMBER_FIELD_UNSPECIFIED
-          - FAX1
-          - FAX2
-          example: FAX1
-    UpdateTagResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique identifier for this tag
-          example: 123
-        name:
-          type: string
-          description: The unique name of this tag
-          example: VIP Customer
-        description:
-          type: string
-          description: A description of this tag
-          example: High-value customers
-        category:
-          $ref: '#/components/schemas/CategoryReference'
-          description: The category this tag belongs to
-        create_time:
-          type: string
-          format: date-time
-          description: The time this tag was created, in ISO 8601 format
-          example: '2024-01-10T08:00:00Z'
-        update_time:
-          type: string
-          format: date-time
-          description: The time this tag was last updated, in ISO 8601 format
-          example: '2024-03-15T10:30:00Z'
-    CategoryReference:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique identifier for the tag category
-          example: 123
-      required:
-      - id
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
-    ListTaggedCompaniesResponse:
-      type: object
-      properties:
-        tagged_companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaggedCompany'
-        next_page_token:
-          type: string
-    PhoneNumber:
-      type: object
-      properties:
-        extension:
-          type: string
-          description: Phone extension
-          example: 101
-        number:
-          type: string
-          description: Phone number. Maximum length is 40 characters for PHONE1-PHONE3 and 20 characters for PHONE4-PHONE5.
-          example: 5551234567
-        type:
-          type: string
-          description: Phone type
-          example: Work
-        field:
-          type: string
-          description: Phone number slot
-          enum:
-          - PHONE_NUMBER_FIELD_UNSPECIFIED
-          - PHONE1
-          - PHONE2
-          - PHONE3
-          - PHONE4
-          - PHONE5
-          example: PHONE1
-        number_e164:
-          type: string
-          description: Phone number in E.164 format
-          example: '+15551234567'
-    TagCategory:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique identifier for this tag category
-          example: 123
-        name:
-          type: string
-          description: The unique name of this tag category
-          example: Customer Segments
-        description:
-          type: string
-          description: A description of this tag category
-          example: Tags for customer segmentation
-        create_time:
-          type: string
-          format: date-time
-          description: The time this tag category was created, in ISO 8601 format
-          example: '2024-01-10T08:00:00Z'
-        update_time:
-          type: string
-          format: date-time
-          description: The time this tag category was last updated, in ISO 8601 format
-          example: '2024-03-15T10:30:00Z'
-    TaggedContact:
-      type: object
-      properties:
-        id:
-          type: string
-        email:
-          type: string
-        given_name:
-          type: string
-        family_name:
-          type: string
-        applied_time:
-          type: string
-          format: date-time
-          description: The time the tag was applied to the contact, in ISO 8601 format.
-          example: '2023-10-01T12:00:00Z'
+        results:
+          type: object
+          additionalProperties:
+            type: string
     UpdateTagCategoryResponse:
       type: object
       properties:
@@ -13362,80 +13434,6 @@ components:
           format: date-time
           description: The time this tag category was last updated, in ISO 8601 format
           example: '2024-03-15T10:30:00Z'
-    ApplyTagsResponse:
-      type: object
-      properties:
-        results:
-          type: object
-          additionalProperties:
-            type: string
-    GetTagCategoryResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique identifier for this tag category
-          example: 123
-        name:
-          type: string
-          description: The unique name of this tag category
-          example: Customer Segments
-        description:
-          type: string
-          description: A description of this tag category
-          example: Tags for customer segmentation
-        create_time:
-          type: string
-          format: date-time
-          description: The time this tag category was created, in ISO 8601 format
-          example: '2024-01-10T08:00:00Z'
-        update_time:
-          type: string
-          format: date-time
-          description: The time this tag category was last updated, in ISO 8601 format
-          example: '2024-03-15T10:30:00Z'
-    Tag:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique identifier for this tag
-          example: 123
-        name:
-          type: string
-          description: The unique name of this tag
-          example: VIP Customer
-        description:
-          type: string
-          description: A description of this tag
-          example: High-value customers
-        category:
-          $ref: '#/components/schemas/CategoryReference'
-          description: The category this tag belongs to
-        create_time:
-          type: string
-          format: date-time
-          description: The time this tag was created, in ISO 8601 format
-          example: '2024-01-10T08:00:00Z'
-        update_time:
-          type: string
-          format: date-time
-          description: The time this tag was last updated, in ISO 8601 format
-          example: '2024-03-15T10:30:00Z'
-    ApplyRemoveTagRequest:
-      type: object
-      properties:
-        contact_ids:
-          type: array
-          description: The IDs of the contacts to apply/remove the tag to/from
-          example:
-          - '123'
-          - '456'
-          items:
-            type: string
-          uniqueItems: true
-      required:
-      - contact_ids
     Company:
       type: object
       properties:
@@ -13556,13 +13554,15 @@ components:
           type: string
           description: ID of the user who last updated this company
           example: 10
-    CustomFieldValue:
+    CategoryReference:
       type: object
       properties:
         id:
           type: string
-        content:
-          description: The value of the custom field. Text custom field values have a maximum length of 65535 characters.
+          description: The unique identifier for the tag category
+          example: 123
+      required:
+      - id
     Throwable:
       title: Throwable
       type: object
@@ -13600,34 +13600,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Throwable'
-    CreateTagCategory:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The category name
-        description:
-          type: string
-          description: The category description
-      required:
-      - name
-    BasicContact:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        email:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-    View:
-      type: object
-      properties:
-        contentType:
-          type: string
+    DefaultHttpStatusCode:
+      allOf:
+      - $ref: '#/components/schemas/HttpStatusCode'
     TaggedContactList:
       type: object
       properties:
@@ -13642,17 +13617,68 @@ components:
           type: string
         previous:
           type: string
-    TaggedCompany_2:
+    Tag_2:
       type: object
       properties:
-        company:
-          $ref: '#/components/schemas/BasicCompany'
-        date_applied:
+        id:
+          type: integer
+          format: int64
+          description: The id for the tag
+        name:
           type: string
-          format: date-time
-    DefaultHttpStatusCode:
-      allOf:
-      - $ref: '#/components/schemas/HttpStatusCode'
+          description: The tag name
+        description:
+          type: string
+          description: The tag description
+        category:
+          $ref: '#/components/schemas/TagCategory_2'
+          description: The tag category reference
+      required:
+      - id
+      - name
+    BasicCompany:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
+        company_name:
+          type: string
+    TaggedCompanyList:
+      type: object
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaggedCompany_2'
+        count:
+          type: integer
+          format: int32
+        next:
+          type: string
+        previous:
+          type: string
+    View:
+      type: object
+      properties:
+        contentType:
+          type: string
+    CreateTag:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The tag name
+        description:
+          type: string
+          description: The tag description
+        category:
+          $ref: '#/components/schemas/CategoryReference_2'
+          description: The tag category reference
+      required:
+      - name
     ModelAndView:
       type: object
       properties:
@@ -13677,6 +13703,93 @@ components:
           type: boolean
         viewName:
           type: string
+    TaggedCompany_2:
+      type: object
+      properties:
+        company:
+          $ref: '#/components/schemas/BasicCompany'
+        date_applied:
+          type: string
+          format: date-time
+    TagCategory_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: The id for the tag category
+        name:
+          type: string
+          description: The category name
+        description:
+          type: string
+          description: The category description
+      required:
+      - id
+      - name
+    BasicContact:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+    Tags:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag_2'
+        count:
+          type: integer
+          format: int32
+        next:
+          type: string
+        previous:
+          type: string
+    RestQueryCommand:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int32
+    RestTagQueryCommand:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int32
+        category:
+          type: integer
+          format: int64
+        name:
+          type: string
+    SetOfIds:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+          properties:
+            empty:
+              type: boolean
+          uniqueItems: true
+      required:
+      - ids
     HttpStatus:
       allOf:
       - $ref: '#/components/schemas/HttpStatusCode'
@@ -13745,54 +13858,6 @@ components:
       - 509 BANDWIDTH_LIMIT_EXCEEDED
       - 510 NOT_EXTENDED
       - 511 NETWORK_AUTHENTICATION_REQUIRED
-    CategoryReference_2:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: The id for the tag category
-      required:
-      - id
-    SetOfIds:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: integer
-            format: int64
-          properties:
-            empty:
-              type: boolean
-          uniqueItems: true
-      required:
-      - ids
-    RestQueryCommand:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int32
-        offset:
-          type: integer
-          format: int32
-    TagCategory_2:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: The id for the tag category
-        name:
-          type: string
-          description: The category name
-        description:
-          type: string
-          description: The category description
-      required:
-      - id
-      - name
     TaggedContact_2:
       type: object
       properties:
@@ -13801,34 +13866,6 @@ components:
         date_applied:
           type: string
           format: date-time
-    CreateTag:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The tag name
-        description:
-          type: string
-          description: The tag description
-        category:
-          $ref: '#/components/schemas/CategoryReference_2'
-          description: The tag category reference
-      required:
-      - name
-    Tags:
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag_2'
-        count:
-          type: integer
-          format: int32
-        next:
-          type: string
-        previous:
-          type: string
     HttpStatusCode:
       type: object
       properties:
@@ -13844,86 +13881,7 @@ components:
           type: boolean
         is5xxServerError:
           type: boolean
-    Tag_2:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: The id for the tag
-        name:
-          type: string
-          description: The tag name
-        description:
-          type: string
-          description: The tag description
-        category:
-          $ref: '#/components/schemas/TagCategory_2'
-          description: The tag category reference
-      required:
-      - id
-      - name
-    RestTagQueryCommand:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int32
-        offset:
-          type: integer
-          format: int32
-        category:
-          type: integer
-          format: int64
-        name:
-          type: string
-    TaggedCompanyList:
-      type: object
-      properties:
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaggedCompany_2'
-        count:
-          type: integer
-          format: int32
-        next:
-          type: string
-        previous:
-          type: string
-    BasicCompany:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        email:
-          type: string
-        company_name:
-          type: string
-    TaggedContactList_2:
-      type: object
-      properties:
-        contacts:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaggedContact_3'
-        count:
-          type: integer
-          format: int32
-        next:
-          type: string
-        previous:
-          type: string
-    TaggedCompany_3:
-      type: object
-      properties:
-        company:
-          $ref: '#/components/schemas/BasicCompany'
-        date_applied:
-          type: string
-          format: date-time
-    CategoryReference_3:
+    CategoryReference_2:
       type: object
       properties:
         id:
@@ -13932,13 +13890,9 @@ components:
           description: The id for the tag category
       required:
       - id
-    TagCategory_3:
+    CreateTagCategory:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          description: The id for the tag category
         name:
           type: string
           description: The category name
@@ -13946,77 +13900,7 @@ components:
           type: string
           description: The category description
       required:
-      - id
       - name
-    TaggedContact_3:
-      type: object
-      properties:
-        contact:
-          $ref: '#/components/schemas/BasicContact'
-        date_applied:
-          type: string
-          format: date-time
-    CreateTag_2:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The tag name
-        description:
-          type: string
-          description: The tag description
-        category:
-          $ref: '#/components/schemas/CategoryReference_3'
-          description: The tag category reference
-      required:
-      - name
-    Tags_2:
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag_3'
-        count:
-          type: integer
-          format: int32
-        next:
-          type: string
-        previous:
-          type: string
-    Tag_3:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: The id for the tag
-        name:
-          type: string
-          description: The tag name
-        description:
-          type: string
-          description: The tag description
-        category:
-          $ref: '#/components/schemas/TagCategory_3'
-          description: The tag category reference
-      required:
-      - id
-      - name
-    TaggedCompanyList_2:
-      type: object
-      properties:
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaggedCompany_3'
-        count:
-          type: integer
-          format: int32
-        next:
-          type: string
-        previous:
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2
@@ -14029,7 +13913,4 @@ x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v1-2025-11-05-openapi-original.json
 - infusionsoft-rest-v1-openapi-original.json
-- infusionsoft-rest-v1-openapi.json
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

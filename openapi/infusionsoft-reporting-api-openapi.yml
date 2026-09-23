@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Reporting across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Reporting across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Reporting
 paths:
@@ -18,7 +17,9 @@ paths:
       tags:
       - Reporting
       summary: Run a Report
-      description: Runs a report as defined in the application (identified as Saved Search)<br/><span style='color:red'>Deprecated as of v2</span>
+      description: 'Runs a report as defined in the application (identified as Saved Search)
+
+        Deprecated as of v2'
       operationId: runReport
       parameters:
       - name: report_id
@@ -97,7 +98,9 @@ paths:
       tags:
       - Reporting
       summary: List Reports
-      description: Retrieves a list of Reports as defined in the application (identified as Saved Search)<br/><span style='color:red'>Deprecated as of v2</span>
+      description: 'Retrieves a list of Reports as defined in the application (identified as Saved Search)
+
+        Deprecated as of v2'
       operationId: listReports
       parameters:
       - name: filter
@@ -207,7 +210,9 @@ paths:
       tags:
       - Reporting
       summary: Retrieve Report
-      description: Retrieves information about a Report as defined in the application (identified as Saved Search)<br/><span style='color:red'>Deprecated as of v2</span>
+      description: 'Retrieves information about a Report as defined in the application (identified as Saved Search)
+
+        Deprecated as of v2'
       operationId: retrieveReport
       parameters:
       - name: report_id
@@ -355,7 +360,9 @@ paths:
       tags:
       - Reporting
       summary: List Reports
-      description: Retrieves a list of Reports as defined in the application (identified as Saved Search)<br/><span style='color:red'>Deprecated as of v2</span>
+      description: 'Retrieves a list of Reports as defined in the application (identified as Saved Search)
+
+        Deprecated as of v2'
       operationId: listReportsUsingGET
       parameters:
       - name: filter
@@ -877,7 +884,9 @@ paths:
       tags:
       - Reporting
       summary: Retrieve Report
-      description: Retrieves information about a Report as defined in the application (identified as Saved Search)<br/><span style='color:red'>Deprecated as of v2</span>
+      description: 'Retrieves information about a Report as defined in the application (identified as Saved Search)
+
+        Deprecated as of v2'
       operationId: retrieveReportUsingGET
       parameters:
       - name: report_id
@@ -1360,7 +1369,9 @@ paths:
       tags:
       - Reporting
       summary: Run a Report
-      description: Runs a report as defined in the application (identified as Saved Search)<br/><span style='color:red'>Deprecated as of v2</span>
+      description: 'Runs a report as defined in the application (identified as Saved Search)
+
+        Deprecated as of v2'
       operationId: runReportUsingPOST
       parameters:
       - name: fields
@@ -1759,6 +1770,54 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
+    ReportExecutionResult:
+      type: object
+      properties:
+        results:
+          type: array
+          description: The list of report result records
+          items:
+            $ref: '#/components/schemas/ReportEntryRecord'
+        page_token:
+          type: string
+          description: Token for retrieving the next page of results
+          example: eyJsYXN0Um93IjoxMDB9
+    ListReportsResponse:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Report'
+        next_page_token:
+          type: string
+    ReportModel:
+      type: object
+      properties:
+        fields:
+          type: array
+          description: The list of fields available for this Report (Saved Search)
+          items:
+            $ref: '#/components/schemas/ReportField'
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
+    RunReportRequest:
+      type: object
+      properties:
+        page_token:
+          type: string
+        order_by:
+          type: string
+        page_size:
+          type: integer
+          format: int32
+        fields:
+          type: string
     Error:
       type: object
       properties:
@@ -1773,65 +1832,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorDetails'
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
-    ListReportsResponse:
-      type: object
-      properties:
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/Report'
-        next_page_token:
-          type: string
-    ReportExecutionResult:
-      type: object
-      properties:
-        results:
-          type: array
-          description: The list of report result records
-          items:
-            $ref: '#/components/schemas/ReportEntryRecord'
-        page_token:
-          type: string
-          description: Token for retrieving the next page of results
-          example: eyJsYXN0Um93IjoxMDB9
-    RunReportRequest:
-      type: object
-      properties:
-        page_token:
-          type: string
-        order_by:
-          type: string
-        page_size:
-          type: integer
-          format: int32
-        fields:
-          type: string
-    ReportModel:
-      type: object
-      properties:
-        fields:
-          type: array
-          description: The list of fields available for this Report (Saved Search)
-          items:
-            $ref: '#/components/schemas/ReportField'
-    ReportField:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The field name as accepted by the report execution `fields` parameter
-          example: Id
-        label:
-          type: string
-          description: The human-readable label for the field
-          example: ID
     ReportEntryValue:
       type: object
       properties:
@@ -1843,6 +1843,15 @@ components:
           type: string
           description: The value of the field
           example: john.smith@example.com
+    ReportEntryRecord:
+      type: object
+      properties:
+        columns:
+          type: array
+          description: The set of column values for this record
+          items:
+            $ref: '#/components/schemas/ReportEntryValue'
+          uniqueItems: true
     Report:
       type: object
       properties:
@@ -1871,15 +1880,17 @@ components:
           - ALL_USERS
           items:
             type: string
-    ReportEntryRecord:
+    ReportField:
       type: object
       properties:
-        columns:
-          type: array
-          description: The set of column values for this record
-          items:
-            $ref: '#/components/schemas/ReportEntryValue'
-          uniqueItems: true
+        name:
+          type: string
+          description: The field name as accepted by the report execution `fields` parameter
+          example: Id
+        label:
+          type: string
+          description: The human-readable label for the field
+          example: ID
     Throwable:
       title: Throwable
       type: object
@@ -1928,5 +1939,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

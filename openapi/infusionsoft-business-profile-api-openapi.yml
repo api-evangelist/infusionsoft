@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Business Profile across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Business Profile across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Business Profile
 paths:
@@ -1302,34 +1301,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorDetails'
-    BusinessProfileAddressRequest:
-      type: object
-      properties:
-        line1:
-          type: string
-        line2:
-          type: string
-        locality:
-          type: string
-          description: The municipality to which the address belongs
-          example: Phoenix
-        region:
-          type: string
-          description: The long-name descriptive version of the Region Code
-          example: Arizona
-        country_code:
-          type: string
-          description: An ISO 3166-1 Country Code (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3)
-          example: USA
-        postal_code:
-          type: string
-      required:
-      - country_code
-      - line1
-      - line2
-      - locality
-      - postal_code
-      - region
     GetBusinessProfileResponse:
       type: object
       description: Profile information about the business that owns/uses this account
@@ -1366,6 +1337,34 @@ components:
           type: string
         business_secondary_color:
           type: string
+    BusinessProfileAddressRequest:
+      type: object
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+        locality:
+          type: string
+          description: The municipality to which the address belongs
+          example: Phoenix
+        region:
+          type: string
+          description: The long-name descriptive version of the Region Code
+          example: Arizona
+        country_code:
+          type: string
+          description: An ISO 3166-1 Country Code (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3)
+          example: USA
+        postal_code:
+          type: string
+      required:
+      - country_code
+      - line1
+      - line2
+      - locality
+      - postal_code
+      - region
     UpdateBusinessProfileRequest:
       type: object
       description: businessProfile
@@ -1462,5 +1461,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

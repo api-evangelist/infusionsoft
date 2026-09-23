@@ -1,7 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Infusionsoft Integrations API
-  version: v2
+  title: Keap Integrations API
+  description: Keap Public API Documentation
+  termsOfService: https://www.thryv.com/terms-of-use
   contact:
     name: Keap
     url: https://developer.keap.com/get-support
@@ -9,11 +10,9 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
-  termsOfService: https://www.thryv.com/terms-of-use
-  description: 'Operations tagged Integrations across 3 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  version: v2
 servers:
 - url: https://api.keap.com/crm
-- url: https://api.infusionsoft.com/crm
 security:
 - oauth2: []
 tags:
@@ -148,8 +147,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    servers:
-    - url: https://api.keap.com/crm
   /rest/v2/integrations/wordpress/options/{option_key}:achieve:
     post:
       tags:
@@ -224,8 +221,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    servers:
-    - url: https://api.keap.com/crm
   /rest/v2/integrations/wordpress/options/{option_key}:
     delete:
       tags:
@@ -290,17 +285,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    servers:
-    - url: https://api.keap.com/crm
 components:
   schemas:
-    AchieveIntegrationsWordPressOptInOptionGoalRequest:
+    ErrorDetails:
       type: object
       properties:
-        contact_id:
+        domain:
           type: string
-          description: The Contact Id to Opt-In
-          example: d05dc112-3c92-4aaf-b2fa-00cc6cb452ec
+        resource:
+          type: string
+    AchieveWordPressOptInGoalResult:
+      type: object
+      properties:
+        successful:
+          type: boolean
     Error:
       type: object
       properties:
@@ -315,25 +313,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorDetails'
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
-    AchieveWordPressOptInGoalResult:
-      type: object
-      properties:
-        successful:
-          type: boolean
-    WordPressOptInOption:
-      type: object
-      properties:
-        key:
-          type: string
-        name:
-          type: string
     ListWordPressOptInOptionsResponse:
       type: object
       properties:
@@ -342,6 +321,20 @@ components:
           items:
             $ref: '#/components/schemas/WordPressOptInOption'
         next_page_token:
+          type: string
+    AchieveIntegrationsWordPressOptInOptionGoalRequest:
+      type: object
+      properties:
+        contact_id:
+          type: string
+          description: The Contact Id to Opt-In
+          example: d05dc112-3c92-4aaf-b2fa-00cc6cb452ec
+    WordPressOptInOption:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
           type: string
     CreateIntegrationsWordPressOptInOption:
       type: object
@@ -362,7 +355,3 @@ components:
           authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
           tokenUrl: https://api.infusionsoft.com/token
           scopes: {}
-x-refined-from:
-- infusionsoft-keap-sdk-v2-swagger-original.yml
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

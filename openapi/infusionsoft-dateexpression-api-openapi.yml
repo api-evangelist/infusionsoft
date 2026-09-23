@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
-  title: Infusionsoft Date Expression API
-  version: v1
+  title: SLA Date Expression API
+  description: Service Level Aggregation API (SLAAPI) to handle public API spec compliance
   contact:
     name: Gryffindor
     email: gryffindor@keap.com
-  description: 'Operations tagged DateExpression across 2 of this provider''s published API definitions: infusionsoft-pipelines-openapi-original.yml, infusionsoft-pipelines-openapi.yml. Each path carries the servers of the definition it was published in.'
+  version: v1
 servers:
 - url: https://api.infusionsoft.com
 tags:
@@ -38,8 +38,8 @@ paths:
                 $ref: '#/components/schemas/DateExpressionResponse'
       security:
       - BearerAuth: []
-    servers:
-    - url: https://api.infusionsoft.com
+      summary: Query date expressions
+      x-summary-source: derived
 components:
   schemas:
     DateExpressionResponse:
@@ -116,6 +116,3 @@ components:
           tokenUrl: https://api.infusionsoft.com/token
           scopes:
             api: General API access
-x-refined-from:
-- infusionsoft-pipelines-openapi-original.yml
-- infusionsoft-pipelines-openapi.yml

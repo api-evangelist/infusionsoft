@@ -5,7 +5,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Locale across 7 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v1-openapi.json, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Locale across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
@@ -3902,6 +3902,20 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
+    CountryCodes:
+      type: object
+      properties:
+        alpha2:
+          type: string
+        alpha3:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
     Error:
       type: object
       properties:
@@ -3928,29 +3942,6 @@ components:
           type: string
       required:
       - provinces
-    CountryCodes:
-      type: object
-      properties:
-        alpha2:
-          type: string
-        alpha3:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
-    Province:
-      type: object
-      properties:
-        code:
-          type: string
-        name:
-          type: string
-        country:
-          type: string
     ListCountriesResponse:
       type: object
       properties:
@@ -3969,6 +3960,15 @@ components:
         codes:
           $ref: '#/components/schemas/CountryCodes'
         name:
+          type: string
+    Province:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        country:
           type: string
     Throwable:
       title: Throwable
@@ -4007,6 +4007,54 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Throwable'
+    View:
+      type: object
+      properties:
+        contentType:
+          type: string
+    RestDefaultOptionsResponse:
+      type: object
+      properties:
+        contact_types:
+          type: array
+          items:
+            type: string
+        title_types:
+          type: array
+          items:
+            type: string
+        suffix_types:
+          type: array
+          items:
+            type: string
+        phone_types:
+          type: array
+          items:
+            type: string
+        fax_types:
+          type: array
+          items:
+            type: string
+    CountriesByCode:
+      type: object
+      properties:
+        countries:
+          type: object
+          additionalProperties:
+            type: string
+          description: A key-value pair of country code and country name.
+      required:
+      - countries
+    ProvincesByCode:
+      type: object
+      properties:
+        provinces:
+          type: object
+          additionalProperties:
+            type: string
+          description: A key-value pair of province code and province name.
+      required:
+      - provinces
     DefaultHttpStatusCode:
       allOf:
       - $ref: '#/components/schemas/HttpStatusCode'
@@ -4117,54 +4165,6 @@ components:
       - 509 BANDWIDTH_LIMIT_EXCEEDED
       - 510 NOT_EXTENDED
       - 511 NETWORK_AUTHENTICATION_REQUIRED
-    RestDefaultOptionsResponse:
-      type: object
-      properties:
-        contact_types:
-          type: array
-          items:
-            type: string
-        title_types:
-          type: array
-          items:
-            type: string
-        suffix_types:
-          type: array
-          items:
-            type: string
-        phone_types:
-          type: array
-          items:
-            type: string
-        fax_types:
-          type: array
-          items:
-            type: string
-    View:
-      type: object
-      properties:
-        contentType:
-          type: string
-    CountriesByCode:
-      type: object
-      properties:
-        countries:
-          type: object
-          additionalProperties:
-            type: string
-          description: A key-value pair of country code and country name.
-      required:
-      - countries
-    ProvincesByCode:
-      type: object
-      properties:
-        provinces:
-          type: object
-          additionalProperties:
-            type: string
-          description: A key-value pair of province code and province name.
-      required:
-      - provinces
   securitySchemes:
     oauth2:
       type: oauth2
@@ -4177,7 +4177,4 @@ x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v1-2025-11-05-openapi-original.json
 - infusionsoft-rest-v1-openapi-original.json
-- infusionsoft-rest-v1-openapi.json
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

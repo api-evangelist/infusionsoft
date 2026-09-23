@@ -5,7 +5,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Email Address across 7 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v1-openapi.json, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Email Address across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
@@ -2022,27 +2022,6 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        status:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetails'
     UpdateEmailAddress:
       type: object
       description: Request to update email address opt-in status
@@ -2058,6 +2037,13 @@ components:
       required:
       - opted_in
       - reason
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
     ListEmailAddressStatusResponse:
       type: object
       properties:
@@ -2067,6 +2053,20 @@ components:
             $ref: '#/components/schemas/RestEmailAddressStatus'
         next_page_token:
           type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
     RestEmailAddressStatus:
       type: object
       description: Email address opt-in status information
@@ -2163,6 +2163,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Throwable'
+    View:
+      type: object
+      properties:
+        contentType:
+          type: string
     UpdateEmailAddress_2:
       type: object
       properties:
@@ -2173,48 +2178,6 @@ components:
       required:
       - opted_in
       - reason
-    DefaultHttpStatusCode:
-      allOf:
-      - $ref: '#/components/schemas/HttpStatusCode'
-    HttpStatusCode:
-      type: object
-      properties:
-        error:
-          type: boolean
-        is1xxInformational:
-          type: boolean
-        is2xxSuccessful:
-          type: boolean
-        is3xxRedirection:
-          type: boolean
-        is4xxClientError:
-          type: boolean
-        is5xxServerError:
-          type: boolean
-    ModelAndView:
-      type: object
-      properties:
-        view:
-          $ref: '#/components/schemas/View'
-        model:
-          type: object
-          additionalProperties: {}
-        status:
-          oneOf:
-          - $ref: '#/components/schemas/DefaultHttpStatusCode'
-          - $ref: '#/components/schemas/HttpStatus'
-        modelMap:
-          type: object
-          additionalProperties: {}
-          properties:
-            empty:
-              type: boolean
-        reference:
-          type: boolean
-        empty:
-          type: boolean
-        viewName:
-          type: string
     RestEmailAddress:
       type: object
       properties:
@@ -2246,6 +2209,48 @@ components:
       - email
       - opted_in
       - status
+    DefaultHttpStatusCode:
+      allOf:
+      - $ref: '#/components/schemas/HttpStatusCode'
+    ModelAndView:
+      type: object
+      properties:
+        view:
+          $ref: '#/components/schemas/View'
+        model:
+          type: object
+          additionalProperties: {}
+        status:
+          oneOf:
+          - $ref: '#/components/schemas/DefaultHttpStatusCode'
+          - $ref: '#/components/schemas/HttpStatus'
+        modelMap:
+          type: object
+          additionalProperties: {}
+          properties:
+            empty:
+              type: boolean
+        reference:
+          type: boolean
+        empty:
+          type: boolean
+        viewName:
+          type: string
+    HttpStatusCode:
+      type: object
+      properties:
+        error:
+          type: boolean
+        is1xxInformational:
+          type: boolean
+        is2xxSuccessful:
+          type: boolean
+        is3xxRedirection:
+          type: boolean
+        is4xxClientError:
+          type: boolean
+        is5xxServerError:
+          type: boolean
     HttpStatus:
       allOf:
       - $ref: '#/components/schemas/HttpStatusCode'
@@ -2314,21 +2319,6 @@ components:
       - 509 BANDWIDTH_LIMIT_EXCEEDED
       - 510 NOT_EXTENDED
       - 511 NETWORK_AUTHENTICATION_REQUIRED
-    View:
-      type: object
-      properties:
-        contentType:
-          type: string
-    UpdateEmailAddress_3:
-      type: object
-      properties:
-        reason:
-          type: string
-        opted_in:
-          type: boolean
-      required:
-      - opted_in
-      - reason
   securitySchemes:
     oauth2:
       type: oauth2
@@ -2341,7 +2331,4 @@ x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v1-2025-11-05-openapi-original.json
 - infusionsoft-rest-v1-openapi-original.json
-- infusionsoft-rest-v1-openapi.json
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

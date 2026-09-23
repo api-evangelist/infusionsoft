@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Product Interest Bundles across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Product Interest Bundles across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Product Interest Bundles
 paths:
@@ -4772,106 +4771,6 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        status:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetails'
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
-    UpdateProductInterestBundleRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Product interest bundle name
-          example: Premium Bundle
-        description:
-          type: string
-          description: Product interest bundle description
-          example: Bundle of premium products
-    CurrencyValue:
-      type: object
-      properties:
-        amount:
-          type: integer
-          format: int64
-          description: The price amount in the smallest currency unit
-          example: 10000
-        currency_code:
-          type: string
-          description: Three-letter ISO currency code
-          example: USD
-        formatted_amount:
-          type: string
-          description: The product amount formatted using the tenant's currency locale
-          example: $100.00
-    ProductInterestBundle:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The product interest bundle ID
-          example: 123
-        name:
-          type: string
-          description: Product interest bundle name
-          example: Premium Bundle
-        description:
-          type: string
-          description: Product interest bundle description
-          example: Bundle of premium products
-        product_interests:
-          type: array
-          description: Product interests
-          items:
-            $ref: '#/components/schemas/ProductInterest'
-        subscription_plan_interests:
-          type: array
-          description: Subscription plan interests
-          items:
-            $ref: '#/components/schemas/ProductInterest'
-    UpdateProductInterestRequest:
-      type: object
-      properties:
-        price:
-          type: number
-          format: double
-          description: The price per unit of the product.
-          example: 10000
-        quantity:
-          type: integer
-          format: int32
-          description: The quantity of product.
-          example: 1
-        discount_percent:
-          type: integer
-          format: int32
-          description: The percent to discount the product.
-          example: 10
-    ListProductInterestBundleResponse:
-      type: object
-      properties:
-        product_interest_bundles:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductInterestBundle'
-        next_page_token:
-          type: string
     CreateProductInterestBundleRequest:
       type: object
       properties:
@@ -4886,6 +4785,36 @@ components:
       required:
       - description
       - name
+    ListProductInterestBundleResponse:
+      type: object
+      properties:
+        product_interest_bundles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductInterestBundle'
+        next_page_token:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
     AddProductInterestRequest:
       type: object
       properties:
@@ -4919,6 +4848,31 @@ components:
       - entity_id
       - price
       - type
+    ProductInterestBundle:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The product interest bundle ID
+          example: 123
+        name:
+          type: string
+          description: Product interest bundle name
+          example: Premium Bundle
+        description:
+          type: string
+          description: Product interest bundle description
+          example: Bundle of premium products
+        product_interests:
+          type: array
+          description: Product interests
+          items:
+            $ref: '#/components/schemas/ProductInterest'
+        subscription_plan_interests:
+          type: array
+          description: Subscription plan interests
+          items:
+            $ref: '#/components/schemas/ProductInterest'
     ProductInterest:
       type: object
       properties:
@@ -4950,6 +4904,51 @@ components:
           format: int32
           description: The percent to discount the product. Percent represented in a whole number, for example 10 is 10%
           example: 10
+    UpdateProductInterestRequest:
+      type: object
+      properties:
+        price:
+          type: number
+          format: double
+          description: The price per unit of the product.
+          example: 10000
+        quantity:
+          type: integer
+          format: int32
+          description: The quantity of product.
+          example: 1
+        discount_percent:
+          type: integer
+          format: int32
+          description: The percent to discount the product.
+          example: 10
+    CurrencyValue:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: The price amount in the smallest currency unit
+          example: 10000
+        currency_code:
+          type: string
+          description: Three-letter ISO currency code
+          example: USD
+        formatted_amount:
+          type: string
+          description: The product amount formatted using the tenant's currency locale
+          example: $100.00
+    UpdateProductInterestBundleRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Product interest bundle name
+          example: Premium Bundle
+        description:
+          type: string
+          description: Product interest bundle description
+          example: Bundle of premium products
     Throwable:
       title: Throwable
       type: object
@@ -4998,5 +4997,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Subscription Plans across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Subscription Plans across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Subscription Plans
 paths:
@@ -3064,6 +3063,13 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
     Error:
       type: object
       properties:
@@ -3078,114 +3084,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorDetails'
-    ErrorDetails:
+    ListSubscriptionPlansResponse:
       type: object
       properties:
-        domain:
+        subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionPlan'
+        next_page_token:
           type: string
-        resource:
-          type: string
-    SubscriptionPlan:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Subscription plan ID
-          example: 123
-        frequency:
-          type: integer
-          format: int32
-          description: Interval at which a customer receives a product or service as part of a subscription plan.
-          example: 1
-        active:
-          type: boolean
-          description: If the subscription plan is active or not.
-          example: true
-        subscription_plan_name:
-          type: string
-          description: Plan name
-          example: Premium Monthly
-        cycle_type:
-          type: string
-          description: The cycle type of the subscription plan.
-          enum:
-          - YEARLY
-          - MONTHLY
-          - WEEKLY
-          - DAILY
-          example: MONTHLY
-        total_cycles:
-          type: integer
-          format: int32
-          description: Total number of cycles the plan will run before ending. Value of 0 indicates plan will never end.
-          example: 12
-        plan_price:
-          $ref: '#/components/schemas/CurrencyValue'
-          description: Price of the plan
-        display_order_index:
-          type: integer
-          format: int32
-          description: The order index where this plan will be displayed on a page against other plans. Smaller number indicates plan will be displayed higher in the list.
-          example: 1
-    CurrencyValue:
-      type: object
-      properties:
-        amount:
-          type: integer
-          format: int64
-          description: The price amount in the smallest currency unit
-          example: 10000
-        currency_code:
-          type: string
-          description: Three-letter ISO currency code
-          example: USD
-        formatted_amount:
-          type: string
-          description: The product amount formatted using the tenant's currency locale
-          example: $100.00
-    UpdateSubscriptionPlanRequest:
-      type: object
-      properties:
-        active:
-          type: boolean
-          description: Whether the subscription plan is active.
-          example: true
-        frequency:
-          type: integer
-          format: int32
-          description: The frequency of the subscription plan. Must be greater than 0.
-          example: 1
-        allow_prorating:
-          type: boolean
-          description: Allow prorating of the subscription plan.
-          example: false
-        cycle_type:
-          type: string
-          description: The cycle type of the subscription plan.
-          enum:
-          - DAILY
-          - WEEKLY
-          - MONTHLY
-          - YEARLY
-          example: MONTHLY
-        display_order_index:
-          type: integer
-          format: int32
-          description: The order that this plan will be displayed to the user.
-          example: 0
-        plan_price:
-          type: number
-          format: double
-          description: The price of the subscription plan in the smallest currency unit. Must be greater than or equal to 0.
-          example: 10000
-        total_cycles:
-          type: integer
-          format: int32
-          description: How many cycles the subscription plan will have. 0 means infinite.
-          example: 12
-      required:
-      - cycle_type
-      - plan_price
     CreateSubscriptionPlanRequest:
       type: object
       properties:
@@ -3232,15 +3139,107 @@ components:
       required:
       - cycle_type
       - plan_price
-    ListSubscriptionPlansResponse:
+    UpdateSubscriptionPlanRequest:
       type: object
       properties:
-        subscriptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscriptionPlan'
-        next_page_token:
+        active:
+          type: boolean
+          description: Whether the subscription plan is active.
+          example: true
+        frequency:
+          type: integer
+          format: int32
+          description: The frequency of the subscription plan. Must be greater than 0.
+          example: 1
+        allow_prorating:
+          type: boolean
+          description: Allow prorating of the subscription plan.
+          example: false
+        cycle_type:
           type: string
+          description: The cycle type of the subscription plan.
+          enum:
+          - DAILY
+          - WEEKLY
+          - MONTHLY
+          - YEARLY
+          example: MONTHLY
+        display_order_index:
+          type: integer
+          format: int32
+          description: The order that this plan will be displayed to the user.
+          example: 0
+        plan_price:
+          type: number
+          format: double
+          description: The price of the subscription plan in the smallest currency unit. Must be greater than or equal to 0.
+          example: 10000
+        total_cycles:
+          type: integer
+          format: int32
+          description: How many cycles the subscription plan will have. 0 means infinite.
+          example: 12
+      required:
+      - cycle_type
+      - plan_price
+    CurrencyValue:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: The price amount in the smallest currency unit
+          example: 10000
+        currency_code:
+          type: string
+          description: Three-letter ISO currency code
+          example: USD
+        formatted_amount:
+          type: string
+          description: The product amount formatted using the tenant's currency locale
+          example: $100.00
+    SubscriptionPlan:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Subscription plan ID
+          example: 123
+        frequency:
+          type: integer
+          format: int32
+          description: Interval at which a customer receives a product or service as part of a subscription plan.
+          example: 1
+        active:
+          type: boolean
+          description: If the subscription plan is active or not.
+          example: true
+        subscription_plan_name:
+          type: string
+          description: Plan name
+          example: Premium Monthly
+        cycle_type:
+          type: string
+          description: The cycle type of the subscription plan.
+          enum:
+          - YEARLY
+          - MONTHLY
+          - WEEKLY
+          - DAILY
+          example: MONTHLY
+        total_cycles:
+          type: integer
+          format: int32
+          description: Total number of cycles the plan will run before ending. Value of 0 indicates plan will never end.
+          example: 12
+        plan_price:
+          $ref: '#/components/schemas/CurrencyValue'
+          description: Price of the plan
+        display_order_index:
+          type: integer
+          format: int32
+          description: The order index where this plan will be displayed on a page against other plans. Smaller number indicates plan will be displayed higher in the list.
+          example: 1
     Throwable:
       title: Throwable
       type: object
@@ -3289,5 +3288,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

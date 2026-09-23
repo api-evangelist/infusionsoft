@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Category Discounts across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Category Discounts across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Category Discounts
 paths:
@@ -3257,20 +3256,6 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        status:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetails'
     ErrorDetails:
       type: object
       properties:
@@ -3278,101 +3263,6 @@ components:
           type: string
         resource:
           type: string
-    CategoryDiscount:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for this category discount
-          example: 102
-        name:
-          type: string
-          description: Name of the discount
-          example: Electronics Category Sale
-        description:
-          type: string
-          description: Description of the discount
-          example: 15% off all electronics
-        criteria:
-          type: array
-          description: List of criteria that must be met for this discount to apply
-          items:
-            $ref: '#/components/schemas/CategoryDiscountCriteriaResponse'
-        discount_percent:
-          type: number
-          format: double
-          description: Percentage discount to apply (0-100)
-          example: 15
-        apply_to_commissions:
-          type: boolean
-          description: Whether to apply this discount to commission calculations
-          example: false
-        product_categories:
-          type: array
-          description: List of product category IDs this discount applies to
-          example:
-          - '10'
-          - '11'
-          - '12'
-          items:
-            type: string
-    ListCategoryDiscountsResponse:
-      type: object
-      properties:
-        discounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CategoryDiscount'
-        next_page_token:
-          type: string
-    CategoryDiscountCriteriaRequest:
-      type: object
-      properties:
-        type:
-          type: string
-          description: 'Type of criteria: DATE_RANGE or PROMO_CODE'
-          enum:
-          - DATE_RANGE
-          - PROMO_CODE
-          example: DATE_RANGE
-        code:
-          type: string
-          description: Promotional code for PROMO_CODE criteria
-          example: SUMMER2024
-        range_start_time:
-          type: string
-          format: date-time
-          description: Start date/time for DATE_RANGE criteria (ISO-8601 format)
-          example: '2024-01-01T00:00:00Z'
-        range_end_time:
-          type: string
-          format: date-time
-          description: End date/time for DATE_RANGE criteria (ISO-8601 format)
-          example: '2024-12-31T23:59:59Z'
-    CreateCategoryDiscountCriteria:
-      type: object
-      properties:
-        type:
-          type: string
-          description: 'Type of criteria: DATE_RANGE or PROMO_CODE'
-          enum:
-          - DATE_RANGE
-          - PROMO_CODE
-          example: DATE_RANGE
-        code:
-          type: string
-          description: Promotional code for PROMO_CODE criteria
-          example: SUMMER2024
-        range_start_time:
-          type: string
-          format: date-time
-          description: Start date/time for DATE_RANGE criteria (ISO-8601 format)
-          example: '2024-01-01T00:00:00Z'
-        range_end_time:
-          type: string
-          format: date-time
-          description: End date/time for DATE_RANGE criteria (ISO-8601 format)
-          example: '2024-12-31T23:59:59Z'
     CreateCategoryDiscountRequest:
       type: object
       properties:
@@ -3478,6 +3368,44 @@ components:
           - LESS_THAN
           - GREATER_THAN
           example: GREATER_THAN
+    CategoryDiscountCriteriaRequest:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Type of criteria: DATE_RANGE or PROMO_CODE'
+          enum:
+          - DATE_RANGE
+          - PROMO_CODE
+          example: DATE_RANGE
+        code:
+          type: string
+          description: Promotional code for PROMO_CODE criteria
+          example: SUMMER2024
+        range_start_time:
+          type: string
+          format: date-time
+          description: Start date/time for DATE_RANGE criteria (ISO-8601 format)
+          example: '2024-01-01T00:00:00Z'
+        range_end_time:
+          type: string
+          format: date-time
+          description: End date/time for DATE_RANGE criteria (ISO-8601 format)
+          example: '2024-12-31T23:59:59Z'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
     UpdateCategoryDiscountRequest:
       type: object
       properties:
@@ -3512,6 +3440,30 @@ components:
           - '12'
           items:
             type: string
+    CreateCategoryDiscountCriteria:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'Type of criteria: DATE_RANGE or PROMO_CODE'
+          enum:
+          - DATE_RANGE
+          - PROMO_CODE
+          example: DATE_RANGE
+        code:
+          type: string
+          description: Promotional code for PROMO_CODE criteria
+          example: SUMMER2024
+        range_start_time:
+          type: string
+          format: date-time
+          description: Start date/time for DATE_RANGE criteria (ISO-8601 format)
+          example: '2024-01-01T00:00:00Z'
+        range_end_time:
+          type: string
+          format: date-time
+          description: End date/time for DATE_RANGE criteria (ISO-8601 format)
+          example: '2024-12-31T23:59:59Z'
     CategoryDiscountCriteriaResponse:
       type: object
       properties:
@@ -3540,6 +3492,53 @@ components:
           format: date-time
           description: End date/time for DATE_RANGE criteria (ISO-8601 format)
           example: '2024-12-31T23:59:59Z'
+    ListCategoryDiscountsResponse:
+      type: object
+      properties:
+        discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryDiscount'
+        next_page_token:
+          type: string
+    CategoryDiscount:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this category discount
+          example: 102
+        name:
+          type: string
+          description: Name of the discount
+          example: Electronics Category Sale
+        description:
+          type: string
+          description: Description of the discount
+          example: 15% off all electronics
+        criteria:
+          type: array
+          description: List of criteria that must be met for this discount to apply
+          items:
+            $ref: '#/components/schemas/CategoryDiscountCriteriaResponse'
+        discount_percent:
+          type: number
+          format: double
+          description: Percentage discount to apply (0-100)
+          example: 15
+        apply_to_commissions:
+          type: boolean
+          description: Whether to apply this discount to commission calculations
+          example: false
+        product_categories:
+          type: array
+          description: List of product category IDs this discount applies to
+          example:
+          - '10'
+          - '11'
+          - '12'
+          items:
+            type: string
     Throwable:
       title: Throwable
       type: object
@@ -3588,5 +3587,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

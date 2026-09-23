@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Automation across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Automation across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Automation
 paths:
@@ -384,7 +383,7 @@ paths:
     patch:
       tags:
       - Automation
-      summary: Renames an Easy Automation.
+      summary: Renames an Easy Automation
       description: Updates the name of a single easy automation.
       operationId: renameAutomationV2
       parameters:
@@ -3646,6 +3645,74 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
+    AddToAutomationSequenceRequest:
+      type: object
+      properties:
+        contact_ids:
+          type: array
+          description: List of contact IDs to add to the automation sequence
+          example:
+          - '123'
+          - '456'
+          - '789'
+          items:
+            type: string
+      required:
+      - contact_ids
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
+    AchieveGoalResponse:
+      type: object
+      description: Response containing the results of achieving a goal
+      properties:
+        results:
+          type: array
+          description: List of results for each goal that was achieved. Contains information about flows started and stopped as a result.
+          items:
+            $ref: '#/components/schemas/GoalEventResultDTO'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
+    RenameEasyAutomationCommand:
+      type: object
+      description: An object used to rename an automation.
+      properties:
+        name:
+          type: string
+          description: Name of the easy automation
+          example: Welcome new customer (Fall 26)
+          minLength: 1
+      required:
+      - name
+    AddToAutomationSequenceResponse:
+      type: object
+      properties:
+        add_to_automation_sequence_results:
+          type: object
+          additionalProperties:
+            type: string
+            enum:
+            - SUCCESS
+            - ALREADY_IN_SEQUENCE
+            - CONTACT_DOES_NOT_EXIST
+            - FAILED
+          description: A map containing the contact ID as key and the result of adding them to the sequence as value
     AutomationLockStatus:
       type: object
       properties:
@@ -3665,6 +3732,96 @@ components:
           type: string
           description: The first name of the user who has the lock
           example: John
+    ListAutomationIdsResponse:
+      type: object
+      description: Response containing a list of automation IDs
+      properties:
+        automation_ids:
+          type: array
+          description: List of automation IDs
+          example:
+          - '123'
+          - '456'
+          - '789'
+          items:
+            type: string
+        next_page_token:
+          type: string
+        locked_automation_ids:
+          type: array
+          description: List of automation IDs that are currently locked for editing
+          example:
+          - '456'
+          - '789'
+          items:
+            type: string
+    AchieveGoalRequest:
+      type: object
+      description: Request to achieve a goal in an automation. You must provide EITHER (integration + call_name) OR (automation_id + goal_id), along with contact_id.
+      properties:
+        integration:
+          type: string
+          description: The integration name of the goal. Required when using integration/call_name approach. Use together with 'call_name'. Mutually exclusive with automation_id/goal_id.
+          example: my_integration
+        call_name:
+          type: string
+          description: The call name of the goal. Required when using integration/call_name approach. Use together with 'integration'. Mutually exclusive with automation_id/goal_id.
+          example: goal_achieved
+        automation_id:
+          type: integer
+          format: int64
+          description: The automation ID. Required when using automation_id/goal_id approach. Use together with 'goal_id'. Mutually exclusive with integration/call_name.
+          example: 123
+        goal_id:
+          type: integer
+          format: int64
+          description: The goal ID within the automation. Required when using automation_id/goal_id approach. Use together with 'automation_id'. Mutually exclusive with integration/call_name.
+          example: 456
+        contact_id:
+          type: integer
+          format: int64
+          description: The contact ID for whom to achieve the goal
+          example: 789
+      required:
+      - contact_id
+    ListAutomationResponse:
+      type: object
+      properties:
+        automations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Automation'
+        next_page_token:
+          type: string
+        automation_count:
+          type: integer
+          format: int32
+    AssignAutomationCategoryRequest:
+      type: object
+      description: Request to assign categories to automations
+      properties:
+        category_ids:
+          type: array
+          description: List of category IDs to assign to the automations
+          example:
+          - '1'
+          - '2'
+          - '3'
+          items:
+            type: string
+        automation_ids:
+          type: array
+          description: List of automation IDs to update. Use '0' as a wildcard to select all automations.
+          example:
+          - '100'
+          - '200'
+          - '300'
+          items:
+            type: string
+        apply_category:
+          type: boolean
+          description: If true, the categories will be applied to the automations. If false, the categories will be removed from the automations.
+          example: true
     GoalEventResultDTO:
       type: object
       description: Result of achieving a specific goal
@@ -3697,20 +3854,50 @@ components:
           description: List of flows that were stopped as a result of achieving this goal
           items:
             $ref: '#/components/schemas/FlowEventResultDTO'
-    Error:
+    FlowEventResultDTO:
       type: object
+      description: Result of a flow being started or stopped
       properties:
-        code:
-          type: integer
-          format: int32
+        success:
+          type: boolean
+          description: Whether the flow operation was successful
+          example: true
         message:
           type: string
-        status:
-          type: string
-        details:
+          description: A message with details about the flow operation
+          example: Flow started successfully
+        flow_id:
+          type: integer
+          format: int64
+          description: The flow ID that was affected
+          example: 789
+    BatchUnpublishAutomationRequest:
+      type: object
+      description: Request to unpublish multiple automations at once
+      properties:
+        automation_ids:
           type: array
+          description: List of automation IDs to unpublish
+          example:
+          - '123'
+          - '456'
+          - '789'
           items:
-            $ref: '#/components/schemas/ErrorDetails'
+            type: string
+        unpublished_form_message:
+          type: string
+          description: Custom message to display on forms when the automation is unpublished
+          example: This form is currently unavailable
+      required:
+      - automation_ids
+    UnpublishAutomationRequest:
+      type: object
+      description: Request to unpublish a single automation
+      properties:
+        unpublished_form_message:
+          type: string
+          description: Custom message to display on forms when the automation is unpublished
+          example: This form is currently unavailable
     Automation:
       type: object
       properties:
@@ -3766,194 +3953,6 @@ components:
         current_edit_lock_status:
           $ref: '#/components/schemas/AutomationLockStatus'
           description: Current edit lock status information
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
-    BatchUnpublishAutomationRequest:
-      type: object
-      description: Request to unpublish multiple automations at once
-      properties:
-        automation_ids:
-          type: array
-          description: List of automation IDs to unpublish
-          example:
-          - '123'
-          - '456'
-          - '789'
-          items:
-            type: string
-        unpublished_form_message:
-          type: string
-          description: Custom message to display on forms when the automation is unpublished
-          example: This form is currently unavailable
-      required:
-      - automation_ids
-    RenameEasyAutomationCommand:
-      type: object
-      description: An object used to rename an automation.
-      properties:
-        name:
-          type: string
-          description: Name of the easy automation
-          example: Welcome new customer (Fall 26)
-          minLength: 1
-      required:
-      - name
-    AddToAutomationSequenceResponse:
-      type: object
-      properties:
-        add_to_automation_sequence_results:
-          type: object
-          additionalProperties:
-            type: string
-            enum:
-            - SUCCESS
-            - ALREADY_IN_SEQUENCE
-            - CONTACT_DOES_NOT_EXIST
-            - FAILED
-          description: A map containing the contact ID as key and the result of adding them to the sequence as value
-    AchieveGoalResponse:
-      type: object
-      description: Response containing the results of achieving a goal
-      properties:
-        results:
-          type: array
-          description: List of results for each goal that was achieved. Contains information about flows started and stopped as a result.
-          items:
-            $ref: '#/components/schemas/GoalEventResultDTO'
-    ListAutomationIdsResponse:
-      type: object
-      description: Response containing a list of automation IDs
-      properties:
-        automation_ids:
-          type: array
-          description: List of automation IDs
-          example:
-          - '123'
-          - '456'
-          - '789'
-          items:
-            type: string
-        next_page_token:
-          type: string
-        locked_automation_ids:
-          type: array
-          description: List of automation IDs that are currently locked for editing
-          example:
-          - '456'
-          - '789'
-          items:
-            type: string
-    AddToAutomationSequenceRequest:
-      type: object
-      properties:
-        contact_ids:
-          type: array
-          description: List of contact IDs to add to the automation sequence
-          example:
-          - '123'
-          - '456'
-          - '789'
-          items:
-            type: string
-      required:
-      - contact_ids
-    AssignAutomationCategoryRequest:
-      type: object
-      description: Request to assign categories to automations
-      properties:
-        category_ids:
-          type: array
-          description: List of category IDs to assign to the automations
-          example:
-          - '1'
-          - '2'
-          - '3'
-          items:
-            type: string
-        automation_ids:
-          type: array
-          description: List of automation IDs to update. Use '0' as a wildcard to select all automations.
-          example:
-          - '100'
-          - '200'
-          - '300'
-          items:
-            type: string
-        apply_category:
-          type: boolean
-          description: If true, the categories will be applied to the automations. If false, the categories will be removed from the automations.
-          example: true
-    AchieveGoalRequest:
-      type: object
-      description: Request to achieve a goal in an automation. You must provide EITHER (integration + call_name) OR (automation_id + goal_id), along with contact_id.
-      properties:
-        integration:
-          type: string
-          description: The integration name of the goal. Required when using integration/call_name approach. Use together with 'call_name'. Mutually exclusive with automation_id/goal_id.
-          example: my_integration
-        call_name:
-          type: string
-          description: The call name of the goal. Required when using integration/call_name approach. Use together with 'integration'. Mutually exclusive with automation_id/goal_id.
-          example: goal_achieved
-        automation_id:
-          type: integer
-          format: int64
-          description: The automation ID. Required when using automation_id/goal_id approach. Use together with 'goal_id'. Mutually exclusive with integration/call_name.
-          example: 123
-        goal_id:
-          type: integer
-          format: int64
-          description: The goal ID within the automation. Required when using automation_id/goal_id approach. Use together with 'automation_id'. Mutually exclusive with integration/call_name.
-          example: 456
-        contact_id:
-          type: integer
-          format: int64
-          description: The contact ID for whom to achieve the goal
-          example: 789
-      required:
-      - contact_id
-    ListAutomationResponse:
-      type: object
-      properties:
-        automations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Automation'
-        next_page_token:
-          type: string
-        automation_count:
-          type: integer
-          format: int32
-    FlowEventResultDTO:
-      type: object
-      description: Result of a flow being started or stopped
-      properties:
-        success:
-          type: boolean
-          description: Whether the flow operation was successful
-          example: true
-        message:
-          type: string
-          description: A message with details about the flow operation
-          example: Flow started successfully
-        flow_id:
-          type: integer
-          format: int64
-          description: The flow ID that was affected
-          example: 789
-    UnpublishAutomationRequest:
-      type: object
-      description: Request to unpublish a single automation
-      properties:
-        unpublished_form_message:
-          type: string
-          description: Custom message to display on forms when the automation is unpublished
-          example: This form is currently unavailable
     Throwable:
       title: Throwable
       type: object
@@ -4002,5 +4001,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

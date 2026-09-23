@@ -5,7 +5,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Users across 7 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v1-openapi.json, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Users across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
@@ -390,7 +390,7 @@ paths:
       tags:
       - Users
       summary: Retrieve User Info
-      description: Retrieves information for the current authenticated end-user, as outlined by the [OpenID Connect specification](http://openid.net/specs/openid-connect-core-1_0.html#UserInfo).
+      description: Retrieves information for the current authenticated end-user, as outlined by the OpenID Connect specification.
       operationId: getUserInfo
       responses:
         '200':
@@ -2260,7 +2260,7 @@ paths:
       tags:
       - Users
       summary: Retrieve User Info
-      description: Retrieves information for the current authenticated end-user, as outlined by the [OpenID Connect specification](http://openid.net/specs/openid-connect-core-1_0.html#UserInfo).
+      description: Retrieves information for the current authenticated end-user, as outlined by the OpenID Connect specification.
       operationId: getUserInfoUsingGET_1
       responses:
         '200':
@@ -5344,6 +5344,48 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
+    EmailAddress:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address. Maximum length is 75 characters for EMAIL1 and 100 characters for EMAIL2 and EMAIL3.
+          example: john.smith@example.com
+        field:
+          type: string
+          description: Email address slot
+          enum:
+          - EMAIL_FIELD_UNSPECIFIED
+          - EMAIL1
+          - EMAIL2
+          - EMAIL3
+          example: EMAIL1
+        opt_in_reason:
+          type: string
+          description: Reason for opting in
+          example: Subscribed via website form
+        is_opt_in:
+          type: boolean
+        email_opt_status:
+          type: string
+          enum:
+          - UNENGAGED_MARKETABLE
+          - SINGLE_OPT_IN
+          - DOUBLE_OPT_IN
+          - CONFIRMED
+          - UNENGAGED_NON_MARKETABLE
+          - NON_MARKETABLE
+          - LOCKDOWN
+          - BOUNCE
+          - HARD_BOUNCE
+          - MANUAL
+          - ADMIN
+          - SYSTEM
+          - LIST_UNSUBSCRIBE
+          - FEEDBACK
+          - SPAM
+          - INVALID
+          - DEACTIVATED
     User:
       type: object
       description: A user in the system
@@ -5456,6 +5498,13 @@ components:
           format: date-time
           description: When the user was last updated, in ISO-8601 format
           example: '2024-05-21T15:00:00Z'
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
     Address:
       type: object
       properties:
@@ -5510,6 +5559,31 @@ components:
           type: string
           description: ZIP+4 extension. Maximum length is 10 characters.
           example: 1234
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
+    ListUsersPaginatedResponse:
+      type: object
+      description: Paginated response containing a list of users
+      properties:
+        users:
+          type: array
+          description: List of users
+          items:
+            $ref: '#/components/schemas/User'
+        next_page_token:
+          type: string
     EmailAddressRequest:
       type: object
       properties:
@@ -5530,27 +5604,6 @@ components:
           type: string
           description: Reason for opting in
           example: Subscribed via website form
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        status:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetails'
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
     GetUserInfoResponse:
       type: object
       description: User information response
@@ -5595,81 +5648,6 @@ components:
           type: string
           description: The tenant ID the user belongs to
           example: xyz789
-    SocialAccount:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Social account username or handle. Maximum length is 255 characters.
-          example: '@thryv'
-        type:
-          type: string
-          description: Social account type
-          enum:
-          - SOCIAL_ACCOUNT_TYPE_UNSPECIFIED
-          - FACEBOOK
-          - LINKED_IN
-          - TWITTER
-          - INSTAGRAM
-          - SNAPCHAT
-          - YOUTUBE
-          - PINTEREST
-          example: FACEBOOK
-      required:
-      - type
-    ListUsersPaginatedResponse:
-      type: object
-      description: Paginated response containing a list of users
-      properties:
-        users:
-          type: array
-          description: List of users
-          items:
-            $ref: '#/components/schemas/User'
-        next_page_token:
-          type: string
-    EmailAddress:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address. Maximum length is 75 characters for EMAIL1 and 100 characters for EMAIL2 and EMAIL3.
-          example: john.smith@example.com
-        field:
-          type: string
-          description: Email address slot
-          enum:
-          - EMAIL_FIELD_UNSPECIFIED
-          - EMAIL1
-          - EMAIL2
-          - EMAIL3
-          example: EMAIL1
-        opt_in_reason:
-          type: string
-          description: Reason for opting in
-          example: Subscribed via website form
-        is_opt_in:
-          type: boolean
-        email_opt_status:
-          type: string
-          enum:
-          - UNENGAGED_MARKETABLE
-          - SINGLE_OPT_IN
-          - DOUBLE_OPT_IN
-          - CONFIRMED
-          - UNENGAGED_NON_MARKETABLE
-          - NON_MARKETABLE
-          - LOCKDOWN
-          - BOUNCE
-          - HARD_BOUNCE
-          - MANUAL
-          - ADMIN
-          - SYSTEM
-          - LIST_UNSUBSCRIBE
-          - FEEDBACK
-          - SPAM
-          - INVALID
-          - DEACTIVATED
     PhoneNumber:
       type: object
       properties:
@@ -5744,6 +5722,28 @@ components:
           type: string
           description: The user's timezone in IANA format
           example: America/New_York
+    SocialAccount:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Social account username or handle. Maximum length is 255 characters.
+          example: '@thryv'
+        type:
+          type: string
+          description: Social account type
+          enum:
+          - SOCIAL_ACCOUNT_TYPE_UNSPECIFIED
+          - FACEBOOK
+          - LINKED_IN
+          - TWITTER
+          - INSTAGRAM
+          - SNAPCHAT
+          - YOUTUBE
+          - PINTEREST
+          example: FACEBOOK
+      required:
+      - type
     FaxNumber:
       type: object
       properties:
@@ -5800,6 +5800,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Throwable'
+    View:
+      type: object
+      properties:
+        contentType:
+          type: string
     Address_2:
       type: object
       properties:
@@ -5816,35 +5821,6 @@ components:
         zip_four:
           type: string
         country_code:
-          type: string
-    CreateUser:
-      type: object
-      description: user
-      properties:
-        email:
-          type: string
-        partner:
-          type: boolean
-        admin:
-          type: boolean
-        given_name:
-          type: string
-      required:
-      - email
-      - given_name
-    Users:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/RestUser'
-        count:
-          type: integer
-          format: int32
-        next:
-          type: string
-        previous:
           type: string
     DefaultHttpStatusCode:
       allOf:
@@ -5873,6 +5849,44 @@ components:
           type: boolean
         viewName:
           type: string
+    RestUserQueryCommand:
+      type: object
+      properties:
+        limit:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int32
+        include_inactive:
+          type: boolean
+        include_partners:
+          type: boolean
+        includeInactive:
+          type: boolean
+        includePartners:
+          type: boolean
+    PhoneNumber_2:
+      type: object
+      properties:
+        number:
+          type: string
+        extension:
+          type: string
+        field:
+          type: string
+          enum:
+          - PHONE1
+          - PHONE2
+          - PHONE3
+          - PHONE4
+          - PHONE5
+        type:
+          type: string
+        number_e164:
+          type: string
+      required:
+      - field
     HttpStatusCode:
       type: object
       properties:
@@ -5888,6 +5902,67 @@ components:
           type: boolean
         is5xxServerError:
           type: boolean
+    RestUser:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address_2'
+        website:
+          type: string
+        partner:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - Active
+          - Invited
+          - Inactive
+        company_name:
+          type: string
+        email_address:
+          type: string
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber_2'
+        fax_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber_2'
+        given_name:
+          type: string
+        family_name:
+          type: string
+        middle_name:
+          type: string
+        preferred_name:
+          type: string
+        time_zone:
+          type: string
+        job_title:
+          type: string
+        infusionsoft_id:
+          type: string
+        date_created:
+          type: string
+          format: date-time
+        created_by:
+          type: integer
+          format: int64
+        last_updated:
+          type: string
+          format: date-time
+        last_updated_by:
+          type: integer
+          format: int64
+        global_user_id:
+          type: integer
+          format: int64
+        id:
+          type: integer
+          format: int64
+      required:
+      - id
     HttpStatus:
       allOf:
       - $ref: '#/components/schemas/HttpStatusCode'
@@ -5956,93 +6031,21 @@ components:
       - 509 BANDWIDTH_LIMIT_EXCEEDED
       - 510 NOT_EXTENDED
       - 511 NETWORK_AUTHENTICATION_REQUIRED
-    RestUser:
+    CreateUser:
       type: object
+      description: user
       properties:
-        address:
-          $ref: '#/components/schemas/Address_2'
-        website:
+        email:
           type: string
         partner:
           type: boolean
-        status:
-          type: string
-          enum:
-          - Active
-          - Invited
-          - Inactive
-        company_name:
-          type: string
-        email_address:
-          type: string
-        phone_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/PhoneNumber_2'
-        fax_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/FaxNumber_2'
+        admin:
+          type: boolean
         given_name:
           type: string
-        family_name:
-          type: string
-        middle_name:
-          type: string
-        preferred_name:
-          type: string
-        time_zone:
-          type: string
-        job_title:
-          type: string
-        infusionsoft_id:
-          type: string
-        date_created:
-          type: string
-          format: date-time
-        created_by:
-          type: integer
-          format: int64
-        last_updated:
-          type: string
-          format: date-time
-        last_updated_by:
-          type: integer
-          format: int64
-        global_user_id:
-          type: integer
-          format: int64
-        id:
-          type: integer
-          format: int64
       required:
-      - id
-    PhoneNumber_2:
-      type: object
-      properties:
-        number:
-          type: string
-        extension:
-          type: string
-        field:
-          type: string
-          enum:
-          - PHONE1
-          - PHONE2
-          - PHONE3
-          - PHONE4
-          - PHONE5
-        type:
-          type: string
-        number_e164:
-          type: string
-      required:
-      - field
-    View:
-      type: object
-      properties:
-        contentType:
-          type: string
+      - email
+      - given_name
     FaxNumber_2:
       type: object
       properties:
@@ -6057,136 +6060,20 @@ components:
           type: string
       required:
       - field
-    RestUserQueryCommand:
+    Users:
       type: object
       properties:
-        limit:
-          type: integer
-          format: int32
-        offset:
-          type: integer
-          format: int32
-        include_inactive:
-          type: boolean
-        include_partners:
-          type: boolean
-        includeInactive:
-          type: boolean
-        includePartners:
-          type: boolean
-    Address_3:
-      type: object
-      properties:
-        line1:
-          type: string
-        line2:
-          type: string
-        locality:
-          type: string
-        region:
-          type: string
-        zip_code:
-          type: string
-        zip_four:
-          type: string
-        country_code:
-          type: string
-    RestUser_2:
-      type: object
-      properties:
-        address:
-          $ref: '#/components/schemas/Address_3'
-        website:
-          type: string
-        partner:
-          type: boolean
-        status:
-          type: string
-          enum:
-          - Active
-          - Invited
-          - Inactive
-        company_name:
-          type: string
-        email_address:
-          type: string
-        phone_numbers:
+        users:
           type: array
           items:
-            $ref: '#/components/schemas/PhoneNumber_3'
-        fax_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/FaxNumber_3'
-        given_name:
-          type: string
-        family_name:
-          type: string
-        middle_name:
-          type: string
-        preferred_name:
-          type: string
-        time_zone:
-          type: string
-        job_title:
-          type: string
-        infusionsoft_id:
-          type: string
-        date_created:
-          type: string
-          format: date-time
-        created_by:
+            $ref: '#/components/schemas/RestUser'
+        count:
           type: integer
-          format: int64
-        last_updated:
+          format: int32
+        next:
           type: string
-          format: date-time
-        last_updated_by:
-          type: integer
-          format: int64
-        global_user_id:
-          type: integer
-          format: int64
-        id:
-          type: integer
-          format: int64
-      required:
-      - id
-    PhoneNumber_3:
-      type: object
-      properties:
-        number:
+        previous:
           type: string
-        extension:
-          type: string
-        field:
-          type: string
-          enum:
-          - PHONE1
-          - PHONE2
-          - PHONE3
-          - PHONE4
-          - PHONE5
-        type:
-          type: string
-        number_e164:
-          type: string
-      required:
-      - field
-    FaxNumber_3:
-      type: object
-      properties:
-        number:
-          type: string
-        field:
-          type: string
-          enum:
-          - FAX1
-          - FAX2
-        type:
-          type: string
-      required:
-      - field
   securitySchemes:
     oauth2:
       type: oauth2
@@ -6199,7 +6086,4 @@ x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v1-2025-11-05-openapi-original.json
 - infusionsoft-rest-v1-openapi-original.json
-- infusionsoft-rest-v1-openapi.json
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

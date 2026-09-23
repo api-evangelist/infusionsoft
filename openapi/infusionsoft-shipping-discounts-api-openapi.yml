@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Shipping Discounts across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Shipping Discounts across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Shipping Discounts
 paths:
@@ -3246,20 +3245,6 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        status:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetails'
     ErrorDetails:
       type: object
       properties:
@@ -3267,165 +3252,6 @@ components:
           type: string
         resource:
           type: string
-    UpdateShippingDiscountRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the discount
-          example: Free Shipping Over $100
-        description:
-          type: string
-          description: Description of the discount
-          example: Free shipping on orders over $100
-        criteria:
-          type: array
-          description: List of criteria that must be met for this discount to apply
-          items:
-            $ref: '#/components/schemas/UpdateShippingDiscountCriteria'
-        discount_type:
-          type: string
-          description: 'Type of discount: AMOUNT (fixed amount) or PERCENT (percentage)'
-          enum:
-          - AMOUNT
-          - PERCENT
-          example: PERCENT
-        discount_value:
-          type: number
-          format: double
-          description: Value of the discount (amount or percentage depending on discount_type)
-          example: 100
-    ListShippingDiscountsResponse:
-      type: object
-      properties:
-        discounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShippingDiscount'
-        next_page_token:
-          type: string
-    ShippingDiscount:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for this shipping discount
-          example: 105
-        name:
-          type: string
-          description: Name of the discount
-          example: Free Shipping Over $100
-        description:
-          type: string
-          description: Description of the discount
-          example: Free shipping on orders over $100
-        criteria:
-          type: array
-          description: List of criteria that must be met for this discount to apply
-          items:
-            $ref: '#/components/schemas/DiscountCriteria'
-        discount_type:
-          type: string
-          description: 'Type of discount: AMOUNT (fixed amount) or PERCENT (percentage)'
-          enum:
-          - AMOUNT
-          - PERCENT
-          example: PERCENT
-        discount_value:
-          type: number
-          format: double
-          description: Value of the discount (amount or percentage depending on discount_type)
-          example: 100
-    CreateShippingDiscountRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the discount
-          example: Free Shipping Over $100
-        description:
-          type: string
-          description: Description of the discount
-          example: Free shipping on orders over $100
-        criteria:
-          type: array
-          description: List of criteria that must be met for this discount to apply
-          items:
-            $ref: '#/components/schemas/CreateShippingDiscountCriteria'
-        discount_type:
-          type: string
-          description: 'Type of discount: AMOUNT (fixed amount) or PERCENT (percentage)'
-          enum:
-          - AMOUNT
-          - PERCENT
-          example: PERCENT
-        discount_value:
-          type: number
-          format: double
-          description: Value of the discount (amount or percentage depending on discount_type)
-          example: 100
-      required:
-      - discount_type
-      - discount_value
-      - name
-    UpdateShippingDiscountCriteria:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Promotional code for PROMO_CODE criteria
-          example: SUMMER2024
-        criteria_id:
-          type: string
-          description: Unique identifier for this criteria
-          example: 501
-        range_start_time:
-          type: string
-          format: date-time
-          description: Start date/time for DATE_RANGE criteria (ISO-8601 format)
-          example: '2024-01-01T00:00:00Z'
-        range_end_time:
-          type: string
-          format: date-time
-          description: End date/time for DATE_RANGE criteria (ISO-8601 format)
-          example: '2024-12-31T23:59:59Z'
-        product_id:
-          type: string
-          description: Product ID for PRODUCT criteria
-          example: 456
-        product_quantity_min:
-          type: integer
-          format: int32
-          description: Minimum product quantity for PRODUCT criteria
-          example: 1
-        product_quantity_max:
-          type: integer
-          format: int32
-          description: Maximum product quantity for PRODUCT criteria
-          example: 10
-        plan_id:
-          type: string
-          description: Subscription plan ID for SUBSCRIPTION_PLAN criteria
-          example: 789
-        subscription_quantity:
-          type: integer
-          format: int32
-          description: Subscription quantity for SUBSCRIPTION_PLAN criteria
-          example: 1
-        total_amount:
-          type: number
-          format: double
-          description: Total amount threshold for ORDER_TOTAL criteria
-          example: 100
-        operator:
-          type: string
-          description: 'Comparison operator for ORDER_TOTAL criteria: LESS_THAN or GREATER_THAN'
-          enum:
-          - LESS_THAN
-          - GREATER_THAN
-          example: GREATER_THAN
-      required:
-      - criteria_id
     DiscountCriteria:
       type: object
       properties:
@@ -3492,6 +3318,151 @@ components:
           - LESS_THAN
           - GREATER_THAN
           example: GREATER_THAN
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
+    ListShippingDiscountsResponse:
+      type: object
+      properties:
+        discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShippingDiscount'
+        next_page_token:
+          type: string
+    UpdateShippingDiscountCriteria:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Promotional code for PROMO_CODE criteria
+          example: SUMMER2024
+        criteria_id:
+          type: string
+          description: Unique identifier for this criteria
+          example: 501
+        range_start_time:
+          type: string
+          format: date-time
+          description: Start date/time for DATE_RANGE criteria (ISO-8601 format)
+          example: '2024-01-01T00:00:00Z'
+        range_end_time:
+          type: string
+          format: date-time
+          description: End date/time for DATE_RANGE criteria (ISO-8601 format)
+          example: '2024-12-31T23:59:59Z'
+        product_id:
+          type: string
+          description: Product ID for PRODUCT criteria
+          example: 456
+        product_quantity_min:
+          type: integer
+          format: int32
+          description: Minimum product quantity for PRODUCT criteria
+          example: 1
+        product_quantity_max:
+          type: integer
+          format: int32
+          description: Maximum product quantity for PRODUCT criteria
+          example: 10
+        plan_id:
+          type: string
+          description: Subscription plan ID for SUBSCRIPTION_PLAN criteria
+          example: 789
+        subscription_quantity:
+          type: integer
+          format: int32
+          description: Subscription quantity for SUBSCRIPTION_PLAN criteria
+          example: 1
+        total_amount:
+          type: number
+          format: double
+          description: Total amount threshold for ORDER_TOTAL criteria
+          example: 100
+        operator:
+          type: string
+          description: 'Comparison operator for ORDER_TOTAL criteria: LESS_THAN or GREATER_THAN'
+          enum:
+          - LESS_THAN
+          - GREATER_THAN
+          example: GREATER_THAN
+      required:
+      - criteria_id
+    CreateShippingDiscountRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the discount
+          example: Free Shipping Over $100
+        description:
+          type: string
+          description: Description of the discount
+          example: Free shipping on orders over $100
+        criteria:
+          type: array
+          description: List of criteria that must be met for this discount to apply
+          items:
+            $ref: '#/components/schemas/CreateShippingDiscountCriteria'
+        discount_type:
+          type: string
+          description: 'Type of discount: AMOUNT (fixed amount) or PERCENT (percentage)'
+          enum:
+          - AMOUNT
+          - PERCENT
+          example: PERCENT
+        discount_value:
+          type: number
+          format: double
+          description: Value of the discount (amount or percentage depending on discount_type)
+          example: 100
+      required:
+      - discount_type
+      - discount_value
+      - name
+    ShippingDiscount:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this shipping discount
+          example: 105
+        name:
+          type: string
+          description: Name of the discount
+          example: Free Shipping Over $100
+        description:
+          type: string
+          description: Description of the discount
+          example: Free shipping on orders over $100
+        criteria:
+          type: array
+          description: List of criteria that must be met for this discount to apply
+          items:
+            $ref: '#/components/schemas/DiscountCriteria'
+        discount_type:
+          type: string
+          description: 'Type of discount: AMOUNT (fixed amount) or PERCENT (percentage)'
+          enum:
+          - AMOUNT
+          - PERCENT
+          example: PERCENT
+        discount_value:
+          type: number
+          format: double
+          description: Value of the discount (amount or percentage depending on discount_type)
+          example: 100
     CreateShippingDiscountCriteria:
       type: object
       properties:
@@ -3554,6 +3525,34 @@ components:
           - LESS_THAN
           - GREATER_THAN
           example: GREATER_THAN
+    UpdateShippingDiscountRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the discount
+          example: Free Shipping Over $100
+        description:
+          type: string
+          description: Description of the discount
+          example: Free shipping on orders over $100
+        criteria:
+          type: array
+          description: List of criteria that must be met for this discount to apply
+          items:
+            $ref: '#/components/schemas/UpdateShippingDiscountCriteria'
+        discount_type:
+          type: string
+          description: 'Type of discount: AMOUNT (fixed amount) or PERCENT (percentage)'
+          enum:
+          - AMOUNT
+          - PERCENT
+          example: PERCENT
+        discount_value:
+          type: number
+          format: double
+          description: Value of the discount (amount or percentage depending on discount_type)
+          example: 100
     Throwable:
       title: Throwable
       type: object
@@ -3602,5 +3601,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

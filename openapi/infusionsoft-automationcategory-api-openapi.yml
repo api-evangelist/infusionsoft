@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged AutomationCategory across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged AutomationCategory across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: AutomationCategory
 paths:
@@ -2097,20 +2096,6 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        status:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetails'
     ErrorDetails:
       type: object
       properties:
@@ -2127,23 +2112,20 @@ components:
           example: Marketing Campaigns
           maxLength: 100
           minLength: 1
-    AutomationCategory:
+    Error:
       type: object
-      description: An automation category
       properties:
-        id:
-          type: string
-          description: The unique identifier of the category
-          example: 1
-        name:
-          type: string
-          description: The name of the category
-          example: Marketing Campaigns
-        automation_count:
+        code:
           type: integer
-          format: int64
-          description: Number of automations in this category
-          example: 15
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
     ListAutomationCategoryResponse:
       type: object
       description: Response containing a list of automation categories
@@ -2165,6 +2147,23 @@ components:
           example: Marketing Campaigns
       required:
       - name
+    AutomationCategory:
+      type: object
+      description: An automation category
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the category
+          example: 1
+        name:
+          type: string
+          description: The name of the category
+          example: Marketing Campaigns
+        automation_count:
+          type: integer
+          format: int64
+          description: Number of automations in this category
+          example: 15
     Throwable:
       title: Throwable
       type: object
@@ -2213,5 +2212,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

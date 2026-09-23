@@ -5,7 +5,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Account Info across 3 of this provider''s published API definitions: infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json, infusionsoft-rest-v1-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Account Info across 2 of this provider''s published API definitions: infusionsoft-rest-v1-2025-11-05-openapi-original.json, infusionsoft-rest-v1-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.infusionsoft.com/crm/rest
 - url: https://api.infusionsoft.com/crm
@@ -1330,9 +1330,41 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Throwable'
-    DefaultHttpStatusCode:
-      allOf:
-      - $ref: '#/components/schemas/HttpStatusCode'
+    ContactAddress:
+      type: object
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+        locality:
+          type: string
+        region:
+          type: string
+        field:
+          type: string
+          enum:
+          - BILLING
+          - SHIPPING
+          - OTHER
+        postal_code:
+          type: string
+          description: Field used to store postal codes containing a combination of letters and numbers ex. 'EC1A', 'S1 2HE', '75000'
+        zip_code:
+          type: string
+          description: 'Mainly used in the United States, this is typically numeric. ex. ''85001'', ''90002'' Note: this is to be used instead of ''postal_code'', not in addition to.'
+        zip_four:
+          type: string
+          description: Last four of a full zip code ex. '8244', '4320'. This field is supplemental to the zip_code field, otherwise will be ignored.
+        country_code:
+          type: string
+      required:
+      - field
+    View:
+      type: object
+      properties:
+        contentType:
+          type: string
     AccountProfile:
       type: object
       description: Information about the company that owns/uses this account
@@ -1369,6 +1401,9 @@ components:
           type: string
         business_secondary_color:
           type: string
+    DefaultHttpStatusCode:
+      allOf:
+      - $ref: '#/components/schemas/HttpStatusCode'
     ModelAndView:
       type: object
       properties:
@@ -1476,41 +1511,6 @@ components:
       - 509 BANDWIDTH_LIMIT_EXCEEDED
       - 510 NOT_EXTENDED
       - 511 NETWORK_AUTHENTICATION_REQUIRED
-    View:
-      type: object
-      properties:
-        contentType:
-          type: string
-    ContactAddress:
-      type: object
-      properties:
-        line1:
-          type: string
-        line2:
-          type: string
-        locality:
-          type: string
-        region:
-          type: string
-        field:
-          type: string
-          enum:
-          - BILLING
-          - SHIPPING
-          - OTHER
-        postal_code:
-          type: string
-          description: Field used to store postal codes containing a combination of letters and numbers ex. 'EC1A', 'S1 2HE', '75000'
-        zip_code:
-          type: string
-          description: 'Mainly used in the United States, this is typically numeric. ex. ''85001'', ''90002'' Note: this is to be used instead of ''postal_code'', not in addition to.'
-        zip_four:
-          type: string
-          description: Last four of a full zip code ex. '8244', '4320'. This field is supplemental to the zip_code field, otherwise will be ignored.
-        country_code:
-          type: string
-      required:
-      - field
   securitySchemes:
     oauth2:
       type: oauth2
@@ -1521,4 +1521,3 @@ components:
 x-refined-from:
 - infusionsoft-rest-v1-2025-11-05-openapi-original.json
 - infusionsoft-rest-v1-openapi-original.json
-- infusionsoft-rest-v1-openapi.json

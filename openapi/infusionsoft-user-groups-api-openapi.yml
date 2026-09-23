@@ -1,7 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Infusionsoft User Groups API
-  version: v2
+  title: Keap User Groups API
+  description: Keap Public API Documentation
+  termsOfService: https://www.thryv.com/terms-of-use
   contact:
     name: Keap
     url: https://developer.keap.com/get-support
@@ -9,11 +10,9 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
-  termsOfService: https://www.thryv.com/terms-of-use
-  description: 'Operations tagged User Groups across 3 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  version: v2
 servers:
 - url: https://api.keap.com/crm
-- url: https://api.infusionsoft.com/crm
 security:
 - oauth2: []
 tags:
@@ -81,8 +80,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    servers:
-    - url: https://api.keap.com/crm
   /rest/v2/userGroups/{user_group_id}:
     get:
       tags:
@@ -151,17 +148,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    servers:
-    - url: https://api.keap.com/crm
 components:
   schemas:
-    ErrorDetails:
-      type: object
-      properties:
-        domain:
-          type: string
-        resource:
-          type: string
     Error:
       type: object
       properties:
@@ -176,6 +164,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorDetails'
+    ListUserGroupsResponse:
+      type: object
+      description: Response containing a list of user groups
+      properties:
+        user_groups:
+          type: array
+          description: List of user groups
+          items:
+            $ref: '#/components/schemas/UserGroup'
+        next_page_token:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        domain:
+          type: string
+        resource:
+          type: string
     UserGroup:
       type: object
       description: A user group in the application
@@ -188,17 +194,6 @@ components:
           type: string
           description: The name of this user group.
           example: Accounting
-    ListUserGroupsResponse:
-      type: object
-      description: Response containing a list of user groups
-      properties:
-        user_groups:
-          type: array
-          description: List of user groups
-          items:
-            $ref: '#/components/schemas/UserGroup'
-        next_page_token:
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2
@@ -207,7 +202,3 @@ components:
           authorizationUrl: https://accounts.infusionsoft.com/app/oauth/authorize
           tokenUrl: https://api.infusionsoft.com/token
           scopes: {}
-x-refined-from:
-- infusionsoft-keap-sdk-v2-swagger-original.yml
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json

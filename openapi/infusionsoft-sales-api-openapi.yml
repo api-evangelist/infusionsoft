@@ -5,11 +5,10 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   version: '1.0'
-  description: 'Operations tagged Sales across 4 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json, infusionsoft-rest-v2-openapi-original.json, infusionsoft-rest-v2-openapi.json. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Sales across 2 of this provider''s published API definitions: infusionsoft-keap-sdk-v2-swagger-original.yml, infusionsoft-rest-v2-2025-11-05-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.keap.com/crm
 - url: https://api.infusionsoft.com/crm/rest
-- url: https://api.infusionsoft.com/crm
 tags:
 - name: Sales
 paths:
@@ -720,67 +719,6 @@ paths:
     - url: https://api.infusionsoft.com/crm/rest
 components:
   schemas:
-    PaymentMethod:
-      type: object
-      properties:
-        contact_id:
-          type: string
-          description: The id of the contact the payment method is associated with.
-          example: 123
-        payment_method_id:
-          type: string
-          description: The unique identifier of the payment method.
-          example: 123
-        credit_card_id:
-          type: string
-          description: For backward-compatibility with v1 endpoints. If present, it's the credit card id this payment method refers to.
-        merchant_account_type:
-          type: string
-          description: The merchant account type through which the payment method was tokenized.
-          enum:
-          - PAYPAL
-          - UNSUPPORTED
-          - AUTHORIZE
-          - EWAY
-          - WEPAY
-          - STRIPE
-          - KEAP_PAY
-          example: STRIPE
-        merchant_account_id:
-          type: string
-          description: The merchant account id through which the payment method was tokenize.
-        payment_method_type:
-          type: string
-          description: The type of payment method. For now, only CARD is supported.
-          enum:
-          - CARD
-        created_time:
-          type: string
-          format: date-time
-          description: When this payment method was made. In ISO-8601 format.
-          example: '2024-05-21T14:30:00Z'
-        card_info:
-          $ref: '#/components/schemas/CardInfo'
-          description: If present, it provides additional details for payment methods of payment_method_type CARD.
-        status:
-          type: string
-          description: Status of the payment method. Fow now, only EXPIRED is supported.
-          enum:
-          - EXPIRED
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        status:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorDetails'
     ErrorDetails:
       type: object
       properties:
@@ -788,14 +726,40 @@ components:
           type: string
         resource:
           type: string
-    ListTransactions:
+    CardInfo:
       type: object
       properties:
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionV2'
-        next_page_token:
+        brand:
+          type: string
+        fingerprint:
+          type: string
+          description: A token that uniquely identifies the card info
+        card_type:
+          type: string
+          description: 'The card type. Valid values are: CREDIT, DEBIT, PREPAID.'
+          enum:
+          - CREDIT
+          - DEBIT
+          - PREPAID
+          - ACH
+        last_four:
+          type: string
+        expiration_year:
+          type: string
+          description: Four-digit expiration year
+        expiration_month:
+          type: string
+          description: Two-digit expiration month
+    BasicContact:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        given_name:
+          type: string
+        family_name:
           type: string
     Payment:
       type: object
@@ -879,24 +843,74 @@ components:
         payment_method:
           $ref: '#/components/schemas/PaymentMethod'
           description: Details of the payment method used for this transaction.
-    BasicContact:
+    PaymentMethod:
       type: object
       properties:
-        id:
+        contact_id:
           type: string
-        email:
+          description: The id of the contact the payment method is associated with.
+          example: 123
+        payment_method_id:
           type: string
-        given_name:
+          description: The unique identifier of the payment method.
+          example: 123
+        credit_card_id:
           type: string
-        family_name:
+          description: For backward-compatibility with v1 endpoints. If present, it's the credit card id this payment method refers to.
+        merchant_account_type:
           type: string
-    ListPayments:
+          description: The merchant account type through which the payment method was tokenized.
+          enum:
+          - PAYPAL
+          - UNSUPPORTED
+          - AUTHORIZE
+          - EWAY
+          - WEPAY
+          - STRIPE
+          - KEAP_PAY
+          example: STRIPE
+        merchant_account_id:
+          type: string
+          description: The merchant account id through which the payment method was tokenize.
+        payment_method_type:
+          type: string
+          description: The type of payment method. For now, only CARD is supported.
+          enum:
+          - CARD
+        created_time:
+          type: string
+          format: date-time
+          description: When this payment method was made. In ISO-8601 format.
+          example: '2024-05-21T14:30:00Z'
+        card_info:
+          $ref: '#/components/schemas/CardInfo'
+          description: If present, it provides additional details for payment methods of payment_method_type CARD.
+        status:
+          type: string
+          description: Status of the payment method. Fow now, only EXPIRED is supported.
+          enum:
+          - EXPIRED
+    Error:
       type: object
       properties:
-        payments:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        status:
+          type: string
+        details:
           type: array
           items:
-            $ref: '#/components/schemas/Payment'
+            $ref: '#/components/schemas/ErrorDetails'
+    ListTransactions:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionV2'
         next_page_token:
           type: string
     TransactionV2:
@@ -984,30 +998,15 @@ components:
         payment_method:
           $ref: '#/components/schemas/PaymentMethod'
           description: Details of the payment method used for this transaction.
-    CardInfo:
+    ListPayments:
       type: object
       properties:
-        brand:
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+        next_page_token:
           type: string
-        fingerprint:
-          type: string
-          description: A token that uniquely identifies the card info
-        card_type:
-          type: string
-          description: 'The card type. Valid values are: CREDIT, DEBIT, PREPAID.'
-          enum:
-          - CREDIT
-          - DEBIT
-          - PREPAID
-          - ACH
-        last_four:
-          type: string
-        expiration_year:
-          type: string
-          description: Four-digit expiration year
-        expiration_month:
-          type: string
-          description: Two-digit expiration month
     Throwable:
       title: Throwable
       type: object
@@ -1056,5 +1055,3 @@ components:
 x-refined-from:
 - infusionsoft-keap-sdk-v2-swagger-original.yml
 - infusionsoft-rest-v2-2025-11-05-openapi-original.json
-- infusionsoft-rest-v2-openapi-original.json
-- infusionsoft-rest-v2-openapi.json
